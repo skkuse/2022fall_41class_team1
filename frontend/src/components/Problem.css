@@ -1,0 +1,4 @@
+.wrapper_problem{
+display: flex;
+flex-direction: column;
+}
