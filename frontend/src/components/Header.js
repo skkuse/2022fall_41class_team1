@@ -5,8 +5,9 @@ function Header() {
   return (
   <div class="Header_wrapper">
         <img
-          src="https://logrocket-assets.io/img/logo.png"
+          src="https://cdn-icons-png.flaticon.com/512/3658/3658773.png"
           width="30"
+          height="30"
           className="img-thumbnail"
           style={{ marginTop: "20px" }}
         />

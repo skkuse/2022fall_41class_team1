@@ -1,3 +1,9 @@
 .Header_wrapper{
 display: flex;
+color: white;
+background-color: black;
+}
+
+img{
+background-color: white;
 }

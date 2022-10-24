@@ -1,37 +1,43 @@
-import React from "react";
+import React, { useRef,useEffect} from "react";
 import ReactDOM from "react-dom";
 
-import Editor from "@monaco-editor/react";
-
-
+import Editor, {useMonaco} from "@monaco-editor/react";
+import styles from "./PythonEditor.css";
 
 function PythonEditor() {
+  const editorRef = useRef(null);
+  const monaco=useMonaco();
 
-  function handleEditorChange(value, event) {
-    console.log("here is the current model value:", value);
+  function handleEditorDidMount(editor, monaco) {
+    editorRef.current = editor;
   }
-    return (
-    <div class="wrapper">
-      <Editor
-  height='90vh'
-  width='80vh'
-  theme="vs-dark"
-  defaultValue='--여기에 Python문을 작성하시면 됩니다.'
-  language='python'
-  theme='tomorrow'
-  onChange={handleEditorChange}
-  options={{
-    fontSize: 15,
-    minimap: { enabled: false },
-    scrollbar: {
-      vertical: 'auto',
-      horizontal: 'auto'
-    }
-  }}
-/>
-</div>
-    );
 
+  function showValue() {
+    alert(editorRef.current.getValue());
+  }
+
+  useEffect(() => {
+    // do conditional chaining
+    monaco?.languages.typescript.javascriptDefaults.setEagerModelSync(true);
+    // or make sure that it exists by other ways
+    if (monaco) {
+      console.log("here is the monaco instance:", monaco);
+    }
+  }, [monaco]);
+
+
+  return (
+   <div class="editor_wrapper">
+     <Editor
+       height="80vh"
+       width="90vh"
+       defaultLanguage="python"
+       defaultValue="// some comment"
+       onMount={handleEditorDidMount}
+     />
+     <button onClick={showValue}>Show value</button>
+   </div>
+  );
 }
 
 export default PythonEditor;
