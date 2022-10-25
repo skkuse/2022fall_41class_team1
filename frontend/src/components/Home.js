@@ -1,12 +1,14 @@
 import React from "react";
-import Header from "./Header";
 
-const Home = () => {
-  return (
-    <>
-      <Header />
-    </>
-  );
-};
+
+function Home() {
+    return (
+    <div class="Home_wrapper">
+      <textarea rows="33" disabled='True' cols="40">
+      resultresultresult
+      </textarea>
+      </div>
+    );
+}
 
 export default Home;
