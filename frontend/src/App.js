@@ -12,9 +12,11 @@ class App extends Component {
     return (
        <body>
         <Header />
+        <div>
         <Problem />
         <PythonEditor />
         <Home />
+        </div>
        </body>
     );
   }
