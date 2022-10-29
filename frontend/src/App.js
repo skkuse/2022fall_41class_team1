@@ -1,27 +1,20 @@
 import React, { Component, Fragment } from "react";
+import { BrowserRouter, Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import AddPage from "./pages/AddPage";
 
-import styles from "./App.css";
-import Header from "./components/Header";
-import Home from "./components/Home";
-import Editor from "@monaco-editor/react";
-import Problem from "./components/Problem"
-import PythonEditor from './components/PythonEditor'
-
-class App extends Component {
-  render() {
+function App() {
     return (
-       <body>
-        <Header />
-        <div>
-        <Problem />
-        <PythonEditor />
-        <Home />
-        </div>
-       </body>
+      <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/add" element={<AddPage />} />
+    </Routes>
     );
   }
-}
-
 
 
 export default App;
