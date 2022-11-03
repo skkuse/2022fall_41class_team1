@@ -5,7 +5,7 @@ from jsonfield import JSONField
 
 class User(models.Model):
     user_id = models.BigIntegerField(primary_key=True)
-    user_name = models.CharField()
+    user_name = models.CharField(max_length=20)
     user_pwd = models.IntegerField()
     user_type = models.SmallIntegerField()
     user_email = models.EmailField()
@@ -15,11 +15,11 @@ class User(models.Model):
         return self.user_name
 
 class Question(models.Model):
-    course = models.IntegerField(primary_key=True)
+    course = models.IntegerField()
     question = models.IntegerField(primary_key=True)
-    answer = models.CharField()
-    testcase = models.CharField()
-    hint = models.CharField()
+    answer = models.CharField(max_length=200)
+    testcase = models.CharField(max_length=200)
+    hint = models.CharField(max_length=512)
     duedate = models.DateTimeField()
 
     def __str__(self):
