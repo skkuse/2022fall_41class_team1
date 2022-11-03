@@ -1,0 +1,5 @@
+playground/
+.vscode/
+Pipfile
+Pipfile.lock
+DB/__pycache__
