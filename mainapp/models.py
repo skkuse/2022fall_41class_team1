@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from jsonfield import JSONField
 
@@ -17,10 +18,12 @@ class User(models.Model):
 class Question(models.Model):
     course = models.IntegerField()
     question = models.IntegerField(primary_key=True)
+    skeleton = models.TextField(default="")
     answer = models.CharField(max_length=200)
     testcase = models.CharField(max_length=200)
     hint = models.CharField(max_length=512)
     duedate = models.DateTimeField()
+    
 
     def __str__(self):
         return "Course:" + self.course + ", Question: " + self.question
@@ -29,3 +32,5 @@ class UserData(models.Model):
     user_id = models.BigIntegerField(primary_key=True)
     question = models.IntegerField()
     save1 = models.TextField()
+    save2 = models.TextField(default="")
+    save3 = models.TextField(default="")
