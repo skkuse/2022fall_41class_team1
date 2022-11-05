@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from mainapp.models import *
-from code_function import *
+#from code_function import *
 import sqlite3
 
 # request -> response : request handler
@@ -17,7 +17,7 @@ def initCode(request,input_data):
     result = Question.objects.filter(course=course,question=question)
     skeleton = result.skeleton
     return render(request,'hello.html',{'skeleton':skeleton})
-
+'''
 # excute python code
 def excuteCode(request, input_data):
     code = input_data['code']
@@ -35,4 +35,4 @@ def compareTestcases(request, input_data):
     else:
         return_data = {'pf':False,'output':test_result}
         
-    return render(request, 'hello.html', {'return_data':return_data})
+    return render(request, 'hello.html', {'return_data':return_data})'''

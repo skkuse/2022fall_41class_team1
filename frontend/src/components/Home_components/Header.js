@@ -24,7 +24,7 @@ function Header() {
         <BiCog css ={cogBtn} />
         <div css={section2}>
           <a css={loginBtn}><Link to="/login">로그인</Link></a>
-          <a css={registerBtn}><Link to="/register">회원가입</Link></a>
+          <a css={registerBtn}><Link to="/register1">회원가입</Link></a>
         </div>
       </div>
       </header>
