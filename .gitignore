@@ -1,0 +1,5 @@
+playground/
+.vscode/
+Pipfile
+Pipfile.lock
+mainapp/__pycache__/*.pyc
