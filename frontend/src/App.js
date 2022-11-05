@@ -9,7 +9,8 @@ import AddPage from "./pages/AddPage";
 import FindPage1 from "./pages/FindPage1";
 import FindPage2 from "./pages/FindPage2";
 
-function App() {
+class App extends Component {
+    render(){
     return (
     <Routes>
       <Route exact path="/" element={<Home />} />
@@ -23,6 +24,6 @@ function App() {
     </Routes>
     );
   }
-
+}
 
 export default App;
