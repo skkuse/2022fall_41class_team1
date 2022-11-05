@@ -4,6 +4,8 @@ from .models import *
 from .serializers import *
 from rest_framework import generics
 
+#dummy
+
 # from serializer 추가 필요
 
 # request -> response : request handler
