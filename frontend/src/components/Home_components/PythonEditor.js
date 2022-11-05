@@ -3,9 +3,13 @@ import ReactDOM from "react-dom";
 
 import Editor, {useMonaco} from "@monaco-editor/react";
 
+
+
 function PythonEditor() {
   const editorRef = useRef(null);
   const monaco=useMonaco();
+
+
 
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
