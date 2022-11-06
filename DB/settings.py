@@ -38,7 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sessions',
     'mainapp',
+    'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
 
 INTERNAL_IPS = [
     #...
