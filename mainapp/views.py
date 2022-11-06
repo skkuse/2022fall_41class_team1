@@ -4,8 +4,6 @@ from .models import *
 from .serializers import *
 from rest_framework import generics
 
-#dummy
-
 # from serializer 추가 필요
 
 # request -> response : request handler
@@ -51,8 +49,8 @@ def initCode(request,input_data):
 '''
 
 def UserAPI(request, input_data):
-    id = input_data['id']
-    result = User.objects.fillter(id=user_id)
+    user_id = input_data['user_id']
+    result = User.objects.fillter(user_id=user_id)
     serializer = UserSerializer(result)
     return Response(serializer.data)
 
@@ -64,9 +62,9 @@ def CourserAPI(request, input_data):
     return Response(serializer.data)
 
 def UserDataAPI(request, input_data):
-    id = input_data['id']
-    result = User.objects.fillter(id=user_id)
-    serializer = UseDatarSerializer(result)
+    user_id = input_data['user_id']
+    result = User.objects.fillter(user_id=user_id)
+    serializer = UserDataSerializer(result)
     return Response(serializer.data)
 
 # excute python code
