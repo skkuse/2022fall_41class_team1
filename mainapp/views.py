@@ -1,8 +1,11 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from .models import *
 from .serializers import *
 from rest_framework import generics
+import os
+import subprocess
+import unittest
 
 # from serializer 추가 필요
 
@@ -10,8 +13,8 @@ from rest_framework import generics
 # Pull data from db, Transform, Send an email, return HttpResponse
 
 # Create your views here.
-def say_hello(request):
-    return render(request,'hello.html',{'name':'Coldmilk'})
+#def say_hello(request):
+#    return render(request,'hello.html',{'name':'Coldmilk'})
 
 
 #POST 방식 참고
@@ -59,15 +62,13 @@ class DetailUserData(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserData.objects.all()
     serializer_class = UserDataSerializer
 
-
-
-''''
 def initCode(request,input_data):
     course = input_data['course']
     question = input_data['question']
     result = Question.objects.filter(course=course,question=question)
     skeleton = result.skeleton
     return render(request,'hello.html',{'skeleton':skeleton})
+
 '''
 
 def UserAPI(request, input_data):
@@ -93,8 +94,36 @@ def UserDataAPI(request, input_data):
 '''
 def excuteCode(request, input_data):
     code = input_data['code']
+
+def excute(code):
+    py = open('temp.txt','w')
+    py.write(code)
+    py.close()
+    os.rename('temp.txt','temp.py')
+    out = subprocess.Popen(['python','temp.py'], stdout=subprocess.PIPE).stdout  
+    return_data = out.read().strip()
+    out.close()
+    os.remove('temp.py') 
+    return return_data
+
+class MyTests(unittest.TestCase):
+    def __init__(self, true_result, my_result):
+        super(MyTests, self).__init__()
+        self.true_result = true_result
+        self.my_result = my_result
+        
+    def test(self):
+        if type('s') != type(self.my_result):
+            my_result = f'{self.my_result}'
+        result = self.assertEqual(self.true_result, my_result)
+        return result
+    
+def excuteCode(request, pk):
+    code = get_object_or_404(UserData, user_id=pk)['save1']
+
     return_data = excute(code)
-    return render(request, 'hello.html', {'return_data':return_data})
+    return_data = return_data.split('/')[-1]
+    return render(request, 'api/results.html', {'return_data':return_data})
         
 # compare code with testcase result
 def compareTestcases(request, input_data):
@@ -108,4 +137,3 @@ def compareTestcases(request, input_data):
         return_data = {'pf':False,'output':test_result}
         
     return render(request, 'hello.html', {'return_data':return_data})
-    '''
