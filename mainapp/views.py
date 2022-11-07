@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import *
 from .serializers import *
@@ -12,6 +12,28 @@ from rest_framework import generics
 # Create your views here.
 def say_hello(request):
     return render(request,'hello.html',{'name':'Coldmilk'})
+
+
+#POST 방식 참고
+def user_create(request,user_id):
+    user = get_object_or_404(User,pk=user_id)
+
+    #UserData에서 User를 Foreign Key로 참고하고 있기 때문에 User에서 userdata_set으로 역참조 가능
+    user.userdata_set.create(content=request.POST.get('content'))  #POST로 폼에 전송된 데이터를 받아옴
+    return redirect('mainapp:~~',user_id=user.id)
+
+def question_create(request):
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.create_date = timezone.now()
+            question.save()
+            return redirect('pybo:index')
+    else:
+        form = QuestionForm()
+    context = {'form': form}
+    return render(request, 'pybo/question_form.html', context)
 
 class ListUser(generics.ListCreateAPIView):
     queryset = User.objects.all()
