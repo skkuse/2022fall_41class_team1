@@ -17,22 +17,20 @@ function PythonEditor() {
   }
 
   const showValue=async() => {
-
+    const newData={
+    "user_id": 123456,
+    "question": 1,
+    "save1": "print(\"hello\")",
+    "save2": "print(\"hello\")",
+    "save3": "print(\"hello\")",
+    };
     try {
-    const response = await axios.post('http://localhost:8000/api/userdata/',{
-
-    "User_id": 12345,
-    "Question": 1,
-    "Save1": "print(\"hello\")",
-    "Save2": "",
-    "Save3": "",
-
-    })
+    const response = await axios.post('http://localhost:8000/api/userdata/',newData)
     console.log("response >>", response)
   } catch(err) {
     console.log("Error >>", err);
   }
-  }
+  };
 
 
   useEffect(() => {
@@ -57,6 +55,6 @@ function PythonEditor() {
      <button onClick={showValue}>Show value</button>
    </div>
   );
-}
+};
 
 export default PythonEditor;

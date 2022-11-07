@@ -10,7 +10,7 @@ from rest_framework import generics
 import os
 import subprocess
 import unittest
-from django.views.decorators.csrf import csrf_exempt
+
 
 # from serializer 추가 필요
 
@@ -23,9 +23,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 
-@csrf_exempt
-def search(request):
-    return HttpResponse('success')
+
 
 class ListUser(generics.ListCreateAPIView):
     queryset = User.objects.all()

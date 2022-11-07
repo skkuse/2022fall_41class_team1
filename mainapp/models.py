@@ -34,3 +34,6 @@ class UserData(models.Model):
     save1 = models.TextField()
     save2 = models.TextField(default="")
     save3 = models.TextField(default="")
+
+    def __str__(self):
+        return "ID:" + self.user_id + ", save1: " + self.save1
