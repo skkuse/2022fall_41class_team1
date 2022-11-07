@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import Editor, {useMonaco} from "@monaco-editor/react";
 
+import axios from "axios";
 
 
 function PythonEditor() {
@@ -15,9 +16,24 @@ function PythonEditor() {
     editorRef.current = editor;
   }
 
-  function showValue() {
-    alert(editorRef.current.getValue());
+  const showValue=async() => {
+
+    try {
+    const response = await axios.post('http://localhost:8000/api/userdata/',{
+
+    "User_id": 12345,
+    "Question": 1,
+    "Save1": "print(\"hello\")",
+    "Save2": "",
+    "Save3": "",
+
+    })
+    console.log("response >>", response)
+  } catch(err) {
+    console.log("Error >>", err);
   }
+  }
+
 
   useEffect(() => {
     // do conditional chaining
