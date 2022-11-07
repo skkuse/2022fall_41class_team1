@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from .models import *
 from .serializers import *
@@ -13,8 +13,8 @@ import unittest
 # Pull data from db, Transform, Send an email, return HttpResponse
 
 # Create your views here.
-def say_hello(request):
-    return render(request,'hello.html',{'name':'Coldmilk'})
+#def say_hello(request):
+#    return render(request,'hello.html',{'name':'Coldmilk'})
 
 class ListUser(generics.ListCreateAPIView):
     queryset = User.objects.all()
@@ -40,35 +40,13 @@ class DetailUserData(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserData.objects.all()
     serializer_class = UserDataSerializer
 
-''''
 def initCode(request,input_data):
     course = input_data['course']
     question = input_data['question']
     result = Question.objects.filter(course=course,question=question)
     skeleton = result.skeleton
     return render(request,'hello.html',{'skeleton':skeleton})
-'''
 
-def UserAPI(request, input_data):
-    id = input_data['id']
-    result = User.objects.fillter(id=user_id)
-    serializer = UserSerializer(result)
-    return Response(serializer.data)
-
-def CourserAPI(request, input_data):
-    course = input_data['course']
-    question = input_data['question']
-    result = Question.objects.filter(course=course)
-    serializer = QuestionSerializer(result)
-    return Response(serializer.data)
-
-def UserDataAPI(request, input_data):
-    id = input_data['id']
-    result = User.objects.fillter(id=user_id)
-    serializer = UseDatarSerializer(result)
-    return Response(serializer.data)
-
-# excute python code
 def excute(code):
     py = open('temp.txt','w')
     py.write(code)
@@ -92,11 +70,11 @@ class MyTests(unittest.TestCase):
         result = self.assertEqual(self.true_result, my_result)
         return result
     
-def excuteCode(request, input_data):
-    code = input_data['code']
+def excuteCode(request, pk):
+    code = get_object_or_404(UserData, user_id=pk)['save1']
     return_data = excute(code)
     return_data = return_data.split('/')[-1]
-    return render(request, 'hello.html', {'return_data':return_data})
+    return render(request, 'api/results.html', {'return_data':return_data})
         
 # compare code with testcase result
 def compareTestcases(request, input_data):

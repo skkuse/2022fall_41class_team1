@@ -12,5 +12,6 @@ urlpatterns = [
     
     path('userdata/',views.ListUserData.as_view()),
     path('userdata/<int:pk>/',views.DetailUserData.as_view()),
+    path('userdata/<int:pk>/results/',views.excuteCode, name="result")
 ] 
 
