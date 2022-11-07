@@ -70,40 +70,16 @@ def initCode(request,input_data):
     skeleton = result.skeleton
     return render(request,'hello.html',{'skeleton':skeleton})
 
-'''
-
-def UserAPI(request, input_data):
-    user_id = input_data['user_id']
-    result = User.objects.fillter(user_id=user_id)
-    serializer = UserSerializer(result)
-    return Response(serializer.data)
-
-def CourserAPI(request, input_data):
-    course = input_data['course']
-    question = input_data['question']
-    result = Question.objects.filter(course=course)
-    serializer = QuestionSerializer(result)
-    return Response(serializer.data)
-
-def UserDataAPI(request, input_data):
-    user_id = input_data['user_id']
-    result = User.objects.fillter(user_id=user_id)
-    serializer = UserDataSerializer(result)
-    return Response(serializer.data)
-
-# excute python code
-'''
-def excuteCode(request, input_data):
-    code = input_data['code']
-
 def excute(code):
     py = open('temp.txt','w')
     py.write(code)
     py.close()
     os.rename('temp.txt','temp.py')
-    out = subprocess.Popen(['python','temp.py'], stdout=subprocess.PIPE).stdout  
-    return_data = out.read().strip()
-    out.close()
+    out = subprocess.run(['python', 'temp.py'],capture_output=True)
+    if(out.stderr):
+        return_data = out.stderr.decode('utf-8').split(',')[-1]
+    else:
+        return_data = out.stdout.decode('utf-8')
     os.remove('temp.py') 
     return return_data
 
@@ -119,11 +95,11 @@ class MyTests(unittest.TestCase):
         result = self.assertEqual(self.true_result, my_result)
         return result
     
-def excuteCode(request, pk):
-    code = get_object_or_404(UserData, user_id=pk).save1
+def excuteCode(request):
+    code = request.POST.get('code')
     return_data = excute(code)
     #return_data = return_data.split('/')[-1]
-    return render(request, f'api/results.html', {'user_id':pk,'return_data':return_data})
+    return render(request, f'api/results.html', {'return_data':return_data})
         
 # compare code with testcase result
 def compareTestcases(request, input_data):
