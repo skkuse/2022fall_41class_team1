@@ -16,7 +16,7 @@ import unittest
 #def say_hello(request):
 #    return render(request,'hello.html',{'name':'Coldmilk'})
 
-
+'''
 #POST 방식 참고
 def user_create(request,user_id):
     user = get_object_or_404(User,pk=user_id)
@@ -37,6 +37,7 @@ def question_create(request):
         form = QuestionForm()
     context = {'form': form}
     return render(request, 'pybo/question_form.html', context)
+'''
 
 class ListUser(generics.ListCreateAPIView):
     queryset = User.objects.all()
