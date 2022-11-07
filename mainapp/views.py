@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from .models import *
 from .serializers import *
 from rest_framework import generics
+import os
+import subprocess
+import unittest
 
 # from serializer 추가 필요
 
@@ -37,8 +40,6 @@ class DetailUserData(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserData.objects.all()
     serializer_class = UserDataSerializer
 
-
-
 ''''
 def initCode(request,input_data):
     course = input_data['course']
@@ -68,10 +69,33 @@ def UserDataAPI(request, input_data):
     return Response(serializer.data)
 
 # excute python code
-'''
+def excute(code):
+    py = open('temp.txt','w')
+    py.write(code)
+    py.close()
+    os.rename('temp.txt','temp.py')
+    out = subprocess.Popen(['python','temp.py'], stdout=subprocess.PIPE).stdout  
+    return_data = out.read().strip()
+    out.close()
+    os.remove('temp.py') 
+    return return_data
+
+class MyTests(unittest.TestCase):
+    def __init__(self, true_result, my_result):
+        super(MyTests, self).__init__()
+        self.true_result = true_result
+        self.my_result = my_result
+        
+    def test(self):
+        if type('s') != type(self.my_result):
+            my_result = f'{self.my_result}'
+        result = self.assertEqual(self.true_result, my_result)
+        return result
+    
 def excuteCode(request, input_data):
     code = input_data['code']
     return_data = excute(code)
+    return_data = return_data.split('/')[-1]
     return render(request, 'hello.html', {'return_data':return_data})
         
 # compare code with testcase result
@@ -86,4 +110,3 @@ def compareTestcases(request, input_data):
         return_data = {'pf':False,'output':test_result}
         
     return render(request, 'hello.html', {'return_data':return_data})
-    '''
