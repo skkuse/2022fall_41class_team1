@@ -71,10 +71,10 @@ class MyTests(unittest.TestCase):
         return result
     
 def excuteCode(request, pk):
-    code = get_object_or_404(UserData, user_id=pk)['save1']
+    code = get_object_or_404(UserData, user_id=pk).save1
     return_data = excute(code)
-    return_data = return_data.split('/')[-1]
-    return render(request, 'api/results.html', {'return_data':return_data})
+    #return_data = return_data.split('/')[-1]
+    return render(request, f'api/results.html', {'user_id':pk,'return_data':return_data})
         
 # compare code with testcase result
 def compareTestcases(request, input_data):
