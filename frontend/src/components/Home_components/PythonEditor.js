@@ -18,9 +18,9 @@ function PythonEditor() {
 
   const showValue=async() => {
     const newData={
-    "user_id": 123456,
+    "user_id": 12123,
     "question": 1,
-    "save1": "print(\"hello\")",
+    "save1": editorRef.current.getValue(),
     "save2": "print(\"hello\")",
     "save3": "print(\"hello\")",
     };
@@ -32,6 +32,17 @@ function PythonEditor() {
   }
   };
 
+  const showValue2=async() => {
+    const newData={
+    "code": editorRef.current.getValue(),
+    };
+    try {
+    const response = await axios.post('http://localhost:8000/api/userdata/1234/asdf/results/',newData)
+    console.log("response >>", response)
+  } catch(err) {
+    console.log("Error >>", err);
+  }
+  };
 
   useEffect(() => {
     // do conditional chaining
@@ -52,7 +63,7 @@ function PythonEditor() {
        defaultValue="// some comment"
        onMount={handleEditorDidMount}
      />
-     <button onClick={showValue}>Show value</button>
+     <button onClick={showValue2}>Show value</button>
    </div>
   );
 };
