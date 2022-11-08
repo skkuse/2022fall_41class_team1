@@ -3,7 +3,7 @@ from django.db import models
 from jsonfield import JSONField
 
 # Create your models here.
-#dummy
+
 class User(models.Model):
     user_id = models.BigIntegerField(primary_key=True)
     user_name = models.CharField(max_length=20)
