@@ -95,12 +95,15 @@ class MyTests(unittest.TestCase):
             my_result = f'{self.my_result}'
         result = self.assertEqual(self.true_result, my_result)
         return result
-    
+
+@api_view(['GET','POST'])
 def excuteCode(request):
     code = request.POST.get('code')
     return_data = excute(code)
+    serializer = ReturnDataSerializer(return_data,context={'request':request})
     #return_data = return_data.split('/')[-1]
-    return render(request, f'api/results.html', {'return_data':return_data})
+    return Response(serializer.data)
+    #return render(request, f'api/results.html', {'return_data':return_data})
         
 # compare code with testcase result
 def compareTestcases(request, input_data):

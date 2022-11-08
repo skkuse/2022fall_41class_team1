@@ -15,3 +15,9 @@ class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = UserData
+
+class ReturnDataSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = '__all__'
+        model = ReturnData
