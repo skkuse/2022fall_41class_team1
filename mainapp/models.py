@@ -18,7 +18,7 @@ class User(models.Model):
 class Question(models.Model):
     course = models.IntegerField()
     question = models.IntegerField(primary_key=True)
-    skeleton = models.TextField(default="")
+    skeleton = models.TextField()
     answer = models.CharField(max_length=200)
     testcase = models.CharField(max_length=200)
     hint = models.CharField(max_length=512)
@@ -29,11 +29,12 @@ class Question(models.Model):
         return "Course:" + self.course + ", Question: " + self.question
 
 class UserData(models.Model):
-    user_id = models.BigIntegerField(primary_key=True)
-    question = models.IntegerField()
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     save1 = models.TextField()
-    save2 = models.TextField(default="")
-    save3 = models.TextField(default="")
+    save2 = models.TextField()
+    save3 = models.TextField()
 
-    def __str__(self):
-        return "ID:" + self.user_id + ", save1: " + self.save1
+
+class ReturnData(models.Model):
+    code = models.TextField()
