@@ -34,3 +34,7 @@ class UserData(models.Model):
     save1 = models.TextField()
     save2 = models.TextField()
     save3 = models.TextField()
+
+
+class ReturnData(models.Model):
+    code = models.TextField()
