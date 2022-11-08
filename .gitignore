@@ -3,3 +3,6 @@ playground/
 Pipfile
 Pipfile.lock
 mainapp/__pycache__/*.pyc
+DB/__pycache__/settings.cpython-39.pyc
+mainapp/__pycache__/urls.cpython-39.pyc
+mainapp/__pycache__/views.cpython-39.pyc

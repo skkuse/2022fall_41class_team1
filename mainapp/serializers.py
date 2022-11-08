@@ -3,36 +3,15 @@ from .models import *
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = (
-            'user_id',
-            'user_name',
-            'user_pwd',
-            'user_type',
-            'user_email',
-            'user_org'
-        )
+        fields = '__all__'
         model = User
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = (
-            'course',
-            'question',
-            'skeleton',
-            'answer',
-            'testcase',
-            'hint',
-            'duedate'
-        )
+        fields = '__all__'
         model = Question
         
 class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = (
-            'user_id',
-            'question',
-            'save1',
-            'save2',
-            'save3'
-        )
-        model = UserData       
+        fields = '__all__'
+        model = UserData
