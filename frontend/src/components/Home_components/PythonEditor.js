@@ -16,17 +16,21 @@ function PythonEditor() {
     editorRef.current = editor;
   }
 
+  // 현재 editor에 있는 코드 실행 함수
+  // 현재 아이디, 코드, 문제 저장하는 함수는 따로 만들도록!
   const showValue=async() => {
     const newData={
-    "user_id": 123456,
-    "question": 1,
-    "save1": "print(\"hello\")",
-    "save2": "print(\"hello\")",
-    "save3": "print(\"hello\")",
+    //"user_id": 123456,
+    //"question": 1,
+    //"save1": "print(\"hello\")",
+    //"save2": "print(\"hello\")",
+    //"save3": "print(\"hello\")",
+    save1 : editorRef.current.getValue()
     };
     try {
-    const response = await axios.post('http://localhost:8000/api/userdata/',newData)
-    console.log("response >>", response)
+    const response = await axios.get('http://localhost:8000/api/userdata/123456/1/results/',{params:newData})
+    console.log("response >>", response);
+    console.log(response.data.save1);
   } catch(err) {
     console.log("Error >>", err);
   }

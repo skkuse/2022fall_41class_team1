@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
+from django.core import serializers
 from .models import *
 from .serializers import *
 from rest_framework import generics
@@ -7,6 +8,8 @@ import os
 import subprocess
 import unittest
 from rest_framework.response import Response
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 
 # from serializer 추가 필요
@@ -22,11 +25,9 @@ from rest_framework.response import Response
 #POST 방식 참고
 def user_create(request,user_id):
     user = get_object_or_404(User,pk=user_id)
-
     #UserData에서 User를 Foreign Key로 참고하고 있기 때문에 User에서 userdata_set으로 역참조 가능
     user.userdata_set.create(content=request.POST.get('content'))  #POST로 폼에 전송된 데이터를 받아옴
     return redirect('mainapp:~~',user_id=user.id)
-
 def question_create(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -95,12 +96,15 @@ class MyTests(unittest.TestCase):
             my_result = f'{self.my_result}'
         result = self.assertEqual(self.true_result, my_result)
         return result
-    
+
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+
 def excuteCode(request):
-    code = request.POST.get('code')
+    code = request.GET['save1']
     return_data = excute(code)
-    #return_data = return_data.split('/')[-1]
-    return render(request, f'api/results.html', {'return_data':return_data})
+    data = {'save1':return_data}
+    return Response(data)
         
 # compare code with testcase result
 def compareTestcases(request, input_data):
@@ -114,4 +118,3 @@ def compareTestcases(request, input_data):
         return_data = {'pf':False,'output':test_result}
         
     return render(request, 'hello.html', {'return_data':return_data})
-
