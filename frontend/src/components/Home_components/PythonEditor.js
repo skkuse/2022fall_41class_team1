@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import Editor, {useMonaco} from "@monaco-editor/react";
 
+import axios from "axios";
 
 
 function PythonEditor() {
@@ -15,9 +16,26 @@ function PythonEditor() {
     editorRef.current = editor;
   }
 
-  function showValue() {
-    alert(editorRef.current.getValue());
+  // 현재 editor에 있는 코드 실행 함수
+  // 현재 아이디, 코드, 문제 저장하는 함수는 따로 만들도록!
+  const showValue=async() => {
+    const newData={
+    //"user_id": 123456,
+    //"question": 1,
+    //"save1": "print(\"hello\")",
+    //"save2": "print(\"hello\")",
+    //"save3": "print(\"hello\")",
+    save1 : editorRef.current.getValue()
+    };
+    try {
+    const response = await axios.get('http://localhost:8000/api/userdata/123456/1/results/',{params:newData})
+    console.log("response >>", response);
+    console.log(response.data.save1);
+  } catch(err) {
+    console.log("Error >>", err);
   }
+  };
+
 
   useEffect(() => {
     // do conditional chaining
@@ -41,6 +59,6 @@ function PythonEditor() {
      <button onClick={showValue}>Show value</button>
    </div>
   );
-}
+};
 
 export default PythonEditor;

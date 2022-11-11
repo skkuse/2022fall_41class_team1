@@ -20,5 +20,5 @@ from django.urls import path, include
 #playgroun/hello
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mainapp/',include('mainapp.urls')),
+    path('api/',include('mainapp.urls')),
 ]

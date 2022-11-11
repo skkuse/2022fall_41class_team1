@@ -10,7 +10,7 @@ export function registerUser(dataToSubmit) {
 }
 
 export function loginUser(dataToSubmit) {
-  const data = request("post", "/api/auth/login", dataToSubmit);
+  const data = request("post", "/api", dataToSubmit);
   return {
     type: LOGIN_USER,
     payload: data,
