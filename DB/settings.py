@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'mainapp',
     'rest_framework',
-    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -63,16 +62,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'DB.middleware.DisableCSRF',
 ]
 
-CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000'
-                         ,'http://localhost:3000']
-CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:3000'
-                         ,'http://localhost:3000']
+
+
 
 ROOT_URLCONF = 'DB.urls'
 

@@ -4,5 +4,6 @@
     "react-router-dom": "^6.4.2",
     "styled-components": "^5.3.6",
     "styled-reset": "^4.4.2"
-  }
+  },
+  "proxy": "http://localhost:8000"
 }
