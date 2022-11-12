@@ -18,15 +18,15 @@ function PythonEditor() {
 
   const showValue=async() => {
     const newData={
-    "user_id": 12123,
+      "user_id": 12123,
     "question": 1,
     "save1": editorRef.current.getValue(),
     "save2": "print(\"hello\")",
     "save3": "print(\"hello\")",
     };
     try {
-    const response = await axios.post('http://localhost:8000/api/userdata/',newData)
-    console.log("response >>", response)
+    const response = await axios.post('http://localhost:8000/api/userdata/',newData);
+    console.log("response >>", response);
   } catch(err) {
     console.log("Error >>", err);
   }
@@ -34,11 +34,15 @@ function PythonEditor() {
 
   const showValue2=async() => {
     const newData={
-    "code": editorRef.current.getValue(),
+    "user_id": 12123,
+    "question": 1,
+    "save1": editorRef.current.getValue(),
+    "save2": "print(\"hello\")",
+    "save3": "print(\"hello\")",
     };
     try {
-    const response = await axios.post('http://localhost:8000/api/userdata/1234/asdf/results/',newData)
-    console.log("response >>", response)
+    const response = await axios.post('http://localhost:8000/api/results/',);
+    console.log("response >>", response);
   } catch(err) {
     console.log("Error >>", err);
   }

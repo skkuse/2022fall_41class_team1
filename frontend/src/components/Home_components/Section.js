@@ -3,7 +3,8 @@ import { css, jsx } from "@emotion/react";
 import PythonEditor from "./PythonEditor";
 import Problem from "./Problem";
 
-function Section() {
+function Section(){
+
   return (
     <>
       <div css={flexBox}>

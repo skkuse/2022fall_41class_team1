@@ -97,7 +97,7 @@ class MyTests(unittest.TestCase):
         return result
 
 def excuteCode(request):
-    code = request.POST.get('code')
+    code = request.GET.get('save1')
     return_data = excute(code)
     serializer = ReturnDataSerializer(return_data,context={'request':request})
     #return_data = return_data.split('/')[-1]

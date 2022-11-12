@@ -14,5 +14,5 @@ urlpatterns = [
     re_path(r'^userdata/',views.ListUserData.as_view()),
     re_path(r'^userdata/(?P<userid>\w+)/(?P<question>\w+)/',views.DetailUserData.as_view()),
     #path('userdata/<int:pk>/results/',views.excuteCode)
-    re_path(r'^userdata/(?P<userid>\w+)/(?P<question>\w+)/results/',views.excuteCode)
+    re_path(r'^results/',views.excuteCode)
 ]
