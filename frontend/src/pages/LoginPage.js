@@ -34,8 +34,12 @@ function LoginPage(props) {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const body = {
-      email: Email,
-      password: Password,
+      user_id: 1234,
+      user_name: "asdf",
+      user_pwd: 1234,
+      user_type: 1,
+      user_email: "hello@naver.com",
+      user_org: "asdf",
     };
     dispatch(loginUser(body))
       .then((res) => {
