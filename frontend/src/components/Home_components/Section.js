@@ -1,16 +1,123 @@
+import React, { useState, useRef,useEffect} from "react";
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
+import Editor, {useMonaco} from "@monaco-editor/react";
 import PythonEditor from "./PythonEditor";
 import Problem from "./Problem";
+import axios from "axios";
 
 function Section(){
+  const [editorVisible,setEditorVisible]=useState(1);
+  const [user_id,setUser_id]=useState(1234);
+  const [question_no,setQuestion_no]=useState(1);
+   const editorRef1 = useRef(null);
+   const editorRef2 = useRef(null);
+   const editorRef3 = useRef(null);
+  const monaco=useMonaco();
+
+
+ function handleEditor1DidMount(editor, monaco) {
+    editorRef1.current = editor;
+  }
+  function handleEditor2DidMount(editor, monaco) {
+    editorRef2.current = editor;
+  }
+  function handleEditor3DidMount(editor, monaco) {
+    editorRef3.current = editor;
+  }
+
+
+  const showValue=async() => {
+
+  };
+
+
+
+  useEffect(() => {
+    // do conditional chaining
+    monaco?.languages.typescript.javascriptDefaults.setEagerModelSync(true);
+    // or make sure that it exists by other ways
+    if (monaco) {
+      console.log("here is the monaco instance:", monaco);
+    }
+  }, [monaco]);
+
+  const saveData=async()=>{
+    const newData={
+     "user_id": user_id,
+    "question": question_no,
+    "save1": editorRef1.current.getValue(),
+    "save2": editorRef2.current.getValue(),
+    "save3": editorRef3.current.getValue(),
+    };
+    try {
+    const response = await axios.post('http://localhost:8000/api/userdata/',newData);
+    console.log("response >>", response);
+  } catch(err) {
+    console.log("Error >>", err);
+  }
+  }
+
 
   return (
     <>
       <div css={flexBox}>
         <div css={splitStyle}>
           <Problem />
-          <PythonEditor />
+            <div css={editorWrapper}>
+              <div css={onlyButtons}>
+                <button onClick={()=>{
+                    setEditorVisible(3)
+                    }}
+                >3</button>
+
+                <button onClick={()=>{
+                    setEditorVisible(2)
+                    }}
+                 >2</button>
+                <button onClick={()=>{
+                    setEditorVisible(1)
+                    }}
+                    >1</button>
+
+                <button onClick={saveData}> save</button>
+
+
+              </div>
+              <div css={onlyEditors}>
+              <div css={editorVisible==1?visible:unvisible}>
+                <Editor
+       height="80vh"
+       width="90vh"
+       defaultLanguage="python"
+       defaultValue="// some comment"
+       onMount={handleEditor1DidMount}
+     />
+     <button onClick={showValue}>Show value</button>
+                </div>
+                <div css={editorVisible==2?visible:unvisible}>
+                <Editor
+       height="80vh"
+       width="90vh"
+       defaultLanguage="python"
+       defaultValue="// some comment"
+       onMount={handleEditor2DidMount}
+     />
+     <button onClick={showValue}>Show value</button>
+                </div>
+                <div css={editorVisible==3?visible:unvisible}>
+                <Editor
+       height="80vh"
+       width="90vh"
+       defaultLanguage="python"
+       defaultValue="// some comment"
+       onMount={handleEditor3DidMount}
+     />
+     <button onClick={showValue}>Show value</button>
+                </div>
+              </div>
+            </div>
+
           <textarea disabled='True' cols="40" rows="33">
           resultresultresult
           </textarea>
@@ -43,6 +150,46 @@ const splitStyle = css`
   right: 0px;
 `;
 
+const editorWrapper= css`
+  display: flex;
+  height: 100%;
 
+  /* position: absolute; */
+
+  flex-direction: column;
+  left: 0px;
+  right: 0px;
+`;
+
+const onlyEditors = css`
+  flex: 1 1 0%;
+  display: flex;
+  width: 100%;
+  /* position: absolute; */
+
+  flex-direction: row;
+  left: 0px;
+  right: 0px;
+`;
+
+const onlyButtons = css`
+  flex: 1 1 0%;
+  display: flex;
+  width: 100%;
+  /* position: absolute; */
+
+  flex-direction: row-reverse;
+  left: 0px;
+  right: 0px;
+`;
+
+const visible = css`
+  display: block;
+
+`;
+const unvisible = css`
+  display: none;
+
+`;
 
 export default Section;

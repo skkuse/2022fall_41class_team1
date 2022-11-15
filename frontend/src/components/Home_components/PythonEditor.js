@@ -1,4 +1,4 @@
-import React, { useRef,useEffect} from "react";
+import React, { useState, useRef,useEffect} from "react";
 import ReactDOM from "react-dom";
 
 import Editor, {useMonaco} from "@monaco-editor/react";
@@ -18,7 +18,7 @@ function PythonEditor() {
 
   const showValue=async() => {
     const newData={
-      "user_id": 12123,
+     "user_id": 12123,
     "question": 1,
     "save1": editorRef.current.getValue(),
     "save2": "print(\"hello\")",
@@ -34,14 +34,20 @@ function PythonEditor() {
 
   const showValue2=async() => {
     const newData={
-    "user_id": 12123,
-    "question": 1,
-    "save1": editorRef.current.getValue(),
-    "save2": "print(\"hello\")",
-    "save3": "print(\"hello\")",
+//    "user_id": 12123,
+//    "question": 1,
+//    "save1": editorRef.current.getValue(),
+//    "save2": "print(\"hello\")",
+//    "save3": "print(\"hello\")",
+    "user_id": 123444,
+        "user_name": editorRef.current.getValue(),
+        "user_pwd": 1234,
+        "user_type": 1,
+        "user_email": "asdf@asdf.conm",
+        "user_org": "asdf"
     };
     try {
-    const response = await axios.post('http://localhost:8000/api/results/',);
+    const response = await axios.post('http://localhost:8000/api/user/',newData);
     console.log("response >>", response);
   } catch(err) {
     console.log("Error >>", err);
