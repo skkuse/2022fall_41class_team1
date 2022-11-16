@@ -71,13 +71,28 @@ function Section(){
     setCode3("// some comment");
   }
 
-  const handleFile = (e) => {
-    const content = e.target.result;
-    setCode1(content);
-  }
-  const handleChangeFile = (file) => {
+  const handleChangeFile1 = (file) => {
     let fileData = new FileReader();
-    fileData.onloadend = handleFile;
+    fileData.onloadend = (e) => {
+      const content = e.target.result;
+      setCode1(content);
+    }
+    fileData.readAsText(file);
+  }
+  const handleChangeFile2 = (file) => {
+    let fileData = new FileReader();
+    fileData.onloadend = (e) => {
+      const content = e.target.result;
+      setCode2(content);
+    }
+    fileData.readAsText(file);
+  }
+  const handleChangeFile3 = (file) => {
+    let fileData = new FileReader();
+    fileData.onloadend = (e) => {
+      const content = e.target.result;
+      setCode3(content);
+    }
     fileData.readAsText(file);
   }
   
@@ -93,8 +108,6 @@ function Section(){
     try {
       console.log(text);
       await navigator.clipboard.writeText(text);
-      
-      alert('복사 성공!');
     } catch (error) {
       alert('복사 실패!');
     }
@@ -133,7 +146,7 @@ function Section(){
                     onMount={handleEditor1DidMount}
                   />
                   <button onClick={showValue}>Show value</button>
-                  <input type="file" onChange={e => handleChangeFile(e.target.files[0])} accept = ".py"/>
+                  <input type="file" onChange={e => handleChangeFile1(e.target.files[0])} accept = ".py"/>
                   <button onClick={onReset1}>reset</button>
                   <button onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>copy</button>
                   <button onClick ={()=>{saveFile(editorRef1.current.getValue(), "code1.py")}}>download</button>
@@ -148,10 +161,10 @@ function Section(){
                     onMount={handleEditor2DidMount}
                   />
                   <button onClick={showValue}>Show value</button>
-                  <button >upload</button>
+                  <input type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
                   <button onClick={onReset2}>reset</button>
-                  <button >copy</button>
-                  <button >download</button>
+                  <button onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>copy</button>
+                  <button onClick ={()=>{saveFile(editorRef2.current.getValue(), "code2.py")}}>download</button>
                 </div>
                 <div css={editorVisible==3?visible:unvisible}>
                   <Editor
@@ -163,10 +176,10 @@ function Section(){
                     onMount={handleEditor3DidMount}
                   />
                   <button onClick={showValue}>Show value</button>
-                  <button >upload</button>
+                  <input type="file" onChange={e => handleChangeFile3(e.target.files[0])} accept = ".py"/>
                   <button onClick={onReset3}>reset</button>
-                  <button >copy</button>
-                  <button >download</button>
+                  <button onClick={() => handleCopyClipBoard(editorRef3.current.getValue())}>copy</button>
+                  <button onClick ={()=>{saveFile(editorRef3.current.getValue(), "code3.py")}}>download</button>
                 </div>
               </div>
             </div>
