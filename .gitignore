@@ -2,7 +2,10 @@ playground/
 .vscode/
 Pipfile
 Pipfile.lock
-mainapp/__pycache__/*.pyc
-DB/__pycache__/settings.cpython-39.pyc
-mainapp/__pycache__/urls.cpython-39.pyc
-mainapp/__pycache__/views.cpython-39.pyc
+__pycache__/
+*.py[cod]
+*.pyc
+**/*.pyc
+**/**/*.pyc
+**/**/**/*.pyc
+__pycache__/
