@@ -31,10 +31,11 @@ class Question(models.Model):
     reference = models.CharField(max_length=300) #문제 설명 밑의 참고사항
     duedate = models.DateTimeField() #마감기한
     
-
     def __str__(self):
         return self.course_id + " " + self.question_id
 
+
+#/api/userdata/ 로 접근할 경우 프론트에서 user_id와 question을 같이 보내줘야 함
 class UserData(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE,db_column='user_id')
     question = models.ForeignKey(Question, on_delete=models.CASCADE,db_column='question')

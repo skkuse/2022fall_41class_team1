@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
+from django.core import serializers
 from .models import *
 from .serializers import *
 from rest_framework import generics
@@ -22,11 +23,9 @@ from rest_framework import APIView
 #POST 방식 참고
 def user_create(request,user_id):
     user = get_object_or_404(User,pk=user_id)
-
     #UserData에서 User를 Foreign Key로 참고하고 있기 때문에 User에서 userdata_set으로 역참조 가능
     user.userdata_set.create(content=request.POST.get('content'))  #POST로 폼에 전송된 데이터를 받아옴
     return redirect('mainapp:~~',user_id=user.id)
-
 def question_create(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -107,7 +106,7 @@ def executeCode(request):
         
 # compare code with testcase result
 def compareTestcases(request, input_data):
-    my_code = excute(input_data['code'])
+    my_code = execute(input_data['code'])
     test_func = MyTests(input_data['testcase_answer'],my_code)
     test_result = test_func.test()
     
@@ -115,7 +114,7 @@ def compareTestcases(request, input_data):
         return_data = {'pf':True,'output':input_data['testcase_answer']}
     else:
         return_data = {'pf':False,'output':test_result}
-        
+
     return render(request, 'hello.html', {'return_data':return_data})
 
 ##################################################################################
