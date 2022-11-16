@@ -177,7 +177,7 @@ class CourseApi(APIView):
         try:
             return Course.objects.get(pk=course)
         except Course.DoesNotExist:
-            test_data = {"course":"SWE3002-41","user_id":"coldmilk","course_name":"소프트웨어공학개론"}            }
+            test_data = {"course":"SWE3002-41","user_id":"coldmilk","course_name":"소프트웨어공학개론"}
             return test_data #Http404
     
     #내용 추가
