@@ -23,7 +23,7 @@ class Course(models.Model):
         return self.course_name
 
 class Question(models.Model):
-    question = models.CharField(primary_key=True) # 프로그래밍기초실습_week2
+    question = models.CharField(primary_key=True,max_length=50) # 프로그래밍기초실습_week2
     course = models.ForeignKey(Course,on_delete=models.CASCADE,db_column='course') #프로그래밍기초실습
     skeleton = models.TextField() #스켈레톤 코드
     answer = models.CharField(max_length=1000)
