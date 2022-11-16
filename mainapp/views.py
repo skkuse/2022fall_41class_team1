@@ -9,6 +9,8 @@ import subprocess
 import unittest
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.http import Http404
+from rest_framework import status
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
@@ -126,26 +128,70 @@ def compareTestcases(request, input_data):
 ##################################################################################
 
 class UserApi(APIView):
+    def get_object(self,user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            test_data = {"user_id":"coldmilk","user_name":"Chanu","user_pwd":"1234",
+                "user_type":True, "user_org":"성균관대학교"
+            }
+            return test_data
     
+    #내용 추가
     def post(self,request):
         serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    #내용 조회
+    def get(self,request):
+        user_id = request.GET.get('user_id') #GET 리퀘스트로 들어온 JSON 데이터에서 user_id를 받아옴
+        user = self.get_object(user_id)
+        serializer = UserSerializer(user)
+
+        return Response(serializer.data)
+    
+    #내용 수정
+    def put(self,request):
+        user_id = request.PUT.get('user_id')
+        user = self.get_object(user_id)
+        serializer = UserSerializer(user,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+    #내용 삭제
+    def delete(self,request):
+        user_id = request.DELETE.get('user_id')
+        user = self.get_object(user_id)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class CourseApi(APIView):
+    
     def post(self,request):
         serializer = CourseSerializer(data=request.data)
 
 class QuestionApi(APIView):
+    
     def post(self,request):
         serializer = QuestionSerializer(data=request.data)
 
 class UserDataApi(APIView):
+    
     def post(self,request):
         serializer = UserDataSerializer(data=request.data)
 class ChatApi(APIView):
+    
     def post(self,request):
         serializer = ChatSerializer(data=request.data)
 
 
 class SubmissionApi(APIView):
+    
     def post(self,request):
         serializer = SubmissionSerializer(data=request.data)
