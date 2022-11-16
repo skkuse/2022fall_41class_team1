@@ -16,8 +16,17 @@ class UserDataSerializer(serializers.ModelSerializer):
         fields = '__all__'
         model = UserData
 
-class ReturnDataSerializer(serializers.ModelSerializer):
-
+class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
-        model = ReturnData
+        model = Course
+
+class ChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = Chat
+
+class SubmissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = Submission

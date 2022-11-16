@@ -7,7 +7,7 @@ import os
 import subprocess
 import unittest
 from rest_framework.response import Response
-
+from rest_framework import APIView
 
 # from serializer 추가 필요
 
@@ -71,7 +71,7 @@ def initCode(request,input_data):
     skeleton = result.skeleton
     return render(request,'hello.html',{'skeleton':skeleton})
 
-def excute(code):
+def execute(code):
     py = open('temp.txt','w')
     py.write(code)
     py.close()
@@ -97,7 +97,7 @@ class MyTests(unittest.TestCase):
         return result
 
 @api_view(['GET','POST'])
-def excuteCode(request):
+def executeCode(request):
     code = request.POST.get('code')
     return_data = excute(code)
     serializer = ReturnDataSerializer(return_data,context={'request':request})
@@ -118,3 +118,29 @@ def compareTestcases(request, input_data):
         
     return render(request, 'hello.html', {'return_data':return_data})
 
+##################################################################################
+
+class UserApi(APIView):
+    
+    def post(self,request):
+        serializer = UserSerializer(data=request.data)
+
+class CourseApi(APIView):
+    def post(self,request):
+        serializer = CourseSerializer(data=request.data)
+
+class QuestionApi(APIView):
+    def post(self,request):
+        serializer = QuestionSerializer(data=request.data)
+
+class UserDataApi(APIView):
+    def post(self,request):
+        serializer = UserDataSerializer(data=request.data)
+class ChatApi(APIView):
+    def post(self,request):
+        serializer = ChatSerializer(data=request.data)
+
+
+class SubmissionApi(APIView):
+    def post(self,request):
+        serializer = SubmissionSerializer(data=request.data)
