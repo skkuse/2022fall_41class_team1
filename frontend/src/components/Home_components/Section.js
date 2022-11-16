@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect} from "react";
+import React, { useState, useRef, useEffect} from "react";
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
 import Editor, {useMonaco} from "@monaco-editor/react";
@@ -10,10 +10,14 @@ function Section(){
   const [editorVisible,setEditorVisible]=useState(1);
   const [user_id,setUser_id]=useState(1234);
   const [question_no,setQuestion_no]=useState(1);
+  const [code1, setCode1] = useState("// some comment")
+  const [code2, setCode2] = useState("// some comment")
+  const [code3, setCode3] = useState("// some comment")
+
    const editorRef1 = useRef(null);
    const editorRef2 = useRef(null);
    const editorRef3 = useRef(null);
-  const monaco=useMonaco();
+  const monaco = useMonaco();
 
 
  function handleEditor1DidMount(editor, monaco) {
@@ -27,7 +31,7 @@ function Section(){
   }
 
 
-  const showValue=async() => {
+  const showValue = async() => {
 
   };
 
@@ -42,7 +46,7 @@ function Section(){
     }
   }, [monaco]);
 
-  const saveData=async()=>{
+  const saveData = async()=>{
     const newData={
      "user_id": user_id,
     "question": question_no,
@@ -53,11 +57,48 @@ function Section(){
     try {
     const response = await axios.post('http://localhost:8000/api/userdata/',newData);
     console.log("response >>", response);
-  } catch(err) {
-    console.log("Error >>", err);
+    } catch(err) {
+      console.log("Error >>", err);
+    }
   }
+  const onReset1 = () => {
+    setCode1("// some comment");
+  }
+  const onReset2 = () => {
+    setCode2("// some comment");
+  }
+  const onReset3 = () => {
+    setCode3("// some comment");
   }
 
+  const handleFile = (e) => {
+    const content = e.target.result;
+    setCode1(content);
+  }
+  const handleChangeFile = (file) => {
+    let fileData = new FileReader();
+    fileData.onloadend = handleFile;
+    fileData.readAsText(file);
+  }
+  
+  const saveFile = (str, filename) => {
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:attachment/text,' + encodeURI(str);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = filename;
+    hiddenElement.click();
+  }
+
+  const handleCopyClipBoard = async (text) => {
+    try {
+      console.log(text);
+      await navigator.clipboard.writeText(text);
+      
+      alert('복사 성공!');
+    } catch (error) {
+      alert('복사 실패!');
+    }
+  }
 
   return (
     <>
@@ -70,58 +111,69 @@ function Section(){
                     setEditorVisible(3)
                     }}
                 >3</button>
-
                 <button onClick={()=>{
                     setEditorVisible(2)
                     }}
-                 >2</button>
+                >2</button>
                 <button onClick={()=>{
                     setEditorVisible(1)
                     }}
-                    >1</button>
-
+                >1</button>
                 <button onClick={saveData}> save</button>
-
-
               </div>
               <div css={onlyEditors}>
-              <div css={editorVisible==1?visible:unvisible}>
-                <Editor
-       height="80vh"
-       width="90vh"
-       defaultLanguage="python"
-       defaultValue="// some comment"
-       onMount={handleEditor1DidMount}
-     />
-     <button onClick={showValue}>Show value</button>
+                <div css={editorVisible==1?visible:unvisible}>
+                  <Editor
+                    id = "Editor1"
+                    value={code1}
+                    height="80vh"
+                    width="90vh"
+                    defaultLanguage="python"
+                    defaultValue="// some comment"
+                    onMount={handleEditor1DidMount}
+                  />
+                  <button onClick={showValue}>Show value</button>
+                  <input type="file" onChange={e => handleChangeFile(e.target.files[0])} accept = ".py"/>
+                  <button onClick={onReset1}>reset</button>
+                  <button onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>copy</button>
+                  <button onClick ={()=>{saveFile(editorRef1.current.getValue(), "code1.py")}}>download</button>
                 </div>
                 <div css={editorVisible==2?visible:unvisible}>
-                <Editor
-       height="80vh"
-       width="90vh"
-       defaultLanguage="python"
-       defaultValue="// some comment"
-       onMount={handleEditor2DidMount}
-     />
-     <button onClick={showValue}>Show value</button>
+                  <Editor
+                    value={code2}
+                    height="80vh"
+                    width="90vh"
+                    defaultLanguage="python"
+                    defaultValue="// some comment"
+                    onMount={handleEditor2DidMount}
+                  />
+                  <button onClick={showValue}>Show value</button>
+                  <button >upload</button>
+                  <button onClick={onReset2}>reset</button>
+                  <button >copy</button>
+                  <button >download</button>
                 </div>
                 <div css={editorVisible==3?visible:unvisible}>
-                <Editor
-       height="80vh"
-       width="90vh"
-       defaultLanguage="python"
-       defaultValue="// some comment"
-       onMount={handleEditor3DidMount}
-     />
-     <button onClick={showValue}>Show value</button>
+                  <Editor
+                    value={code3}
+                    height="80vh"
+                    width="90vh"
+                    defaultLanguage="python"
+                    defaultValue="// some comment"
+                    onMount={handleEditor3DidMount}
+                  />
+                  <button onClick={showValue}>Show value</button>
+                  <button >upload</button>
+                  <button onClick={onReset3}>reset</button>
+                  <button >copy</button>
+                  <button >download</button>
                 </div>
               </div>
             </div>
-
           <textarea disabled='True' cols="40" rows="33">
-          resultresultresult
+            code result
           </textarea>
-      </div>
+        </div>
       </div>
     </>
   );
