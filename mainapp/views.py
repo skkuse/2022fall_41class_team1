@@ -135,7 +135,7 @@ class UserApi(APIView):
             test_data = {"user_id":"coldmilk","user_name":"Chanu","user_pwd":"1234",
                 "user_type":True, "user_org":"성균관대학교"
             }
-            return test_data
+            return test_data #Http404
     
     #내용 추가
     def post(self,request):
@@ -172,26 +172,221 @@ class UserApi(APIView):
 
 
 class CourseApi(APIView):
+
+    def get_object(self,course):
+        try:
+            return Course.objects.get(pk=course)
+        except Course.DoesNotExist:
+            test_data = {"course":"SWE3002-41","user_id":"coldmilk","course_name":"소프트웨어공학개론"}            }
+            return test_data #Http404
     
+    #내용 추가
     def post(self,request):
         serializer = CourseSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    #내용 조회
+    def get(self,request):
+        course = request.GET.get('course') #GET 리퀘스트로 들어온 JSON 데이터에서 user_id를 받아옴
+        course_object = self.get_object(course)
+        serializer = CourseSerializer(course_object)
+
+        return Response(serializer.data)
+    
+    #내용 수정
+    def put(self,request):
+        course = request.PUT.get('course')
+        course_object = self.get_object(course)
+        serializer = CourseSerializer(course_object,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+    #내용 삭제
+    def delete(self,request):
+        course = request.DELETE.get('course')
+        course_object = self.get_object(course)
+        course_object.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class QuestionApi(APIView):
+
+    def get_object(self,question):
+        try:
+            return Question.objects.get(pk=question)
+        except Question.DoesNotExist:
+            test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
+                "answer":"12", "testcase":"[1,2,3,4]", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
+            }
+            return test_data #Http404
     
+    #내용 추가
     def post(self,request):
         serializer = QuestionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    #내용 조회
+    def get(self,request):
+        question = request.GET.get('question') #GET 리퀘스트로 들어온 JSON 데이터에서 user_id를 받아옴
+        question_object = self.get_object(question)
+        serializer = UserSerializer(question_object)
 
+        return Response(serializer.data)
+    
+    #내용 수정
+    def put(self,request):
+        question = request.PUT.get('question')
+        question_object = self.get_object(question)
+        serializer = QuestionSerializer(question_object,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+    #내용 삭제
+    def delete(self,request):
+        question = request.DELETE.get('question')
+        question_object = self.get_object(question)
+        question_object.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+##pk가 없고 foreign key만 있는 테이블에 대해서 조회하는 것 수정
 class UserDataApi(APIView):
-    
-    def post(self,request):
-        serializer = UserDataSerializer(data=request.data)
-class ChatApi(APIView):
-    
-    def post(self,request):
-        serializer = ChatSerializer(data=request.data)
 
+    def get_object(self,user_id,question):
+        try:
+            return Question.objects.get(user_id=user_id,question=question)
+        except Question.DoesNotExist:
+            test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
+                "answer":"12", "testcase":"[1,2,3,4]", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
+            }
+            return test_data #Http404
+    
+    #내용 추가
+    def post(self,request):
+        serializer = QuestionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    #내용 조회
+    def get(self,request):
+        question = request.GET.get('question') #GET 리퀘스트로 들어온 JSON 데이터에서 user_id를 받아옴
+        question_object = self.get_object(question)
+        serializer = UserSerializer(question_object)
+
+        return Response(serializer.data)
+    
+    #내용 수정
+    def put(self,request):
+        question = request.PUT.get('question')
+        question_object = self.get_object(question)
+        serializer = QuestionSerializer(question_object,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+    #내용 삭제
+    def delete(self,request):
+        question = request.DELETE.get('question')
+        question_object = self.get_object(question)
+        question_object.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ChatApi(APIView): 
+
+    def get_object(self,question):
+        try:
+            return Question.objects.get(pk=question)
+        except Question.DoesNotExist:
+            test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
+                "answer":"12", "testcase":"[1,2,3,4]", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
+            }
+            return test_data #Http404
+    
+    #내용 추가
+    def post(self,request):
+        serializer = QuestionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    #내용 조회
+    def get(self,request):
+        question = request.GET.get('question') #GET 리퀘스트로 들어온 JSON 데이터에서 user_id를 받아옴
+        question_object = self.get_object(question)
+        serializer = UserSerializer(question_object)
+
+        return Response(serializer.data)
+    
+    #내용 수정
+    def put(self,request):
+        question = request.PUT.get('question')
+        question_object = self.get_object(question)
+        serializer = QuestionSerializer(question_object,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+    #내용 삭제
+    def delete(self,request):
+        question = request.DELETE.get('question')
+        question_object = self.get_object(question)
+        question_object.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class SubmissionApi(APIView):
+
+
+    def get_object(self,question):
+        try:
+            return Question.objects.get(pk=question)
+        except Question.DoesNotExist:
+            test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
+                "answer":"12", "testcase":"[1,2,3,4]", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
+            }
+            return test_data #Http404
     
+    #내용 추가
     def post(self,request):
-        serializer = SubmissionSerializer(data=request.data)
+        serializer = QuestionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    #내용 조회
+    def get(self,request):
+        question = request.GET.get('question') #GET 리퀘스트로 들어온 JSON 데이터에서 user_id를 받아옴
+        question_object = self.get_object(question)
+        serializer = UserSerializer(question_object)
+
+        return Response(serializer.data)
+    
+    #내용 수정
+    def put(self,request):
+        question = request.PUT.get('question')
+        question_object = self.get_object(question)
+        serializer = QuestionSerializer(question_object,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+    #내용 삭제
+    def delete(self,request):
+        question = request.DELETE.get('question')
+        question_object = self.get_object(question)
+        question_object.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
