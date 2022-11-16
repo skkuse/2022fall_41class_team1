@@ -20,8 +20,12 @@ function Section(){
   const monaco = useMonaco();
 
 
- function handleEditor1DidMount(editor, monaco) {
+  function handleEditor1DidMount(editor, monaco) {
     editorRef1.current = editor;
+    editorRef1.current.onDidChangeModelContent(handleChange)
+  }
+  function handleChange() {
+    setCode1(editorRef1.current.getValue());
   }
   function handleEditor2DidMount(editor, monaco) {
     editorRef2.current = editor;
