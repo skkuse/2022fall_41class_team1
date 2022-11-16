@@ -55,7 +55,6 @@ class Chat(models.Model):
     def __str__(self):
         return "Chat of " + self.course + " " + self.user_id + " " + self.time
 
-
 class Submission(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE,db_column='user_id')
     question = models.ForeignKey(Question,on_delete=models.CASCADE,db_column='question')

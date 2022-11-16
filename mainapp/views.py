@@ -9,6 +9,8 @@ import subprocess
 import unittest
 from rest_framework.response import Response
 from rest_framework import APIView
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 # from serializer 추가 필요
 
@@ -96,14 +98,16 @@ class MyTests(unittest.TestCase):
         return result
 
 @api_view(['GET','POST'])
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def executeCode(request):
     code = request.POST.get('code')
-    return_data = excute(code)
+    return_data = execute(code)
     serializer = ReturnDataSerializer(return_data,context={'request':request})
     #return_data = return_data.split('/')[-1]
     return Response(serializer.data)
     #return render(request, f'api/results.html', {'return_data':return_data})
-        
+
+
 # compare code with testcase result
 def compareTestcases(request, input_data):
     my_code = execute(input_data['code'])
@@ -114,6 +118,7 @@ def compareTestcases(request, input_data):
         return_data = {'pf':True,'output':input_data['testcase_answer']}
     else:
         return_data = {'pf':False,'output':test_result}
+
 
     return render(request, 'hello.html', {'return_data':return_data})
 
