@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'mainapp',
     'rest_framework',
+    'drf_yasg',
 ]
 
 REST_FRAMEWORK = {
