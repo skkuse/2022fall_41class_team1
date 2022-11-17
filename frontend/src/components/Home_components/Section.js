@@ -10,9 +10,10 @@ function Section(){
   const [editorVisible,setEditorVisible]=useState(1);
   const [user_id,setUser_id]=useState(1234);
   const [question_no,setQuestion_no]=useState(1);
-  const [code1, setCode1] = useState("// some comment")
-  const [code2, setCode2] = useState("// some comment")
-  const [code3, setCode3] = useState("// some comment")
+  const [code1, setCode1] = useState("#some comment");
+  const [code2, setCode2] = useState("#some comment");
+  const [code3, setCode3] = useState("#some comment");
+  const [result, setResult] = useState("result display");
 
    const editorRef1 = useRef(null);
    const editorRef2 = useRef(null);
@@ -36,7 +37,17 @@ function Section(){
 
 
   const showValue = async() => {
-
+    const newData={
+    "code": editorRef1.current.getValue(),
+    };
+    try {
+    saveData()
+    const response = await axios.get('http://localhost:8000/api/results/',{params: {code: editorRef1.current.getValue()}});
+    console.log("response >>", response);
+    setResult(response['data'])
+    } catch(err) {
+      console.log("Error >>", err);
+    }
   };
 
 
@@ -66,13 +77,13 @@ function Section(){
     }
   }
   const onReset1 = () => {
-    setCode1("// some comment");
+    setCode1("# some comment");
   }
   const onReset2 = () => {
-    setCode2("// some comment");
+    setCode2("# some comment");
   }
   const onReset3 = () => {
-    setCode3("// some comment");
+    setCode3("# some comment");
   }
 
   const handleChangeFile1 = (file) => {
@@ -137,6 +148,7 @@ function Section(){
                     }}
                 >1</button>
                 <button onClick={saveData}> save</button>
+
               </div>
               <div css={onlyEditors}>
                 <div css={editorVisible==1?visible:unvisible}>
@@ -146,10 +158,10 @@ function Section(){
                     height="80vh"
                     width="90vh"
                     defaultLanguage="python"
-                    defaultValue="// some comment"
+                    defaultValue="# some comment"
                     onMount={handleEditor1DidMount}
                   />
-                  <button onClick={showValue}>Show value</button>
+                  <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
                   <input type="file" onChange={e => handleChangeFile1(e.target.files[0])} accept = ".py"/>
                   <button onClick={onReset1}>reset</button>
                   <button onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>copy</button>
@@ -161,10 +173,10 @@ function Section(){
                     height="80vh"
                     width="90vh"
                     defaultLanguage="python"
-                    defaultValue="// some comment"
+                    defaultValue="# some comment"
                     onMount={handleEditor2DidMount}
                   />
-                  <button onClick={showValue}>Show value</button>
+                  <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
                   <input type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
                   <button onClick={onReset2}>reset</button>
                   <button onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>copy</button>
@@ -176,10 +188,10 @@ function Section(){
                     height="80vh"
                     width="90vh"
                     defaultLanguage="python"
-                    defaultValue="// some comment"
+                    defaultValue="# some comment"
                     onMount={handleEditor3DidMount}
                   />
-                  <button onClick={showValue}>Show value</button>
+                  <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
                   <input type="file" onChange={e => handleChangeFile3(e.target.files[0])} accept = ".py"/>
                   <button onClick={onReset3}>reset</button>
                   <button onClick={() => handleCopyClipBoard(editorRef3.current.getValue())}>copy</button>
@@ -187,8 +199,7 @@ function Section(){
                 </div>
               </div>
             </div>
-          <textarea disabled='True' cols="40" rows="33">
-            code result
+          <textarea value={result} disabled='True' cols="40" rows="33">
           </textarea>
         </div>
       </div>

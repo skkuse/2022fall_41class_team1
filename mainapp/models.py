@@ -26,7 +26,7 @@ class Question(models.Model):
     
 
     def __str__(self):
-        return "Course:" + self.course + ", Question: " + self.question
+        return "Course:" + str(self.course) + ", Question: " + str(self.question)
 
 class UserData(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)

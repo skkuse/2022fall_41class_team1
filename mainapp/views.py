@@ -76,7 +76,7 @@ def excute(code):
     py.write(code)
     py.close()
     os.rename('temp.txt','temp.py')
-    out = subprocess.run(['python', 'temp.py'],capture_output=True)
+    out = subprocess.run(['python3', 'temp.py'],capture_output=True)
     if(out.stderr):
         return_data = out.stderr.decode('utf-8').split(',')[-1]
     else:
@@ -97,12 +97,14 @@ class MyTests(unittest.TestCase):
         return result
 
 def excuteCode(request):
-    code = request.GET.get('save1')
+    code = request.GET.get("code")
+    print("code: ",code)
     return_data = excute(code)
-    serializer = ReturnDataSerializer(return_data,context={'request':request})
+    print(return_data)
+    serializer = ReturnDataSerializer({'code': return_data},context={'request':request})
     #return_data = return_data.split('/')[-1]
-    return Response(serializer.data)
-    #return render(request, f'api/results.html', {'return_data':return_data})
+    #return Response(serializer.data)
+    return render(request, f'api/results.html', {'return_data':return_data})
         
 # compare code with testcase result
 def compareTestcases(request, input_data):
