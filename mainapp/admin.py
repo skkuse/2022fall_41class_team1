@@ -5,3 +5,6 @@ from mainapp.models import *
 admin.site.register(User)
 admin.site.register(Question)
 admin.site.register(UserData)
+admin.site.register(Course)
+admin.site.register(Chat)
+admin.site.register(Submission)
