@@ -13,10 +13,8 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
-<<<<<<< HEAD
-=======
 from drf_yasg.utils import swagger_auto_schema
->>>>>>> add-swagger
+from drf_yasg import openapi
 
 # from serializer 추가 필요
 
@@ -141,6 +139,7 @@ def compareTestcases(request, input_data):
 ##################################################################################
 
 class UserApi(APIView):
+    
     def get_object(self,user_id):
         try:
             return User.objects.get(pk=user_id)
@@ -150,7 +149,26 @@ class UserApi(APIView):
             }
             return test_data #Http404
     
+    #성공했을 때 response값을 설명해줄 수도 있다
+    success_response = openapi.Schema(
+        title='response',
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'user id' : openapi.Schema(type=openapi.TYPE_STRING, description="사용자 ID"),
+        }
+    )
     #내용 추가
+    @swagger_auto_schema(tags=["user추가"], 
+                        request_body=UserSerializer, 
+                        query_serializer=UserSerializer,
+                        responses={
+                            200 : success_response,
+                            404 : '찾을 수 없음',
+                            400 : '인풋값 에러',
+                            500 : '서버 에러',
+                        },
+                        operation_id='사용자 추가',
+                        operation_description="사용자 추가하는 API임...")
     def post(self,request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
