@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from .models import *
 from .serializers import *
@@ -13,6 +13,10 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+<<<<<<< HEAD
+=======
+from drf_yasg.utils import swagger_auto_schema
+>>>>>>> add-swagger
 
 # from serializer 추가 필요
 
@@ -55,7 +59,16 @@ class ListUserData(generics.ListCreateAPIView):
     queryset = UserData.objects.all()
     serializer_class = UserDataSerializer
 
+@swagger_auto_schema(tags=["detail user"], request_body=UserSerializer, query_serializer=UserSerializer)
+def detail_user(request, userid):
+    data = User.objects.get(user_id=userid)
+    queryset = User.objects.all()
+    serializer_class = UserSerializer(data)
+    if request.method == 'GET':
+        return JsonResponse(serializer_class.data, safe=False)
+
 class DetailUser(generics.RetrieveUpdateDestroyAPIView):
+    #   @swagger_auto_schema(tags=["detail user"], request_body=UserSerializer, query_serializer=UserSerializer)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
