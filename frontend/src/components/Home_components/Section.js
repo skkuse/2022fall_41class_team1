@@ -23,16 +23,15 @@ function Section(){
 
   function handleEditor1DidMount(editor, monaco) {
     editorRef1.current = editor;
-    editorRef1.current.onDidChangeModelContent(handleChange)
-  }
-  function handleChange() {
-    setCode1(editorRef1.current.getValue());
+    editorRef1.current.onDidChangeModelContent(() => {setCode1(editorRef1.current.getValue())})
   }
   function handleEditor2DidMount(editor, monaco) {
     editorRef2.current = editor;
+    editorRef2.current.onDidChangeModelContent(() => {setCode1(editorRef2.current.getValue())})
   }
   function handleEditor3DidMount(editor, monaco) {
     editorRef3.current = editor;
+    editorRef3.current.onDidChangeModelContent(() => {setCode1(editorRef3.current.getValue())})
   }
 
 
