@@ -39,12 +39,12 @@ function PythonEditor() {
 //    "save1": editorRef.current.getValue(),
 //    "save2": "print(\"hello\")",
 //    "save3": "print(\"hello\")",
-    "user_id": 123444,
-        "user_name": editorRef.current.getValue(),
-        "user_pwd": 1234,
-        "user_type": 1,
-        "user_email": "asdf@asdf.conm",
-        "user_org": "asdf"
+      "user_id": 123444,
+      "user_name": editorRef.current.getValue(),
+      "user_pwd": 1234,
+      "user_type": 1,
+      "user_email": "asdf@asdf.conm",
+      "user_org": "asdf"
     };
     try {
     const response = await axios.post('http://localhost:8000/api/user/',newData);
