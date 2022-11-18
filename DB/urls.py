@@ -42,4 +42,5 @@ urlpatterns = [
     # django
     path('admin/', admin.site.urls),
     path('api/',include('mainapp.urls')),
+    path('editor/',include('editor.urls')),
 ]

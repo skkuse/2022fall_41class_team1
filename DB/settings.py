@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'mainapp',
     'rest_framework',
     'drf_yasg',
+    'editor',
 ]
 
 REST_FRAMEWORK = {

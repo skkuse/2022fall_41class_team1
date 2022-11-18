@@ -288,6 +288,7 @@ class QuestionApi(APIView):
         question_object.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+'''
 ##pk가 없고 foreign key만 있는 테이블에 대해서 조회하는 것 수정
 class UserDataApi(APIView):
 
@@ -332,7 +333,7 @@ class UserDataApi(APIView):
         question_object = self.get_object(question)
         question_object.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
+'''
 class ChatApi(APIView): 
 
     def get_object(self,question):
