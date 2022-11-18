@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Router, Routes, Route } from "react-router-dom";
-import {createStore, combineReducers} from 'redux';
-import { Provider, useDispatch } from "react-redux";
+import { loginCheck } from "./_actions/changeStatus";
+import { useSelector, useDispatch } from "react-redux";
 import rootReducer from "./_reducers/index";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
@@ -13,12 +13,20 @@ import FindPage1 from "./pages/FindPage1";
 import FindPage2 from "./pages/FindPage2";
 
 function App() {
-    const store = createStore(rootReducer);
+    const dispatch = useDispatch();
+    const isLogin = useSelector((state) => state.changeStatus.isLogin);
+    const localstorageCheck = localStorage.getItem('access_token');
+
+    useEffect(() => {
+      if (localstorageCheck) {
+        dispatch(loginCheck());
+      }
+    }, []);
 
     return (
     <Routes>
       <Route exact path="/" element={<Home />} />
-      <Route path="/login" element={<Provider store={store}><LoginPage /></Provider>} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/register1" element={<RegisterPage1 />} />
       <Route path="/register2" element={<RegisterPage2 />} />
       <Route path="/register3" element={<RegisterPage3 />} />
