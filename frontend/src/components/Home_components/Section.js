@@ -216,7 +216,7 @@ const flexBox = css`
   flex-wrap: wrap;
   align-items: stretch;
   justify-content: space-between;
-  font-family: pretendard;
+  font-family: NeoDunggeunmo;
 `;
 
 

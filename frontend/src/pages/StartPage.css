@@ -1,0 +1,28 @@
+.codingTestDiv1 {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: inline-block;
+}
+.codingTestDiv {
+  position: absolute;
+  top: 452px;
+  left: 435px;
+  width: 600px;
+  height: 121px;
+}
+.desktop1 {
+  position: relative;
+  background-color: #2f2f2f;
+  width: 100%;
+  height: 1024px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  font-size: 100px;
+  color: #bdbdbd;
+  font-family: NeoDunggeunmo;
+
+}
