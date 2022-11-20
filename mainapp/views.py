@@ -379,7 +379,6 @@ class ChatApi(APIView):
 
 class SubmissionApi(APIView):
 
-
     def get_object(self,question):
         try:
             return Question.objects.get(pk=question)
