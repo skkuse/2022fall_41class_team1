@@ -8,5 +8,5 @@ from mainapp.views import QuestionApi
 urlpatterns = [
     path('save/',UserDataApi.as_view()),
     path('reinit/',QuestionApi.as_view()),
-    
+    path('explain/',CodeExplainApi.as_view()), #only GET request
 ]

@@ -11,7 +11,52 @@ from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
-# Create your views here.
+import openai
+from api_secrets import API_KEY
+from pathlib import Path
+
+openai.api_key = API_KEY
+
+class CodeExplainApi(APIView):
+
+    def analyzeCode(self,user_code):
+        analysis_prompt = """Here's what the above code is doing:
+        """ + user_code
+
+        response1 = openai.Completion.create(
+            model="text-davinci-002",
+            prompt=analysis_prompt,
+            max_tokens=1000,
+            temperature=0
+        )
+
+        analysis = response1["choices"][0]["text"]
+
+        translation_prompt = """Translate this into Korean
+        """ + analysis
+
+        response2 = openai.Completion.create(
+            model="text-davinci-002",
+            prompt=translation_prompt,
+            max_tokens=1000,
+            temperature=0
+        )
+
+        translation = response2["choices"][0]["text"]
+    
+        return translation
+    
+    def get(self,request):
+        serializer = CodeExplainSerializer(data=request.data)
+
+        if serializer.is_valid():
+            code_analysis = self.analyzeCode(serializer.data)
+            output = {"data":code_analysis}
+            output_serializer = CodeExplainSerializer(output)
+            return Response(output_serializer.data)
+
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
 
 #코드 저장 관련 api
 #post, get, delete 지원

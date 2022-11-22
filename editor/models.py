@@ -6,3 +6,7 @@ class Save(models.Model):
     question = models.ForeignKey(Question,on_delete=models.CASCADE,db_column='question')
     count = models.IntegerField()
     code = models.TextField()
+
+
+class CodeExplain(models.Model):
+    data = models.TextField()
