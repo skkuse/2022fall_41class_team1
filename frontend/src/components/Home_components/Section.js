@@ -271,7 +271,10 @@ function Section(){
             <div css={resultShow==0?visible:unvisible}>
           <textarea value={result} disabled='True' cols="40" rows="33" />
           </div>
-          <div css={resultShow==1?visible:unvisible}>제출결과: </div>
+          <div css={resultShow==1?visible:unvisible}>
+          <textarea value={result} disabled='True' cols="40" rows="33" />
+          <div>제출결과: </div>
+          </div>
            <div css={resultShow==2?css`display:flex; flex-direction: column;`:css`display:none;`}>
            <textarea value="코드 분석" disabled='True' cols="40" rows="33" />
            <button>분석하기</button>
