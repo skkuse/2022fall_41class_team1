@@ -9,4 +9,12 @@ class Save(models.Model):
 
 
 class CodeExplain(models.Model):
-    data = models.TextField()
+    code = models.TextField()
+
+class Translation(models.Model):
+    language = models.TextField()
+
+
+class Skeleton(models.Model):
+    skeleton = models.TextField()
+

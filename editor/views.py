@@ -12,51 +12,85 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
 import openai
-from api_secrets import API_KEY
+from .api_secrets import API_KEY
 from pathlib import Path
 
 openai.api_key = API_KEY
 
-class CodeExplainApi(APIView):
+def analyzeCode(self,user_code,mode):
+    #0: simple, 1:detail
+    if mode == 1:
+        model = "text-davinci-002"
+    else:
+        model = "text-curie-001"
 
-    def analyzeCode(self,user_code):
-        analysis_prompt = """Here's what the above code is doing:
-        """ + user_code
+    analysis_prompt = user_code + """\nHere's what the code is doing:
+    """
 
-        response1 = openai.Completion.create(
-            model="text-davinci-002",
-            prompt=analysis_prompt,
-            max_tokens=1000,
-            temperature=0
-        )
+    response = openai.Completion.create(
+        model=model,
+        prompt=analysis_prompt,
+        max_tokens=1000,
+        temperature=0
+    )
 
-        analysis = response1["choices"][0]["text"]
+    analysis = response["choices"][0]["text"]
 
+    data = {"code": analysis}
+    return data
+
+class SimpleExplainApi(APIView):
+    
+    def get(self,request):
+        serializer = CodeExplainSerializer(data=request.data)
+
+        if serializer.is_valid():
+            code_analysis = analyzeCode(serializer.code,0)
+            output_serializer = CodeExplainSerializer(code_analysis)
+            return Response(output_serializer.data)
+
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class DetailExplainApi(APIView):
+    
+    def get(self,request):
+        serializer = CodeExplainSerializer(data=request.data)
+
+        if serializer.is_valid():
+            code_analysis = analyzeCode(serializer.code,1)
+            output_serializer = CodeExplainSerializer(code_analysis)
+            return Response(output_serializer.data)
+
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class TranslationApi(APIView):
+
+    def translate(self,english):
         translation_prompt = """Translate this into Korean
-        """ + analysis
+        """ + english + "\n"
 
-        response2 = openai.Completion.create(
+        response = openai.Completion.create(
             model="text-davinci-002",
             prompt=translation_prompt,
             max_tokens=1000,
             temperature=0
         )
 
-        translation = response2["choices"][0]["text"]
+        translation = response["choices"][0]["text"]
     
-        return translation
-    
+        data = {"language":translation}
+
+        return data
+
     def get(self,request):
-        serializer = CodeExplainSerializer(data=request.data)
+        serializer = TranslationSerializer(data=request.data)
 
         if serializer.is_valid():
-            code_analysis = self.analyzeCode(serializer.data)
-            output = {"data":code_analysis}
-            output_serializer = CodeExplainSerializer(output)
+            output = self.translate(serializer.language)
+            output_serializer = TranslationSerializer(output)
             return Response(output_serializer.data)
 
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
 
 #코드 저장 관련 api
 #post, get, delete 지원
@@ -136,3 +170,24 @@ class UserDataApi(APIView):
         userdata.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+class SkeletonApi(APIView):
+    
+    def get_object(self,question):
+        try:
+            return Question.objects.get(pk=question)
+        except Question.DoesNotExist:
+            test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
+                "answer":"12", "testcase":"[1,2,3,4]", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
+            }
+            return test_data #Http404
+    
+    #내용 조회
+    def get(self,request):
+        question = request.GET.get('question') #GET 리퀘스트로 들어온 JSON 데이터에서 user_id를 받아옴
+        question_object = self.get_object(question)
+        skeleton_code = {"skeleton": question_object["skeleton"]}
+        serializer = SkeletonSerializer(skeleton_code)
+        if serializer.is_valid():
+            return Response(serializer.data)

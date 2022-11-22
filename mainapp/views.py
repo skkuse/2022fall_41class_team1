@@ -267,7 +267,7 @@ class QuestionApi(APIView):
     def get(self,request):
         question = request.GET.get('question') #GET 리퀘스트로 들어온 JSON 데이터에서 user_id를 받아옴
         question_object = self.get_object(question)
-        serializer = UserSerializer(question_object)
+        serializer = QuestionSerializer(question_object)
 
         return Response(serializer.data)
     
