@@ -70,7 +70,7 @@ function Section(){
 
   const saveData = async()=>{
     const newData={
-     "user_id": user_id,
+    "user_id": user_id,
     "question": question_no,
     "save1": editorRef1.current.getValue(),
     "save2": editorRef2.current.getValue(),
@@ -291,7 +291,7 @@ const flexBox = css`
   flex-wrap: wrap;
   align-items: stretch;
   justify-content: space-between;
-  font-family: pretendard;
+  font-family: NeoDunggeunmo;
 `;
 
 

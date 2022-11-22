@@ -36,7 +36,7 @@ const RegisterPage1 = () => {
           <p css={register_text}>또는</p>
           <div css={register_line}></div>
         </div>
-        <div css={signUpBar}>이메일로 가입하기</div>
+        <div css={signUpBar}><Link to="/register2">이메일로 가입하기</Link></div>
         <div css={login_box}>
         <span>이미 계정이 있으신가요?</span>
         <span css={linkToLogin}><Link to="/login">로그인하기</Link></span>

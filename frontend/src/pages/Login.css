@@ -1,0 +1,130 @@
+.iDDiv {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  display: inline-block;
+}
+.pWDiv,
+.rectangleDiv {
+  position: absolute;
+  left: 0;
+}
+.pWDiv {
+  top: 74px;
+  display: inline-block;
+  left: 10px;
+}
+.rectangleDiv {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #646464;
+}
+.component1Div,
+.component2Div,
+.groupDiv {
+  position: absolute;
+  top: 0;
+  left: 80px;
+  width: 486px;
+  height: 50px;
+}
+.component2Div,
+.groupDiv {
+  top: 74px;
+}
+.groupDiv {
+  top: 646px;
+  left: 367px;
+  width: 556px;
+  height: 124px;
+  font-size: 50px;
+}
+.rectangleDiv2 {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+}
+.codingTestDiv1_login,
+.component3Div {
+  position: absolute;
+  top: 646px;
+  left: 957px;
+  width: 148px;
+  height: 124px;
+}
+.codingTestDiv1_login {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  text-shadow: 0 4px 4px rgba(110, 47, 47, 0.25);
+  -webkit-text-stroke: 1px #000;
+}
+.codingTestDiv_login {
+  position: absolute;
+  top: 211px;
+  left: 240px;
+  width: 1000px;
+  height: 121px;
+  font-size: 100px;
+}
+.div{
+  position:absolute;
+  display:inline-block;
+}
+.register {
+  position: relative;
+  display: inline-block;
+}
+.div {
+  top: 697px;
+  left: 986px;
+  font-size: 30px;
+  color: #646464;
+}
+.register {
+  margin-top: 10%;
+  top: 0;
+  left: 0;
+}
+.div1,
+.iDDiv1 {
+  position: absolute;
+  top: 783px;
+  left: 957px;
+  width: 133px;
+  height: 25px;
+  text-align: left;
+}
+.div1 {
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  top: 790px;
+  width: 150px;
+}
+.siDDiv1 {
+  top: 783px;
+  width: 133px;
+}
+.desktop2 {
+  position: relative;
+  background-color: #2F2F2F;
+  width: 100%;
+  height: 1024px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  font-size: var(--font-size-base);
+  color: white;
+  font-family: NeoDunggeunmo Pro;
+}
