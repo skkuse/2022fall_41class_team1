@@ -21,8 +21,10 @@ def analyzeCode(self,user_code,mode):
     #0: simple, 1:detail
     if mode == 1:
         model = "text-davinci-002"
+        token = 500
     else:
         model = "text-curie-001"
+        token = 2000
 
     analysis_prompt = user_code + """\nHere's what the code is doing:
     """
@@ -30,7 +32,7 @@ def analyzeCode(self,user_code,mode):
     response = openai.Completion.create(
         model=model,
         prompt=analysis_prompt,
-        max_tokens=1000,
+        max_tokens=token,
         temperature=0
     )
 
