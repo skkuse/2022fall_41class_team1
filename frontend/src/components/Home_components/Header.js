@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from "react";
+import React, {useState, useContext} from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { BiHome } from 'react-icons/bi';
@@ -7,16 +7,25 @@ import { BiAlarm } from 'react-icons/bi';
 import { BiCog } from 'react-icons/bi';
 import { Link } from "react-router-dom";
 import search from '../../assets/search.svg';
+import {Dropdown, Dropdownlist} from './Dropdown'
+import { NowContext } from "../../context/NowContext";
+
 
 function Header() {
+  const [dropdownVisibility, setDropdownVisibility] = useState(false);
+
   return(
     <>
     <header css={headerStyle}>
       <div css={headerWrapper}>
         <div css={section1}>
-          <BiHome css={homeBtn} href="/"/>
-          <a css={subjectName}>소프트웨어공학</a>
-          <a css={assignmentName}>week1 : 피보나치 수</a>
+          <ul css={assignmentName} onClick={e => setDropdownVisibility(!dropdownVisibility)} >
+            week1 : 피보나치 수 
+            {dropdownVisibility? ' △': ' ▽'}
+          </ul>
+          <Dropdown visibility={dropdownVisibility}>
+            <Dropdownlist/>
+          </Dropdown>
         </div>
         <input css={inputStyle} type="text" placeholder="검색" />
         <img src="search" alt="search" css={searchStyle}></img>
@@ -41,6 +50,7 @@ const headerStyle = css`
   border-width: 1px;
   background-color: black;
   border-bottom-style: solid;
+  z-index: 2;
 `;
 
 const headerWrapper = css`
@@ -58,16 +68,6 @@ const headerWrapper = css`
 const section1 = css`
   flex: 1 1;
   justify-content: flex-start;
-`;
-
-const homeBtn = css`
-  margin-left: 0px;
-  margin-right: 0.75rem;
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  color: white;
-  border: none;
 `;
 
 const subjectName = css`

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect} from "react";
+import React, { useState, useRef, useEffect, useContext} from "react";
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
 import Editor, {useMonaco} from "@monaco-editor/react";
@@ -15,9 +15,9 @@ function Section(){
   const [code3, setCode3] = useState("#some comment");
   const [result, setResult] = useState("result display");
 
-   const editorRef1 = useRef(null);
-   const editorRef2 = useRef(null);
-   const editorRef3 = useRef(null);
+  const editorRef1 = useRef(null);
+  const editorRef2 = useRef(null);
+  const editorRef3 = useRef(null);
   const monaco = useMonaco();
 
 
@@ -48,8 +48,6 @@ function Section(){
       console.log("Error >>", err);
     }
   };
-
-
 
   useEffect(() => {
     // do conditional chaining
@@ -149,7 +147,6 @@ function Section(){
                     }}
                 >1</button>
                 <button onClick={saveData}> save</button>
-
               </div>
               <div css={onlyEditors}>
                 <div css={editorVisible==1?visible:unvisible}>
@@ -217,6 +214,7 @@ const flexBox = css`
   align-items: stretch;
   justify-content: space-between;
   font-family: pretendard;
+  z-index: 1;
 `;
 
 

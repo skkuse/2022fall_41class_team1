@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
+import { NowContext } from "../../context/NowContext";
 
 function Problem() {
+  const {now, setNow} = useContext(NowContext);
+
+
   return (
     <>
     <div css={problemStyle}>
@@ -11,18 +15,19 @@ function Problem() {
           <a css={questionStyle}>문제</a>
         </div>
         <div css={textBox}>
-          <a css={textStyle}>피보나치 수는 0과 1로 시작하며, 다음 피보나치 수는 바로 앞의 두 피보나치 수의 합이 된다.
-          n = 0, 1...에 해당하는 피보나치 수는 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...이다.
-          <br /><br />n번째 피보나치 수를 리턴하시오</a>
+          <a css={textStyle}>{now.problem}</a>
         </div>
         <div css={questionBox}>
           <a css={questionStyle}>참조 / 제약사항</a>
         </div>
         <div css={textBox}>
-          <a css={textStyle}>리턴 타입이 int가 아니라는 것에 유의!</a>
+          <a css={textStyle}>{now.constraint}</a>
         </div>
         <div css={questionBox}>
           <a css={questionStyle}>테스트케이스</a>
+        </div>
+        <div css={textBox}>
+          <a css={textStyle}>{now.testcase}</a>
         </div>
     </div>
   </div>

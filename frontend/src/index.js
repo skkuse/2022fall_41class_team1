@@ -3,7 +3,7 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import { NowContext, NowProvider } from "./context/NowContext";
 import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import promiseMiddleware from "redux-promise";
@@ -16,6 +16,7 @@ const createStoreWithMiddleware = applyMiddleware(
 
 ReactDOM.render(
   <StrictMode>
+    <NowProvider>
       <Provider
         store={createStoreWithMiddleware(
           reducer,
@@ -27,6 +28,7 @@ ReactDOM.render(
           <App />
         </BrowserRouter>
       </Provider>
+    </NowProvider>
   </StrictMode>,
   rootElement
 );

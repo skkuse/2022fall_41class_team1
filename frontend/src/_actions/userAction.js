@@ -19,7 +19,6 @@ export function loginUser(dataToSubmit) {
 
 export function logoutUser() {
   const data = request("post", "/api/auth/logout");
-
   return {
     type: LOGOUT_USER,
     payload: data,
@@ -28,7 +27,6 @@ export function logoutUser() {
 
 export function verifyUser(dataToSubmit) {
   const data = request("post", "/api/email/verify", dataToSubmit);
-
   return {
     type: VERIFY_USER,
     payload: data,
@@ -37,7 +35,6 @@ export function verifyUser(dataToSubmit) {
 
 export function checkUser(dataToSubmit) {
   const data = request("post", "/api/email/verify-key", dataToSubmit);
-
   return {
     type: CHECK_USER,
     payload: data,
@@ -46,7 +43,6 @@ export function checkUser(dataToSubmit) {
 
 export function findUser(dataToSubmit) {
   const data = request("post", "/api/email/reset-password", dataToSubmit);
-
   return {
     type: FIND_USER,
     payload: data,

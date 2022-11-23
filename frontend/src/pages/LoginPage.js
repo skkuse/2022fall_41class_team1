@@ -45,7 +45,7 @@ function LoginPage(props) {
         if (res.payload.data.status === "OK") {
           navigate("/");
           localStorage.setItem('access_token', res.payload.data.data.access_token);
-           dispatch(loginCheck()); //여기 아마 useraction 파일 참조하는데 api 달라서 오류나는듯?
+          dispatch(loginCheck()); //여기 아마 useraction 파일 참조하는데 api 달라서 오류나는듯?
           
         } else {
           setLoginMsg("가입되어 있지 않은 계정이거나, 이메일 또는 비밀번호가 일치하지 않습니다.");

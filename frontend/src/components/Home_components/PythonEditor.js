@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect} from "react";
+import React, { useState, useRef, useEffect} from "react";
 import ReactDOM from "react-dom";
 
 import Editor, {useMonaco} from "@monaco-editor/react";
@@ -10,15 +10,13 @@ function PythonEditor() {
   const editorRef = useRef(null);
   const monaco=useMonaco();
 
-
-
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
   }
 
   const showValue=async() => {
     const newData={
-     "user_id": 12123,
+    "user_id": 12123,
     "question": 1,
     "save1": editorRef.current.getValue(),
     "save2": "print(\"hello\")",

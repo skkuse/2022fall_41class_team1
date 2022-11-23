@@ -24,16 +24,16 @@ function App() {
     }, []);
 
     return (
-    <Routes>
-      <Route exact path="/" element={<Home />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register1" element={<RegisterPage1 />} />
-      <Route path="/register2" element={<RegisterPage2 />} />
-      <Route path="/register3" element={<RegisterPage3 />} />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register1" element={<RegisterPage1 />} />
+        <Route path="/register2" element={<RegisterPage2 />} />
+        <Route path="/register3" element={<RegisterPage3 />} />
 
-      <Route path="/find1" element={<FindPage1 />} />
-      <Route path="/find2" element={<FindPage2 />} />
-    </Routes>
+        <Route path="/find1" element={<FindPage1 />} />
+        <Route path="/find2" element={<FindPage2 />} />
+      </Routes>
     );
     //<Route path="/add" element={<AddPage />} />
 
