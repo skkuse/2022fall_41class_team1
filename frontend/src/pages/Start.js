@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./StartPage.css";
+import styles from "./Start.css";
 
-const StartPage = () => {
+const Start = () => {
   const navigate = useNavigate();
 
   const onDesktop1Click = useCallback(() => {
@@ -11,11 +11,11 @@ const StartPage = () => {
 
   return (
     <div className="desktop1" onClick={onDesktop1Click}>
-      <div className="codingTestDiv">
-        <div className="codingTestDiv1">coding test</div>
-      </div>
+      <div className="title1">CODING TEST</div>
+      <div className="title2">CODING TEST</div>
+      <div className="start">Click anywhere...</div>
     </div>
   );
 };
 
-export default StartPage;
+export default Start;
