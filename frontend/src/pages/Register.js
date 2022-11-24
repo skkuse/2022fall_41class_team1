@@ -23,7 +23,12 @@ const Register = () => {
         <div className="checkText">PW 확인</div>
         <input className="checkInput"></input>
         <div className="findText">PW 찾기 질문</div>
-        <input className="findInput"></input>
+        <select className="findInput" reuqired>
+          <option value="hungry">아 배고프다</option>
+          <option>저녁을 먹어야 할 시간이네요</option>
+          <option>다들 데이트 중인가요? *윤진</option>
+          <option>행복하세요</option>
+        </select>
         <div className="answerText">답변</div>
         <input className="answerInput"></input>
       </div>
