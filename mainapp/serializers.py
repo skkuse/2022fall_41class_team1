@@ -1,7 +1,24 @@
 from rest_framework import serializers
 from .models import *
+from django.contrib.auth.hashers import make_password
 
+class LoginSerializer(serializers.ModelSerializer):
+    def validate(self, attrs):
+        return attrs
+
+    class Meta:
+        model = User
+        fields = ('user_id', 'user_pwd')
+        
 class UserSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        validated_data['user_pwd'] = make_password(validated_data['user_pwd'])
+        user = User.objects.create(**validated_data)
+        return user
+
+    def validate(self, attrs):
+        return attrs
+
     class Meta:
         fields = '__all__'
         model = User

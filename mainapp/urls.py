@@ -11,4 +11,8 @@ urlpatterns = [
     path('course/',CourseApi.as_view()),
     path('chat/',ChatApi.as_view()),
     path('submission/',SubmissionApi.as_view()),
+
+    path('signin/', Login.as_view()),   # 로그인
+    path('signup/', RegistUser.as_view()),  # 회원가입
+    path('add_course/,')
 ]

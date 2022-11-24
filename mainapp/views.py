@@ -13,8 +13,10 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from rest_framework.parsers import JSONParser
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from django.contrib.auth.hashers import make_password, check_password
 
 # from serializer 추가 필요
 
@@ -138,6 +140,32 @@ def compareTestcases(request, input_data):
 ##################################################################################
 ##################################################################################
 
+class Login(APIView):
+    def post(self, request):
+        serializer = LoginSerializer(request.data)
+        user = User.objects.filter(user_id=serializer.data['user_id']).first()
+        if user is None:
+            return Response(dict(msg="There's no such ID"))
+        if check_password(serializer.data['user_pwd'], user.user_pwd):
+            return Response(dict(msg="Login Sucess"))
+        else:
+            return Response(dict(msg="Login Failure"))
+
+
+class RegistUser(APIView):
+    def post(self, request):
+        serializer = UserSerializer(request.data)
+        if User.objects.filter(user_id=serializer.data['user_id']).exists():
+            user = User.objects.filter(user_id=serializer.data['user_id']).first()
+            data = dict(
+                msg="exist id"
+            )
+            return Response(data)
+        
+        user = serializer.create(request.data)
+        return Response(data=UserSerializer(user).data)
+    
+        
 class UserApi(APIView):
     
     def get_object(self,user_id):
