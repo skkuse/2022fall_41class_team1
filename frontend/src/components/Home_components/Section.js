@@ -42,6 +42,10 @@ function Section(){
     diffEditorRef.current = editor;
   }
 
+    function handleEditorValidation(markers) {
+    // model markers
+    markers.forEach(marker => console.log("onValidate:", marker.message));
+  }
 
   const showValue = async() => {
     const newData={
@@ -209,9 +213,11 @@ function Section(){
                     value={code1}
                     height="80vh"
                     width="90vh"
+                    theme="vs-dark"
                     defaultLanguage="python"
                     defaultValue="# some comment"
                     onMount={handleEditor1DidMount}
+                    onValidate={handleEditorValidation}
                   />
                   <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
                   <input type="file" onChange={e => handleChangeFile1(e.target.files[0])} accept = ".py"/>
