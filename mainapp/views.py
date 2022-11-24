@@ -207,8 +207,9 @@ class UserApi(APIView):
     #내용 조회
     def get(self,request):
         user_id = request.GET.get('user_id') #GET 리퀘스트로 들어온 JSON 데이터에서 user_id를 받아옴
-        user = self.get_object(user_id)
-        serializer = UserSerializer(user)
+        # user = self.get_object(user_id)
+        user = User.objects.all()
+        serializer = UserSerializer(user, many=True)
 
         return Response(serializer.data)
     
@@ -240,12 +241,17 @@ class CourseApi(APIView):
             return test_data #Http404
     
     #내용 추가
-    def post(self,request):
-        serializer = CourseSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request):
+        serializer = CourseSerializer(request.data)
+        course = serializer.create(request.data)
+        return Response(data=CourseSerializer(course).data)
+
+    # def post(self,request):
+    #     serializer = CourseSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     #내용 조회
     def get(self,request):

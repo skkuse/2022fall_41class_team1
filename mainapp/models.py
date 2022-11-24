@@ -16,7 +16,7 @@ class User(models.Model):
 
 class Course(models.Model):
     course= models.CharField(max_length=50, help_text="예: SWE3002-41")
-    user_id = models.ForeignKey(User,on_delete=models.CASCADE,db_column='user_id', help_text="예: sunkyun12@skku.edu")
+    user_id = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE,db_column='user_id', null=True, blank=True, help_text="예: sunkyun12@skku.edu")
     course_name = models.CharField(max_length=50, help_text="예: 소프트웨어공학개론")
 
     def __str__(self):

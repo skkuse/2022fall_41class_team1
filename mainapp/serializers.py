@@ -9,8 +9,16 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('user_id', 'user_pwd')
-        
+
+class CourseSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = '__all__'
+        model = Course
+
 class UserSerializer(serializers.ModelSerializer):
+    user = CourseSerializer(many=True, read_only = True)
+
     def create(self, validated_data):
         validated_data['user_pwd'] = make_password(validated_data['user_pwd'])
         user = User.objects.create(**validated_data)
@@ -20,7 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
         return attrs
 
     class Meta:
-        fields = '__all__'
+        fields = ("user_id", "user_name", "user_pwd", "user_type", "user_org", "user")
         model = User
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -33,10 +41,6 @@ class UserDataSerializer(serializers.ModelSerializer):
         fields = '__all__'
         model = UserData
 
-class CourseSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = '__all__'
-        model = Course
 
 class ChatSerializer(serializers.ModelSerializer):
     class Meta:

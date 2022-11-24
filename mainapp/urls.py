@@ -14,5 +14,6 @@ urlpatterns = [
 
     path('signin/', Login.as_view()),   # 로그인
     path('signup/', RegistUser.as_view()),  # 회원가입
-    path('add_course/,')
+    
+    # path('add_course/,')
 ]
