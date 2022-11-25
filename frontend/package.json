@@ -25,6 +25,7 @@
     "routes": "^2.1.0",
     "styled-components": "^5.3.6",
     "styled-reset": "^4.4.2",
+    "styles": "^0.2.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
