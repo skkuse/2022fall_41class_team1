@@ -1,0 +1,155 @@
+
+.desktop2 {
+  position: relative;
+  background-color: black;
+  width: 100%;
+  height: 1024px;
+}
+
+.login_title1{
+  position: absolute;
+  width: 100%;
+  height: 128px;
+  left: 0px;
+  top: 232px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 128px;
+  line-height: 128px;
+  /* identical to box height */
+  text-align: center;
+  letter-spacing: 0.12em;
+  mix-blend-mode: screen;
+  text-shadow: -3px 0 white, 0 3px white, 3px 0 white, 0 -3px white;
+}
+
+.login_title2{
+  position: absolute;
+  width: 100%;
+  height: 128px;
+  left: 0px;
+  top: 237px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 128px;
+  line-height: 128px;
+  /* identical to box height */
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: rgba(255, 167, 34, 0.8);
+  text-shadow: -9px 4px 0px rgba(123, 213, 101, 0.4);
+}
+
+
+.email_text{
+  position: absolute;
+  width: 363px;
+  height: 50px;
+  left: 113px;
+  top: 479px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 50px;
+  text-align: right;
+  letter-spacing: 0.07em;
+  color: #E9D738;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.pw_text {
+  position: absolute;
+  width: 310px;
+  height: 50px;
+  left: 309px;
+  top: 559px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 50px;
+  letter-spacing: 0.07em;
+  color: #E9D738;
+}
+
+.email_input {
+  position: absolute;
+  width: 486px;
+  height: 49px;
+  left: 500px;
+  top: 479px;
+  border: 5px solid #FFFFFF;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.pw_input {
+  position: absolute;
+  width: 486px;
+  height: 49px;
+  left: 500px;
+  top: 560px;
+  border: 5px solid #FFFFFF;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.loginBtn{
+  position: absolute;
+  width: 154px;
+  height: 146px;
+  left: 1030px;
+  top: 477px;
+  background: #4235D3;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 36px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #FFFFFF;
+}
+
+.link_findPw{
+  position: absolute;
+  width: 109px;
+  height: 25px;
+  left: 780px;
+  top: 649px;
+  
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  font-family: 'NeoDunggeunmo';
+font-style: normal;
+font-weight: 400;
+font-size: 25px;
+line-height: 25px;
+/* identical to box height */
+
+
+color: #FFFFFF;
+
+
+}
+
+.link_register {
+position: absolute;
+width: 141px;
+height: 25px;
+left: 900px;
+top: 649px;
+
+filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+font-family: 'NeoDunggeunmo';
+font-style: normal;
+font-weight: 400;
+font-size: 25px;
+line-height: 25px;
+/* identical to box height */
+
+
+color: #FFFFFF;
+
+}

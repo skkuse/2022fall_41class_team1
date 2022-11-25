@@ -1,0 +1,211 @@
+.desktop3 {
+  position: relative;
+  background-color: black;
+  width: 100%;
+  height: 1024px;
+}
+
+.register_title1 {
+  position: absolute;
+  width: 100%;
+  height: 128px;
+  left: 0px;
+  top: 105px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 128px;
+  line-height: 128px;
+  text-align: center;
+  letter-spacing: 0.12em;
+  mix-blend-mode: screen;
+  text-shadow: -3px 0 white, 0 3px white, 3px 0 white, 0 -3px white;
+}
+
+.register_title2 {
+  position: absolute;
+  width: 100%;
+  height: 128px;
+  left: 0px;
+  top: 108px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 128px;
+  line-height: 128px;
+
+  text-align: center;
+  letter-spacing: 0.12em;
+  
+  color: rgba(255, 167, 34, 0.8);
+  
+  text-shadow: -9px 4px 0px rgba(123, 213, 101, 0.4);
+  
+}
+
+.emailText{
+  position: absolute;
+width: 1241px;
+height: 48px;
+left: 320px;
+top: 288px;
+
+font-family: 'NeoDunggeunmo';
+font-style: normal;
+font-weight: 400;
+font-size: 48px;
+line-height: 48px;
+/* identical to box height */
+
+
+color: #FFFFFF;
+}
+.emailInput {
+  position: absolute;
+  width: 449px;
+  height: 46px;
+  left: 701px;
+  top: 288px;
+  
+  border: 5px solid #FFFFFF;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+}
+
+.pwText {
+  position: absolute;
+  width: 1220px;
+  height: 55px;
+  left: 320px;
+  top: 366px;
+  
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 48px;
+  
+  color: #FFFFFF;
+}
+
+.pwInput {
+  position: absolute;
+  width: 449px;
+  height: 46px;
+  left: 701px;
+  top: 366px;
+  
+  border: 5px solid #FFFFFF;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+}
+
+.checkText {
+  position: absolute;
+  width: 1220px;
+  height: 55px;
+  left: 320px;
+  top: 445px;
+  
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 48px;
+  
+  color: #FFFFFF;
+}
+
+.checkInput {
+  position: absolute;
+  width: 449px;
+  height: 47px;
+  left: 701px;
+  top: 445px;
+  
+  border: 5px solid #FFFFFF;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+}
+
+.findText {
+
+  position: absolute;
+width: 1220px;
+height: 55px;
+left: 320px;
+top: 525px;
+
+font-family: 'NeoDunggeunmo';
+font-style: normal;
+font-weight: 400;
+font-size: 48px;
+line-height: 48px;
+
+color: #FFFFFF;
+}
+
+.findInput {
+  position: absolute;
+  width: 463px;
+  height: 59px;
+  left: 701px;
+  top: 525px;
+  
+  border: 5px solid #FFFFFF;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+}
+
+.answerText {
+  position: absolute;
+  width: 1220px;
+  height: 54px;
+  left: 320px;
+  top: 605px;
+  
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 48px;
+  
+  color: #FFFFFF;
+
+}
+
+.answerInput{
+  position: absolute;
+  width: 449px;
+  height: 46px;
+  left: 701px;
+  top: 604px;
+  
+  border: 5px solid #FFFFFF;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+
+}
+
+.registerBtn {
+  box-sizing: border-box;
+
+position: absolute;
+width: 840px;
+height: 75px;
+left: 323px;
+top: 714px;
+
+border: 7px solid #FFFFFF;
+
+font-family: 'NeoDunggeunmo';
+font-style: normal;
+font-weight: 400;
+font-size: 40px;
+line-height: 40px;
+/* identical to box height */
+
+text-align: center;
+
+color: #2F2F2F;
+}
