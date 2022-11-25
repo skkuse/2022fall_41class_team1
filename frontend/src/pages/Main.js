@@ -268,7 +268,7 @@ const Main = () => {
     <div className="desktop13">
       <div className="header" />
       <ul className="problemname" onClick={e => setDropdownVisibility(!dropdownVisibility)} >
-        week1 : 피보나치 수 
+        {now.problem} 
         {dropdownVisibility? ' △': ' ▽'}
       </ul>
       <Dropdown visibility={dropdownVisibility}>
