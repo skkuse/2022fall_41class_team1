@@ -25,21 +25,83 @@ const [editorVisible,setEditorVisible]=useState(1);
   const monaco = useMonaco();
 
 
+
   function handleEditor1DidMount(editor, monaco) {
     editorRef1.current = editor;
+    monaco.editor.defineTheme('myTheme', {
+	base: 'vs-dark',
+	inherit: true,
+	rules: [{ background: 'EDF9FA' }],
+	colors: {
+		'editor.foreground': '#000000',
+		'editor.background': '#EDF9FA',
+		'editorCursor.foreground': '#8B0000',
+		'editor.lineHighlightBackground': '#0000FF20',
+		'editorLineNumber.foreground': '#008800',
+		'editor.selectionBackground': '#88000030',
+		'editor.inactiveSelectionBackground': '#88000015'
+	    }
+    });
+    monaco.editor.setTheme('myTheme');
     editorRef1.current.onDidChangeModelContent(() => {setCode1(editorRef1.current.getValue())})
+
   }
   function handleEditor2DidMount(editor, monaco) {
     editorRef2.current = editor;
+    monaco.editor.defineTheme('myTheme', {
+	base: 'vs-dark',
+	inherit: true,
+	rules: [{ background: 'EDF9FA' }],
+	colors: {
+		'editor.foreground': '#000000',
+		'editor.background': '#EDF9FA',
+		'editorCursor.foreground': '#8B0000',
+		'editor.lineHighlightBackground': '#0000FF20',
+		'editorLineNumber.foreground': '#008800',
+		'editor.selectionBackground': '#88000030',
+		'editor.inactiveSelectionBackground': '#88000015'
+	    }
+    });
+    monaco.editor.setTheme('myTheme');
     editorRef2.current.onDidChangeModelContent(() => {setCode2(editorRef2.current.getValue())})
   }
   function handleEditor3DidMount(editor, monaco) {
     editorRef3.current = editor;
+    monaco.editor.defineTheme('myTheme', {
+	base: 'vs-dark',
+	inherit: true,
+	rules: [{ background: 'EDF9FA' }],
+	colors: {
+		'editor.foreground': '#000000',
+		'editor.background': '#EDF9FA',
+		'editorCursor.foreground': '#8B0000',
+		'editor.lineHighlightBackground': '#0000FF20',
+		'editorLineNumber.foreground': '#008800',
+		'editor.selectionBackground': '#88000030',
+		'editor.inactiveSelectionBackground': '#88000015'
+	    }
+    });
+    monaco.editor.setTheme('myTheme');
     editorRef3.current.onDidChangeModelContent(() => {setCode3(editorRef3.current.getValue())})
   }
 
   function handleDiffEditorDidMount(editor, monaco) {
     diffEditorRef.current = editor;
+    monaco.editor.defineTheme('myTheme', {
+	base: 'vs-dark',
+	inherit: true,
+	rules: [{ background: 'EDF9FA' }],
+	colors: {
+		'editor.foreground': '#000000',
+		'editor.background': '#EDF9FA',
+		'editorCursor.foreground': '#8B0000',
+		'editor.lineHighlightBackground': '#0000FF20',
+		'editorLineNumber.foreground': '#008800',
+		'editor.selectionBackground': '#88000030',
+		'editor.inactiveSelectionBackground': '#88000015'
+	    }
+    });
+    monaco.editor.setTheme('myTheme');
   }
 
     function handleEditorValidation(markers) {
@@ -242,7 +304,7 @@ const [editorVisible,setEditorVisible]=useState(1);
                     value={code1}
                     height="60vh"
                     width="130vh"
-                    theme="vs-dark"
+                    theme="myTheme"
                     defaultLanguage="python"
                     defaultValue="# some comment"
                     onMount={handleEditor1DidMount}
@@ -259,7 +321,7 @@ const [editorVisible,setEditorVisible]=useState(1);
                     value={code2}
                     height="60vh"
                     width="130vh"
-                    theme="vs-dark"
+                    theme="myTheme"
                     defaultLanguage="python"
                     defaultValue="# some comment"
                     onMount={handleEditor2DidMount}
@@ -275,7 +337,7 @@ const [editorVisible,setEditorVisible]=useState(1);
                     value={code3}
                     height="60vh"
                     width="130vh"
-                    theme="vs-dark"
+                    theme="myTheme"
                     defaultLanguage="python"
                     defaultValue="# some comment"
                     onMount={handleEditor3DidMount}
@@ -288,8 +350,9 @@ const [editorVisible,setEditorVisible]=useState(1);
                 </div>
                 <div css={editorVisible==4?css`display:block`:css`display:none`}>
                   <DiffEditor
-                    height="90vh"
-                    width="90vh"
+                    height="60vh"
+                    width="130vh"
+                    theme="myTheme"
                     defaultLanguage="python"
                     original={original_code}
                     modified={modified_code}
@@ -302,7 +365,8 @@ const [editorVisible,setEditorVisible]=useState(1);
         <div className="terminal_header">
           <button className="resultBtn1" onClick={() => setResultShow(0)}>실행결과</button>
           <button className="resultBtn2" onClick={() => setResultShow(1)}>제출결과</button>
-          <button className="resultBtn3" onClick={() => setResultShow(2)}>테스트케이스</button>
+          <button className="resultBtn3" onClick={() => setResultShow(1)}>테스트케이스</button>
+          <button className="resultBtn4" onClick={() => setResultShow(2)}>코드분석</button>
           <div className="result_window">
         <div css={resultShow==0?css`display:block`:css`display:none`}>
           <textarea value={result} disabled='True' cols="145" rows="15"/>
