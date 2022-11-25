@@ -26,10 +26,9 @@ class ExecuteCodeV2(models.Model):
 class CheckTestcase(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, db_column='user_id')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, db_column='question')
-    tc_result1 = models.TextField()
-    tc_result2 = models.TextField()
-    tc_result3 = models.TextField()
+    score = models.CharField(max_length=10)
+    o_pass_fail = models.TextField() # test case 정보 제공.
+    h_pass_fail = models.TextField()
     
     def __str__(self):
         return "Testcase execution result of " + self.user_id + "\'s " + self.question + " code"
-    

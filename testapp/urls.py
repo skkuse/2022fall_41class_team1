@@ -6,5 +6,5 @@ from .views import *
 
 urlpatterns = [
     path('execute1/',ExecuteCodeV1API.as_view()),
-    #path('execute2/',ExecuteCodeV2API.as_view())
+    path('execute2/',ExecuteCodeV2API.as_view()),
 ]
