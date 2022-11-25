@@ -11,5 +11,5 @@ urlpatterns = [
     path('simple_explain/',SimpleExplainApi.as_view()),
     path('detail_explain/',DetailExplainApi.as_view()), #only GET request
     path('translate/',TranslationApi.as_view()),
-    #path('reference/',ReferenceApi.as_view()),
+    path('reference/',ReferenceApi.as_view())
 ]

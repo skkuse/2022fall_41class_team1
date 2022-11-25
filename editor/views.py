@@ -14,6 +14,7 @@ from drf_yasg import openapi
 import openai
 from .api_secrets import API_KEY
 from pathlib import Path
+from .reference import crawling_link
 
 openai.api_key = API_KEY
 
@@ -191,5 +192,14 @@ class SkeletonApi(APIView):
         question_object = self.get_object(question)
         skeleton_code = {"skeleton": question_object["skeleton"]}
         serializer = SkeletonSerializer(skeleton_code)
+        if serializer.is_valid():
+            return Response(serializer.data)
+        
+class ReferenceApi(APIView):
+    def get(self,request):
+        keyword = request.GET.get('keyword')
+        links = crawling_link(keyword)
+        links['keyword'] = keyword
+        serializer = ReferenceSerializer(links)
         if serializer.is_valid():
             return Response(serializer.data)

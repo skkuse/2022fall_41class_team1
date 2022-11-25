@@ -21,3 +21,8 @@ class SkeletonSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Skeleton
+
+class ReferenceSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = Reference

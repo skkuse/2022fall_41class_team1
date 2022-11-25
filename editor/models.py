@@ -18,3 +18,9 @@ class Translation(models.Model):
 class Skeleton(models.Model):
     skeleton = models.TextField()
 
+
+class Reference(models.Model):
+    keyword = models.TextField()
+    youtube = models.TextField()
+    beakjun = models.TextField()
+    wiki = models.TextField()
