@@ -1,13 +1,15 @@
 import styles from "./Main.css";
-import React, { useState, useRef, useEffect} from "react";
+import React, { useState, useRef, useEffect, useContext} from "react";
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
 import Editor, {useMonaco, DiffEditor} from "@monaco-editor/react";
 import axios from "axios";
+import {Dropdown, Dropdownlist} from './Dropdown'
+import { NowContext } from "../context/NowContext";
 
 const Main = () => {
 
-const [editorVisible,setEditorVisible]=useState(1);
+  const [editorVisible,setEditorVisible]=useState(1);
   const [user_id,setUser_id]=useState(12344);
   const [question_no,setQuestion_no]=useState(1);
   const [code1, setCode1] = useState("#some comment");
@@ -18,11 +20,15 @@ const [editorVisible,setEditorVisible]=useState(1);
   const [result, setResult] = useState("result display");
   const [resultShow, setResultShow] = useState(0);
 
-   const editorRef1 = useRef(null);
-   const editorRef2 = useRef(null);
-   const editorRef3 = useRef(null);
-   const diffEditorRef = useRef(null);
+  const editorRef1 = useRef(null);
+  const editorRef2 = useRef(null);
+  const editorRef3 = useRef(null);
+  const diffEditorRef = useRef(null);
   const monaco = useMonaco();
+
+  const [dropdownVisibility, setDropdownVisibility] = useState(false);
+  const {now, setNow} = useContext(NowContext);
+
 
 
 
@@ -261,24 +267,27 @@ const [editorVisible,setEditorVisible]=useState(1);
   return (
     <div className="desktop13">
       <div className="header" />
-        <div className="week1">Week 1 : 피보나치 수</div>
+      <ul className="problemname" onClick={e => setDropdownVisibility(!dropdownVisibility)} >
+        week1 : 피보나치 수 
+        {dropdownVisibility? ' △': ' ▽'}
+      </ul>
+      <Dropdown visibility={dropdownVisibility}>
+        <Dropdownlist/>
+      </Dropdown>
       <div className="section_left">
         <div className="section1"/>
           <div className="line1"/>
           <dlv className="line2"/>
           <div className="line3"/>
           <div className="question_title1">문제</div>
-          <div className="question_content1">피보나치 수는 0과 1로 시작하며, 다음 피보나치 수는 
-            바로 앞의 두 피보나치 수의 합이 된다.
-            a = 0, 1...에 해당하는 피보나치 수는 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...이다.
-            n번째 피보나치 수를 리턴하시오. </div>
+          <div className="question_content1">{now.problem}</div>
           <div className="line4"/>
           <div className="question_title2">참조 / 제약사항</div>
-          <div className="question_content2">리턴 타입이 int가 아니라는것에 유의!</div>
+          <div className="question_content2">{now.constraint}</div>
         <div className="section2"/>
           <div className="testcase_title">테스트케이스</div>
           <div className="line5"/>
-          <div className="testcase_content">테스트케이스1</div>
+          <div className="testcase_content">{now.testcase}</div>
       </div>
 
       <div className="editor" css={css`background-color:red`}>

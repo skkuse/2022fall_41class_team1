@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
+import {Dropdown, Dropdownlist} from './Dropdown'
+import { NowContext } from "../../context/NowContext";
 
 function Problem() {
+  const {now, setNow} = useContext(NowContext);
+
   return (
     <>
     <div css={problemStyle}>

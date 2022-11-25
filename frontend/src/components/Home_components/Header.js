@@ -7,9 +7,17 @@ import { BiAlarm } from 'react-icons/bi';
 import { BiCog } from 'react-icons/bi';
 import { Link } from "react-router-dom";
 import search from '../../assets/search.svg';
+import {Dropdown, Dropdownlist} from '../../pages/Dropdown'
+import { NowContext } from "../../context/NowContext";
+
 
 function Header() {
+  const [dropdownVisibility, setDropdownVisibility] = useState(false);
+
+
+
   return(
+    
     <>
     <header css={headerStyle}>
       <div css={headerWrapper}>
