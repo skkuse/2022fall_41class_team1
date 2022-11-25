@@ -275,6 +275,22 @@ transform: rotate(90deg);
   color: #FFFFFF;
 }
 
+.saveBtn{
+  width: 82px;
+  height: 34px;
+  margin-top: 8px;
+  position: absolute;
+  margin-left: 630px;
+  background: #4235D3;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  color: #FFFFFF;
+  border: none;
+}
+
 .runBtn {
   width: 82px;
   height: 34px;
@@ -320,6 +336,24 @@ transform: rotate(90deg);
   line-height: 20px;
   color: #FFFFFF;
   border: none;
+}
+
+.onlyEditors{
+  position: absolute;
+  left: 29.5%;
+  top: 18.02%;
+  flex: 1 1 0%;
+  display: flex;
+  width: 100%;
+  /* position: absolute; */
+
+  flex-direction: row;
+}
+
+.result_window{
+ position: absolute;
+  top: 120%;
+
 }
 
 .terminal_header {
