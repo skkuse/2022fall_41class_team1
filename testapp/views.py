@@ -28,20 +28,6 @@ def execute(code):
         return_data = out.stdout.decode('utf-8')
     os.remove('temp.py') 
     return return_data
-
-
-def execute(code):
-    py = open('temp.txt','w')
-    py.write(code)
-    py.close()
-    os.rename('temp.txt','temp.py')
-    out = subprocess.run(['python', 'temp.py'],capture_output=True)
-    if(out.stderr):
-        return_data = out.stderr.decode('utf-8').split(',')[-1]
-    else:
-        return_data = out.stdout.decode('utf-8')
-    os.remove('temp.py') 
-    return return_data
             
 def testcase(code1, code2, testcase):
     
@@ -60,9 +46,8 @@ def testcase(code1, code2, testcase):
         out = subprocess.run(['sh','temp.sh',f'>result_{type}.txt'],capture_output=True)
        
         if (out.stderr):
-        
-        
-        
+            print("")
+               
     if ("*" in testcase):
         testcase1 = testcase.split("*")
         testcase2 = testcase1[-1].split("&")

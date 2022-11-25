@@ -6,7 +6,7 @@ from .views import *
 
 urlpatterns = [
     path('user/',UserApi.as_view()),
-    path('userdata/',UserDataApi.as_view()),
+    #path('userdata/',UserDataApi.as_view()),
     path('question/',QuestionApi.as_view()),
     path('course/',CourseApi.as_view()),
     path('chat/',ChatApi.as_view()),

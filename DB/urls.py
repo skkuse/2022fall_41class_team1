@@ -41,7 +41,7 @@ urlpatterns = [
     path(r'redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     # django
     path('admin/', admin.site.urls),
-    path('mainapp/',include('mainapp.urls')),
-    path('testapp/',include('testapp.urls')),
-    
+    path('main/',include('mainapp.urls')),
+    path('test/',include('testapp.urls')),
+    path('editor/',include('editor.urls')),
 ]

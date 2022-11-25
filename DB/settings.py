@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'testapp',
     'rest_framework',
     'drf_yasg',
+    'editor',
 ]
 
 REST_FRAMEWORK = {
