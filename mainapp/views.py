@@ -177,9 +177,14 @@ class MainPageAPI(APIView):
         queryset = list(queryset)
         jsonObject = json.dumps(queryset)
         dics = json.loads(jsonObject)
-        print(dics[1])       
+        print((dics[0]['course']))
 
-        return JsonResponse({'result': queryset}, status = 200)
+        course_list = []
+        for i in dics:
+            course_list.append(i['course'])
+
+        print(course_list)
+        return JsonResponse({'result': course_list}, status = 200)
 
 
 class UserApi(APIView):
