@@ -31,7 +31,13 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ("user_id", "user_name", "user_pwd", "user_type", "user_org", "user")
         model = User
 
+# class DefaultMainInfoSerializer(serializers.ModelSerialuzer):
+#     class Meta:
+#         model = Course
+#         fields = '__all__'
+
 class QuestionSerializer(serializers.ModelSerializer):
+    question = CourseSerializer(many=True, read_only = True)
     class Meta:
         fields = '__all__'
         model = Question

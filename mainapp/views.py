@@ -7,6 +7,7 @@ from rest_framework import generics
 import os
 import subprocess
 import unittest
+import json
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import Http404
@@ -17,6 +18,7 @@ from rest_framework.parsers import JSONParser
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from django.contrib.auth.hashers import make_password, check_password
+from django.core import serializers
 
 # from serializer 추가 필요
 
@@ -165,7 +167,21 @@ class RegistUser(APIView):
         user = serializer.create(request.data)
         return Response(data=UserSerializer(user).data)
     
+class MainPageAPI(APIView):
+    def get(self, request):
         
+        user_id = request.query_params.get('user_id')
+
+        queryset = Course.objects.filter(user_id_id=user_id).values()
+
+        queryset = list(queryset)
+        jsonObject = json.dumps(queryset)
+        dics = json.loads(jsonObject)
+        print(dics[1])       
+
+        return JsonResponse({'result': queryset}, status = 200)
+
+
 class UserApi(APIView):
     
     def get_object(self,user_id):
