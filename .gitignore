@@ -1,8 +1,7 @@
-playground/
 .vscode/
 Pipfile
 Pipfile.lock
-__pycache__/
+backend/__pycache__/
 *.py[cod]
 *.pyc
 **/*.pyc
@@ -12,6 +11,6 @@ __pycache__/
 **/__pycache__/
 **/**/__pycache__/
 **/**/**/__pycache__/
-editor/api_secrets.py
+backend/editor/api_secrets.py
 .env
-editor/ai_test.py
+backend/editor/ai_test.py
