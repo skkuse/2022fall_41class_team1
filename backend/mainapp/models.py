@@ -15,24 +15,25 @@ class User(models.Model):
         return self.user_name
 
 class Course(models.Model):
-    course= models.CharField(max_length=50, help_text="예: SWE3002-41")
-    user_id = models.ForeignKey(User,on_delete=models.CASCADE,db_column='user_id', help_text="예: sunkyun12@skku.edu")
+    course= models.CharField(max_length=50, primary_key=True, help_text="예: SWE3002-41")
+    user_id = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE,db_column='user_id', null=True, blank=True, help_text="예: sunkyun12@skku.edu")
     course_name = models.CharField(max_length=50, help_text="예: 소프트웨어공학개론")
 
     def __str__(self):
-        return self.course_name
+        return self.course
+
 
 class Question(models.Model):
     question = models.CharField(primary_key=True,max_length=50, help_text="예: 프로그래밍기초실습_week2")
-    course = models.ForeignKey(Course,on_delete=models.CASCADE,db_column='course', help_text="프로그래밍기초실습") 
+    course = models.ForeignKey(Course, related_name='question',on_delete=models.CASCADE, db_column='course', null=True, help_text="프로그래밍기초실습") 
     skeleton = models.TextField(help_text="스켈레톤 코드") 
-    answer = models.TextField()
+    answer = models.CharField(max_length=1000)
     testcase = models.CharField(max_length=100)
     reference = models.CharField(max_length=300, help_text="문제 설명 밑의 참고사항") 
     duedate = models.DateTimeField(help_text="마감기한") 
-    
+
     def __str__(self):
-        return self.course_id + " " + self.question_id
+        return self.question
 
 
 #/api/userdata/ 로 접근할 경우 프론트에서 user_id와 question을 같이 보내줘야 함

@@ -11,6 +11,5 @@ __pycache__/
 **/__pycache__/
 **/**/__pycache__/
 **/**/**/__pycache__/
-backend/editor/api_secrets.py
-.env
 backend/editor/ai_test.py
+backend/editor/api_secrets.py
