@@ -19,6 +19,7 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from django.contrib.auth.hashers import make_password, check_password
 from django.core import serializers
+from mainapp.serializers import CourseIdSerializer
 
 # from serializer 추가 필요
 
@@ -167,24 +168,67 @@ class RegistUser(APIView):
         user = serializer.create(request.data)
         return Response(data=UserSerializer(user).data)
     
-class MainPageAPI(APIView):
+
+# request로 user_id를 전달해준다 
+# 전달하는 값은 "student@skku.com"이다.
+class CourseFindAPI(APIView):
     def get(self, request):
-        
-        user_id = request.query_params.get('user_id')
+        serializer = CourseIdSerializer(data=request.data)
+        if serializer.is_valid():
+            user_id = serializer.data['user_id']
+            course_list = Course.objects.filter(user_id=user_id)
+            serializer_list = CourseSerializer(course_list, many=True)
+            courses = []
 
-        queryset = Course.objects.filter(user_id_id=user_id).values()
+            for i in serializer_list.data:
+                courses.append(i['course'])
+            return Response(courses)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        queryset = list(queryset)
-        jsonObject = json.dumps(queryset)
-        dics = json.loads(jsonObject)
-        print((dics[0]['course']))
+class QuestionFindAPI(APIView):
+    def get(self, request):
+        serializer = QuestionIdSerializer(data=request.data)
+        if serializer.is_valid():
+            course = serializer.data['course']
+            question_info = Question.objects.filter(course=course)
+            print(course)
+            question_info_serializer = QuestionIdSerializer(question_info, many = True)
 
-        course_list = []
-        for i in dics:
-            course_list.append(i['course'])
+            questions = []
+            for i in question_info_serializer.data:
+                questions.append(i['question'])
+            return Response(question_info_serializer.data) 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        print(course_list)
-        return JsonResponse({'result': course_list}, status = 200)
+# class OldMainPageAPI(APIView):
+#     def get(self, request):
+#         user_id = request.query_params.get('user_id')
+#         course_name = request.query_params.get('course')
+
+#         if course_name == None:
+#             queryset = Course.objects.filter(user_id_id=user_id).values()
+
+#             queryset = list(queryset)
+#             jsonObject = json.dumps(queryset)
+#             dics = json.loads(jsonObject)
+
+#             course_list = []
+#             for i in dics:
+#                 course_list.append(i['course'])
+
+#             return JsonResponse({'result': course_list}, status = 200)
+
+#         else:
+#             print(type(course_name))
+#             queryset = Question.objects.filter(course_id=course_name).values()
+#             return Response(queryset)
+#             # a = queryset.question
+#             print(queryset)
+#             questions = Question.objects.filter(course = course).all()
+#             print(questions)
+#             return JsonResponse(questions, status=200)
+#             serializer_list = CourseSerializer(course_name, many=True)
+
 
 
 class UserApi(APIView):
@@ -310,6 +354,7 @@ class QuestionApi(APIView):
             }
             return test_data #Http404
     
+
     #내용 추가
     def post(self,request):
         serializer = QuestionSerializer(data=request.data)
@@ -317,6 +362,7 @@ class QuestionApi(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
     
     #내용 조회
     def get(self,request):

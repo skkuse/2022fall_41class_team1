@@ -10,14 +10,24 @@ class LoginSerializer(serializers.ModelSerializer):
         model = User
         fields = ('user_id', 'user_pwd')
 
-class CourseSerializer(serializers.ModelSerializer):
+class CourseIdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ('user_id', )
 
+class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
+        model = Question
+
+class CourseSerializer(serializers.ModelSerializer):
+    question = QuestionSerializer(many=True, read_only=True)
+    class Meta:
+        fields = ('course', 'user_id', 'course_name', 'question')
         model = Course
 
 class UserSerializer(serializers.ModelSerializer):
-    user = CourseSerializer(many=True, read_only = True)
+    user = CourseSerializer(many=True, read_only=True)
 
     def create(self, validated_data):
         validated_data['user_pwd'] = make_password(validated_data['user_pwd'])
@@ -31,16 +41,10 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ("user_id", "user_name", "user_pwd", "user_type", "user_org", "user")
         model = User
 
-# class DefaultMainInfoSerializer(serializers.ModelSerialuzer):
-#     class Meta:
-#         model = Course
-#         fields = '__all__'
-
-class QuestionSerializer(serializers.ModelSerializer):
-    question = CourseSerializer(many=True, read_only = True)
+class QuestionIdSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = '__all__'
         model = Question
+        fields = ['course', ]
         
 class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
