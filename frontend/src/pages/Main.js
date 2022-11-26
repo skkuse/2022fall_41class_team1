@@ -266,131 +266,130 @@ const Main = () => {
 
   return (
     <div className="desktop13">
-      <div className="header" />
-      <ul className="problemname" onClick={e => setDropdownVisibility(!dropdownVisibility)} >
-        {now.problem} 
-        {dropdownVisibility? ' △': ' ▽'}
-      </ul>
-      <Dropdown visibility={dropdownVisibility}>
-        <Dropdownlist/>
-      </Dropdown>
-      <div className="section_left">
-        <div className="section1"/>
-          <div className="line1"/>
-          <dlv className="line2"/>
-          <div className="line3"/>
-          <div className="question_title1">문제</div>
-          <div className="question_content1">{now.problem}</div>
-          <div className="line4"/>
-          <div className="question_title2">참조 / 제약사항</div>
-          <div className="question_content2">{now.constraint}</div>
-        <div className="section2"/>
-          <div className="testcase_title">테스트케이스</div>
-          <div className="line5"/>
-          <div className="testcase_content">{now.testcase}</div>
+      <div className="header">
+        <ul className="problemname" onClick={e => setDropdownVisibility(!dropdownVisibility)} >
+          {now.problem} 
+          {dropdownVisibility? ' △': ' ▽'}
+        </ul>
+        <Dropdown visibility={dropdownVisibility}>
+          <Dropdownlist/>
+        </Dropdown>
       </div>
-
-      <div className="editor" css={css`background-color:red`}>
-        <div className="editor_header">
-          <button className="codeBtn1" onClick={()=>{
-                    setEditorVisible(1)
-                    }}>1</button>
-          <button className="codeBtn2" onClick={()=>{
-                    setEditorVisible(2)
-                    }}>2</button>
-          <button className="codeBtn3" onClick={()=>{
-                    setEditorVisible(3)
-                    }}>3</button>
-          <button className="saveBtn" onClick={saveData2}> 저장</button>
-          <button className="runBtn" onClick={showValue}>실행</button>
-          <button className="evalBtn">채점</button>
-          <button className="submitBtn" onClick={submit}>제출</button>
+      <div className="main_section">
+        <div className="section_left">
+          <div className="section1">
+            <div className="question_title">문제</div>
+            <dlv className="question_line"/>
+            <div className="question_content">{now.problem}</div>
+            <div className="constraint_title">참조 / 제약사항</div>
+            <div className="constraint_line"/>
+            <div className="constraint_content">{now.constraint}</div>
+          </div>
+          <div className="section2">
+            <div className="testcase_title">테스트케이스</div>
+            <div className="testcase_line"/>
+            <div className="testcase_content">{now.testcase}</div>
+          </div>
         </div>
-        <div className="onlyEditors">
-                <div css={editorVisible==1?css`display:block`:css`display:none`}>
-                  <Editor
-                    id = "Editor1"
-                    value={code1}
-                    height="60vh"
-                    width="130vh"
-                    theme="myTheme"
-                    defaultLanguage="python"
-                    defaultValue="# some comment"
-                    onMount={handleEditor1DidMount}
-                    onValidate={handleEditorValidation}
-                  />
-                  <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
-                  <input type="file" onChange={e => handleChangeFile1(e.target.files[0])} accept = ".py"/>
-                  <button onClick={onReset1}>reset</button>
-                  <button onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>copy</button>
-                  <button onClick ={()=>{saveFile(editorRef1.current.getValue(), "code1.py")}}>download</button>
+        <div className="editor" css={css`background-color:"red"`}>
+          <div className="editor_header">
+            <div classname="savebutton">
+              <button className="codeBtn1" onClick={()=>{setEditorVisible(1)}}>1</button>
+              <button className="codeBtn2" onClick={()=>{setEditorVisible(2)}}>2</button>
+              <button className="codeBtn3" onClick={()=>{setEditorVisible(3)}}>3</button>
+            </div>
+            <div classname="functionbutton">
+              <button className="saveBtn" onClick={saveData2}> 저장</button>
+              <button className="runBtn" onClick={showValue}>실행</button>
+              <button className="evalBtn">채점</button>
+              <button className="submitBtn" onClick={submit}>제출</button>
+            </div>
+          </div>
+          <div className="onlyEditors">
+            <div css={editorVisible==1?css`display:block`:css`display:none`}>
+              <Editor
+                id = "Editor1"
+                value={code1}
+                height="60vh"
+                width="130vh"
+                theme="myTheme"
+                defaultLanguage="python"
+                defaultValue="# some comment"
+                onMount={handleEditor1DidMount}
+                onValidate={handleEditorValidation}
+              />
+              <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
+              <input type="file" onChange={e => handleChangeFile1(e.target.files[0])} accept = ".py"/>
+              <button onClick={onReset1}>reset</button>
+              <button onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>copy</button>
+              <button onClick ={()=>{saveFile(editorRef1.current.getValue(), "code1.py")}}>download</button>
+            </div>
+            <div css={editorVisible==2?css`display:block`:css`display:none`}>
+              <Editor
+                value={code2}
+                height="60vh"
+                width="130vh"
+                theme="myTheme"
+                defaultLanguage="python"
+                defaultValue="# some comment"
+                onMount={handleEditor2DidMount}
+              />
+              <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
+              <input type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
+              <button onClick={onReset2}>reset</button>
+              <button onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>copy</button>
+              <button onClick ={()=>{saveFile(editorRef2.current.getValue(), "code2.py")}}>download</button>
+            </div>
+            <div css={editorVisible==3?css`display:block`:css`display:none`}>
+              <Editor
+                value={code3}
+                height="60vh"
+                width="130vh"
+                theme="myTheme"
+                defaultLanguage="python"
+                defaultValue="# some comment"
+                onMount={handleEditor3DidMount}
+              />
+              <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
+              <input type="file" onChange={e => handleChangeFile3(e.target.files[0])} accept = ".py"/>
+              <button onClick={onReset3}>reset</button>
+              <button onClick={() => handleCopyClipBoard(editorRef3.current.getValue())}>copy</button>
+              <button onClick ={()=>{saveFile(editorRef3.current.getValue(), "code3.py")}}>download</button>
+            </div>
+            <div css={editorVisible==4?css`display:block`:css`display:none`}>
+              <DiffEditor
+                height="60vh"
+                width="130vh"
+                theme="myTheme"
+                defaultLanguage="python"
+                original={original_code}
+                modified={modified_code}
+                onMount={handleDiffEditorDidMount}
+                readOnly={true}
+              />
+            </div>
+          </div>
+          <div className="terminal" css={css`background-color:blue`}>
+            <div className="terminal_header">
+              <button className="resultBtn1" onClick={() => setResultShow(0)}>실행결과</button>
+              <button className="resultBtn2" onClick={() => setResultShow(1)}>제출결과</button>
+              <button className="resultBtn3" onClick={() => setResultShow(1)}>테스트케이스</button>
+              <button className="resultBtn4" onClick={() => setResultShow(2)}>코드분석</button>
+              <div className="result_window">
+                <div css={resultShow==0?css`display:block`:css`display:none`}>
+                  <textarea value={result} disabled='True' cols="145" rows="15"/>
                 </div>
-                <div css={editorVisible==2?css`display:block`:css`display:none`}>
-                  <Editor
-                    value={code2}
-                    height="60vh"
-                    width="130vh"
-                    theme="myTheme"
-                    defaultLanguage="python"
-                    defaultValue="# some comment"
-                    onMount={handleEditor2DidMount}
-                  />
-                  <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
-                  <input type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
-                  <button onClick={onReset2}>reset</button>
-                  <button onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>copy</button>
-                  <button onClick ={()=>{saveFile(editorRef2.current.getValue(), "code2.py")}}>download</button>
+                <div css={resultShow==1?css`display:block`:css`display:none`}>
+                  <textarea value={result} disabled='True' cols="145" rows="15" />
                 </div>
-                <div css={editorVisible==3?css`display:block`:css`display:none`}>
-                  <Editor
-                    value={code3}
-                    height="60vh"
-                    width="130vh"
-                    theme="myTheme"
-                    defaultLanguage="python"
-                    defaultValue="# some comment"
-                    onMount={handleEditor3DidMount}
-                  />
-                  <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
-                  <input type="file" onChange={e => handleChangeFile3(e.target.files[0])} accept = ".py"/>
-                  <button onClick={onReset3}>reset</button>
-                  <button onClick={() => handleCopyClipBoard(editorRef3.current.getValue())}>copy</button>
-                  <button onClick ={()=>{saveFile(editorRef3.current.getValue(), "code3.py")}}>download</button>
-                </div>
-                <div css={editorVisible==4?css`display:block`:css`display:none`}>
-                  <DiffEditor
-                    height="60vh"
-                    width="130vh"
-                    theme="myTheme"
-                    defaultLanguage="python"
-                    original={original_code}
-                    modified={modified_code}
-                    onMount={handleDiffEditorDidMount}
-                    readOnly={true}
-                  />
+                <div css={resultShow==2?css`display:flex; flex-direction: column;`:css`display:none;`}>
+                  <textarea value="코드 분석" disabled='True' cols="145" rows="15" />
+                  <button>분석하기</button>
                 </div>
               </div>
-      <div className="terminal" css={css`background-color:blue`}>
-        <div className="terminal_header">
-          <button className="resultBtn1" onClick={() => setResultShow(0)}>실행결과</button>
-          <button className="resultBtn2" onClick={() => setResultShow(1)}>제출결과</button>
-          <button className="resultBtn3" onClick={() => setResultShow(1)}>테스트케이스</button>
-          <button className="resultBtn4" onClick={() => setResultShow(2)}>코드분석</button>
-          <div className="result_window">
-        <div css={resultShow==0?css`display:block`:css`display:none`}>
-          <textarea value={result} disabled='True' cols="145" rows="15"/>
+            </div>
           </div>
-          <div css={resultShow==1?css`display:block`:css`display:none`}>
-          <textarea value={result} disabled='True' cols="145" rows="15" />
-          </div>
-           <div css={resultShow==2?css`display:flex; flex-direction: column;`:css`display:none;`}>
-           <textarea value="코드 분석" disabled='True' cols="145" rows="15" />
-           <button>분석하기</button>
-           </div>
-         </div>
         </div>
-
-      </div>
       </div>
     </div>
   );

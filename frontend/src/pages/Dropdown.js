@@ -1,3 +1,4 @@
+import styles from "./Main.css";
 import React, {useContext} from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -56,21 +57,20 @@ function Dropdownlist (props) {
     </ul> 
   );
 }
-  
+
 export {Dropdown, Dropdownlist};
 
-
-
-
-const dropdownul = css`
-  position: absolute;
-  top: 65px;
+const dropdownul =css`
+  position: relative;
+  top: 8px;
   color: white;
-  background-color: #000080;
+  background: #3F3F3F;
   z-index: 2;
   width: 300px;
 `;
-const dropdownli = css`
+
+const dropdownli =css`
+  position: relative;
   color: white;
   margin-left: 0.75rem;
   margin-right: 0.75rem;

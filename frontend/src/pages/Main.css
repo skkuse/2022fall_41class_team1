@@ -1,5 +1,6 @@
 .desktop13 {
   position: relative;
+  justify-content: center;
   background-color: black;
   width: 100%;
   height: 1024px;
@@ -7,22 +8,21 @@
   text-align: left;
   font-size: var(--font-size-sm);
   color: white;
-  font-family: NeoDunggeunmo;
+  font-family: 'NeoDunggeunmo';
 }
 .header {
-  position: absolute;
-  width: 1440px;
+  flex: 1;
+  position: relative;
   height: 66px;
-  left: 32px;
-  top: 27px;
+  margin: 15px;
   background: #DFDFDF;
   border-radius: 0px 0px 20px 20px;
 }
+
 .problemname {
-  position: absolute;
+  position: relative;
   width: 414px;
   height: 30px;
-  left: 70px;
   top: 20px;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
@@ -36,194 +36,185 @@
   color: #FFB800;
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
+
+.main_section {
+  display: flex;
+  position: relative;
+}
+/*----------------- section_left -----------------*/
+.section_left {
+  flex: 1;
+  position: relative;
+  height: 900px;
+  width: 40%;
+  justify-content: center;
+  padding: 10px;
+}
+
+/*
+.dropdownul {
+  position: relative;
+  top: 55px;
+  color: white;
+  background: #000080;
+  z-index: 2;
+  width: 300px;
+}
+
+.dropdownli {
+  position: relative;
+  color: white;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+} */
+
 .section1 {
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
-  position: absolute;
-  width: 388px;
-  height: 533px;
-  left: 32px;
-  top: 116px;
+  align-content: center;
+  position: relative;
+  height: 60%;
   background: #EEEEEE;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
-/* .line1 {
-  position: absolute;
-  width: 499.35px;
-  height: 0px;
-  margin-left: 1px;
-  top: 129.03px;
-  border: 5px solid #315528;
-  transform: rotate(90deg);
-} */
-.line2 {
-  position: absolute;
-  width: 365.68px;
-  height: 0px;
-  left: 38px;
-  top: 159.01px;
-  border: 5px solid #315528;
-  transform: rotate(180deg);
-}
-/* 
-.line3 {
-position: absolute;
-width: 499.35px;
-height: 0px;
-left: 407.12px;
-top: 129.03px;
 
-border: 5px solid #315528;
-transform: rotate(90deg);
-} */
-
-
-.question_title1 {
-  position: absolute;
-  width: 331px;
-  height: 25px;
-  left: 79px;
-  top: 124px;
-  font-family: NeoDunggeunmo;
+.question_title{
+  position: relative;
+  font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
   font-size: 25px;
-  line-height: 25px;
+  margin-block: 5px;
   /* identical to box height */
   text-align: center;
   letter-spacing: 1.635em;
   color: #FFE600;
   text-shadow: -0.5px 0 #315528, 0 0.5px #315528, 0.5px 0 #315528, 0 -0.5px #315528;
 }
-
-.question_content1{
-  position: absolute;
-  width: 331px;
-  height: 215px;
-  left: 60px;
-  top: 200px;
+.question_line {
+  position: relative;
+  margin-inline: 10px;
+  border: 1px dashed #A5A49C;
+}
+.question_content{
+  position: relative;
+  height: 40%;
   font-family: 'NeoDunggeunmo Pro';
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  line-height: 148.41%;
-  /* or 27px */
+  padding-inline: 20px;
+  padding-block: 5px;
   color: #0066FF;
 }
 
-.line4 {
-  position: absolute;
-  width: 365px;
-  height: 0px;
-  left: 42px;
-  top: 432px;
-  border: 1px dashed #A5A49C;
-}
-
-
-.question_title2 {
-  position: absolute;
-  width: 331px;
-  height: 25px;
-  left: 67px;
-  top: 443px;
+.constraint_title {
+  position: relative;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
   font-size: 25px;
-  line-height: 25px;
+  margin-block: 5px;
   text-align: center;
   letter-spacing: 0.425em;
   color: #F5E44A;
   text-shadow: -0.5px 0 #315528, 0 0.5px #315528, 0.5px 0 #315528, 0 -0.5px #315528;
 }
-
-.question_content2 {
-  position: absolute;
-  width: 331px;
-  height: 36px;
-  left: 60px;
-  top: 500px;
+.constraint_line {
+  position: relative;
+  margin-inline: 10px;
+  border: 1px dashed #A5A49C;
+}
+.constraint_content {
+  position: relative;
+  height: 40%;
   font-family: 'NeoDunggeunmo Pro';
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  line-height: 18px;
+  padding-inline: 20px;
+  padding-block: 5px;
   color: #0066FF;
 }
 
+
+
+
 .section2 {
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
-  position: absolute;
-  width: 388px;
-  height: 315.48px;
-  left: 32px;
-  top: 676px;
+  align-content: center;
+  position: relative;
+  margin-top: 10px;
+  height: 40%;
   background: #EEEEEE;
-  border: 1px solid #000000;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
 
 .testcase_title {
-  position: absolute;
-  width: 331px;
-  height: 25px;
-  left: 70px;
-  top: 690px;
+  position: relative;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
   font-size: 25px;
-  line-height: 25px;
+  margin-block: 5px;
   text-align: center;
   letter-spacing: 0.775em;
   color: #F5E44A;
   text-shadow: -0.5px 0 #315528, 0 0.5px #315528, 0.5px 0 #315528, 0 -0.5px #315528;
-
 }
-
-.line5 {
-  position: absolute;
-  width: 364.87px;
-  height: 0px;
-  left: 38px;
-  top: 727.09px;
-  border: 5px solid #315528;
-  transform: rotate(180deg);
+.testcase_line {
+  position: relative;
+  margin-inline: 10px;
+  border: 1px dashed #A5A49C;
 }
-
 .testcase_content {
-  position: absolute;
-  width: 123px;
-  height: 36px;
-  left: 56px;
-  top: 770px;
+  position: relative;
+  height: 80%;
   font-family: 'NeoDunggeunmo Pro';
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  line-height: 18px;
   color: #0066FF;
 }
 
+/*----------------------- Editor -----------------------*/
 
+.editor{
+  position: relative;
+  justify-content: center;
+  height: 100%;
+  width: 60%;
+}
+/*------------- Editor header --------------*/
 .editor_header{
-  position: absolute;
-  left: 29.5%;
-  right: 2.29%;
-  top: 11.33%;
-  bottom: 83.4%;
-  background: #FFFFFF;
+  position: relative;
+  background: #000000;
+  display: flex;
+  justify-content: space-between;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.savebutton{
+  position: relative;
+}
+
+.functionbutton{
+  position: relative;
+
 }
 
 .codeBtn1 {
   width: 55px;
   height: 37px;
-  margin-left: 30px;
-  margin-top: 8px;
-  position: absolute;
+  position: relative;
   background: #FF6838;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 22px;
@@ -235,14 +226,12 @@ transform: rotate(90deg);
   line-height: 20px;
   text-align: center;
   color: #FFFFFF;
-
 }
+
 .codeBtn2 {
   width: 55px;
   height: 37px;
-  margin-left: 100px;
-  margin-top: 8px;
-  position: absolute;
+  position: relative;
   background: #FF6838;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 22px;
@@ -259,9 +248,7 @@ transform: rotate(90deg);
 .codeBtn3 {
   width: 55px;
   height: 37px;
-  margin-left: 169px;
-  margin-top: 8px;
-  position: absolute;
+  position: relative;
   background: #FF6838;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 22px;
@@ -278,9 +265,7 @@ transform: rotate(90deg);
 .saveBtn{
   width: 82px;
   height: 34px;
-  margin-top: 8px;
-  position: absolute;
-  margin-left: 630px;
+  position: relative;
   background: #4235D3;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
@@ -294,9 +279,7 @@ transform: rotate(90deg);
 .runBtn {
   width: 82px;
   height: 34px;
-  margin-top: 8px;
-  position: absolute;
-  margin-left: 730px;
+  position: relative;
   background: #4235D3;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
@@ -310,9 +293,7 @@ transform: rotate(90deg);
 .evalBtn {
   width: 82px;
   height: 34px;
-  margin-top: 8px;
-  position: absolute;
-  margin-left: 825px;
+  position: relative;
   background: #4235D3;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
@@ -325,9 +306,7 @@ transform: rotate(90deg);
 .submitBtn {
   width: 82px;
   height: 34px;
-  margin-top: 8px;
-  position: absolute;
-  margin-left: 920px;
+  position: relative;
   background: #4235D3;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
@@ -337,104 +316,94 @@ transform: rotate(90deg);
   color: #FFFFFF;
   border: none;
 }
-
+/*------------- Editor main --------------*/
 .onlyEditors{
-  position: absolute;
-  left: 29.5%;
-  top: 18.02%;
+  position: relative;
   flex: 1 1 0%;
   display: flex;
   width: 100%;
   /* position: absolute; */
-
   flex-direction: row;
 }
 
-.result_window{
- position: absolute;
-  top: 120%;
+.terminal{
+  position: relative;
 
 }
 
 .terminal_header {
-  position: absolute;
-  left: 29.5%;
-  right: 2.29%;
-  top: 66.02%;
-  bottom: 28.91%;
+  position: relative;
   background: #FFFFFF;
   backdrop-filter: blur(2px);
 }
 
 .resultBtn1{
-position: absolute;
-width: 123px;
-height: 52px;
-background: #4235D3;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-border: none;
-font-family: 'NeoDunggeunmo';
-font-style: normal;
-font-weight: 400;
-font-size: 20px;
-line-height: 20px;
-text-align: center;
-letter-spacing: 0.07em;
-
-color: #FFFFFF;
-}
-.resultBtn2{
-  position: absolute;
+  position: relative;
   width: 123px;
   height: 52px;
-  margin-left: 122px;
+  background: #4235D3;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #FFFFFF;
+}
+.resultBtn2{
+  position: relative;
+  width: 123px;
+  height: 52px;
   background: #9C95F0;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border: none;
   font-family: 'NeoDunggeunmo';
-font-style: normal;
-font-weight: 400;
-font-size: 20px;
-line-height: 20px;
-text-align: center;
-letter-spacing: 0.07em;
-
-color: #FFFFFF;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #FFFFFF;
 }
 .resultBtn3{
-  position: absolute;
+  position: relative;
   width: 180px;
-height: 52px;
-margin-left: 245px;
-background: #B1AED2;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-border: none;
-font-family: 'NeoDunggeunmo';
-font-style: normal;
-font-weight: 400;
-font-size: 20px;
-line-height: 20px;
-text-align: center;
-letter-spacing: 0.07em;
-
-color: #FFFFFF;
+  height: 52px;
+  background: #B1AED2;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #FFFFFF;
 }
 
 .resultBtn4{
-position: absolute;
-width: 123px;
-height: 52px;
-margin-left: 425px;
-background: #B1AEA3;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-border: none;
-font-family: 'NeoDunggeunmo';
-font-style: normal;
-font-weight: 400;
-font-size: 20px;
-line-height: 20px;
-text-align: center;
-letter-spacing: 0.07em;
-
-color: #FFFFFF;
+  position: relative;
+  width: 123px;
+  height: 52px;
+  background: #B1AEA3;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #FFFFFF;
 }
+
+.result_window{
+  position: relative;
+   top: 120%;
+ }
