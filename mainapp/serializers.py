@@ -21,7 +21,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
 
 class CourseSerializer(serializers.ModelSerializer):
-    question = QuestionSerializer(many=True, read_only=True)
+    # question = QuestionSerializer(many=True, read_only=True)
     class Meta:
         fields = ('course', 'user_id', 'course_name', 'question')
         model = Course

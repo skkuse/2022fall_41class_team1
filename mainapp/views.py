@@ -191,13 +191,14 @@ class QuestionFindAPI(APIView):
         if serializer.is_valid():
             course = serializer.data['course']
             question_info = Question.objects.filter(course=course)
-            print(course)
-            question_info_serializer = QuestionIdSerializer(question_info, many = True)
-
+            # question_info_serializer = QuestionIdSerializer(question_info, many = True)
+            question_info = list(question_info.values())
+            print(question_info)
+            print("\n")
             questions = []
-            for i in question_info_serializer.data:
+            for i in question_info:
                 questions.append(i['question'])
-            return Response(question_info_serializer.data) 
+            return Response(questions) 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # class OldMainPageAPI(APIView):
