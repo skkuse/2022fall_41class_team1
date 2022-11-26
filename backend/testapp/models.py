@@ -27,8 +27,7 @@ class CheckTestcase(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, db_column='user_id')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, db_column='question')
     score = models.CharField(max_length=10)
-    o_pass_fail = models.TextField() # test case 정보 제공.
-    h_pass_fail = models.TextField()
+    msg = models.TextField() # test case 정보 제공.
     
     def __str__(self):
         return "Testcase execution result of " + self.user_id + "\'s " + self.question + " code"
