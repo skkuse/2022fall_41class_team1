@@ -25,7 +25,7 @@ class Course(models.Model):
 
 class Question(models.Model):
     question = models.CharField(primary_key=True,max_length=50, help_text="예: 프로그래밍기초실습_week2")
-    course = models.ForeignKey(Course, related_name='question', on_delete=models.CASCADE, db_column='course', null=True, help_text="프로그래밍기초실습") 
+    course = models.ForeignKey(Course, related_name='question',on_delete=models.CASCADE, db_column='course', null=True, help_text="프로그래밍기초실습") 
     skeleton = models.TextField(help_text="스켈레톤 코드") 
     answer = models.CharField(max_length=1000)
     testcase = models.CharField(max_length=100)

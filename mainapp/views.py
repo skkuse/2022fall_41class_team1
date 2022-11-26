@@ -182,7 +182,7 @@ class CourseFindAPI(APIView):
 
             for i in serializer_list.data:
                 courses.append(i['course'])
-            return Response(courses)
+            return Response(courses, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class QuestionFindAPI(APIView):
@@ -191,44 +191,25 @@ class QuestionFindAPI(APIView):
         if serializer.is_valid():
             course = serializer.data['course']
             question_info = Question.objects.filter(course=course)
-            # question_info_serializer = QuestionIdSerializer(question_info, many = True)
             question_info = list(question_info.values())
             print(question_info)
             print("\n")
             questions = []
             for i in question_info:
                 questions.append(i['question'])
-            return Response(questions) 
+            return Response(questions, status=status.HTTP_200_OK) 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# class OldMainPageAPI(APIView):
-#     def get(self, request):
-#         user_id = request.query_params.get('user_id')
-#         course_name = request.query_params.get('course')
-
-#         if course_name == None:
-#             queryset = Course.objects.filter(user_id_id=user_id).values()
-
-#             queryset = list(queryset)
-#             jsonObject = json.dumps(queryset)
-#             dics = json.loads(jsonObject)
-
-#             course_list = []
-#             for i in dics:
-#                 course_list.append(i['course'])
-
-#             return JsonResponse({'result': course_list}, status = 200)
-
-#         else:
-#             print(type(course_name))
-#             queryset = Question.objects.filter(course_id=course_name).values()
-#             return Response(queryset)
-#             # a = queryset.question
-#             print(queryset)
-#             questions = Question.objects.filter(course = course).all()
-#             print(questions)
-#             return JsonResponse(questions, status=200)
-#             serializer_list = CourseSerializer(course_name, many=True)
+        
+# request: 소프트공학개론_week2
+class RequestQuestionAPI(APIView):
+    def get(self, request):
+        serializers = QuestionNameSerializer(data=request.data)
+        if serializers.is_valid():
+            question = serializers.data['question']
+            question_info = Question.objects.filter(question=question)
+            question_info = list(question_info.values())
+            return Response(question_info, status=status.HTTP_200_OK)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

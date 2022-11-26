@@ -45,6 +45,12 @@ class QuestionIdSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = ['course', ]
+
+class QuestionNameSerializer(serializers.ModelSerializer):
+    question = serializers.PrimaryKeyRelatedField(required=True, queryset=Question.objects.all())
+    class Meta:
+        model = Question
+        fields = ('question', )
         
 class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
