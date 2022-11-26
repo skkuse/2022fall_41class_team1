@@ -316,13 +316,29 @@
   color: #FFFFFF;
   border: none;
 }
+
+.showvalueBtn{
+  position: relative;
+}
+.uploadBtn{
+  position: relative;
+}
+.resetBtn{
+  position: relative;
+}
+.copyBtn{
+  position: relative;
+}
+.downloadBtn{
+  position: relative;
+}
+
 /*------------- Editor main --------------*/
 .onlyEditors{
   position: relative;
   flex: 1 1 0%;
   display: flex;
   width: 100%;
-  /* position: absolute; */
   flex-direction: row;
 }
 

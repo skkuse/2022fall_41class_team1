@@ -306,7 +306,7 @@ const Main = () => {
             </div>
           </div>
           <div className="onlyEditors">
-            <div css={editorVisible==1?css`display:block`:css`display:none`}>
+            <div css={editorVisible==1?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
               <Editor
                 id = "Editor1"
                 value={code1}
@@ -318,13 +318,15 @@ const Main = () => {
                 onMount={handleEditor1DidMount}
                 onValidate={handleEditorValidation}
               />
-              <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
-              <input type="file" onChange={e => handleChangeFile1(e.target.files[0])} accept = ".py"/>
-              <button onClick={onReset1}>reset</button>
-              <button onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>copy</button>
-              <button onClick ={()=>{saveFile(editorRef1.current.getValue(), "code1.py")}}>download</button>
+              <div css={css`display: flex; flex-direction: row`}>
+                <button className="showvalueBtn" onClick={showValue}>Show value</button> 자동으로 저장됩니다.
+                <input className="uploadBtn" type="file" onChange={e => handleChangeFile1(e.target.files[0])} accept = ".py"/>
+                <button className="resetBtn" onClick={onReset1}>reset</button>
+                <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>copy</button>
+                <button className="downloadBtn" onClick ={()=>{saveFile(editorRef1.current.getValue(), "code1.py")}}>download</button>
+              </div>
             </div>
-            <div css={editorVisible==2?css`display:block`:css`display:none`}>
+            <div css={editorVisible==2?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
               <Editor
                 value={code2}
                 height="60vh"
@@ -334,13 +336,15 @@ const Main = () => {
                 defaultValue="# some comment"
                 onMount={handleEditor2DidMount}
               />
-              <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
-              <input type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
-              <button onClick={onReset2}>reset</button>
-              <button onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>copy</button>
-              <button onClick ={()=>{saveFile(editorRef2.current.getValue(), "code2.py")}}>download</button>
+              <div css={css`display: flex; flex-direction: row`}>
+                <button className="showvalueBtn" onClick={showValue}>Show value</button> 자동으로 저장됩니다.
+                <input className="uploadBtn" type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
+                <button className="resetBtn" onClick={onReset2}>reset</button>
+                <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>copy</button>
+                <button className="downloadBtn" onClick ={()=>{saveFile(editorRef2.current.getValue(), "code2.py")}}>download</button>
+              </div>
             </div>
-            <div css={editorVisible==3?css`display:block`:css`display:none`}>
+            <div css={editorVisible==3?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
               <Editor
                 value={code3}
                 height="60vh"
@@ -350,11 +354,13 @@ const Main = () => {
                 defaultValue="# some comment"
                 onMount={handleEditor3DidMount}
               />
-              <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
-              <input type="file" onChange={e => handleChangeFile3(e.target.files[0])} accept = ".py"/>
-              <button onClick={onReset3}>reset</button>
-              <button onClick={() => handleCopyClipBoard(editorRef3.current.getValue())}>copy</button>
-              <button onClick ={()=>{saveFile(editorRef3.current.getValue(), "code3.py")}}>download</button>
+              <div css={css`display: flex; flex-direction: row`}>
+                <button className="showvalueBtn" onClick={showValue}>Show value</button> 자동으로 저장됩니다.
+                <input className="uploadBtn" type="file" onChange={e => handleChangeFile3(e.target.files[0])} accept = ".py"/>
+                <button className="resetBtn" onClick={onReset3}>reset</button>
+                <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef3.current.getValue())}>copy</button>
+                <button className="downloadBtn" onClick ={()=>{saveFile(editorRef3.current.getValue(), "code3.py")}}>download</button>
+              </div>
             </div>
             <div css={editorVisible==4?css`display:block`:css`display:none`}>
               <DiffEditor
