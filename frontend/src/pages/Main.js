@@ -9,8 +9,8 @@ import { NowContext } from "../context/NowContext";
 
 const Main = () => {
   const [editorVisible, setEditorVisible] = useState(1);
-  const [user_id, setUser_id] = useState("12344");
-  const [question_no, setQuestion_no] = useState("1");
+  const [user_id, setUser_id] = useState("jcy9911");
+  const [question_no, setQuestion_no] = useState("SWE3002-01");
   const [code1, setCode1] = useState("#some comment");
   const [code2, setCode2] = useState("#some comment");
   const [code3, setCode3] = useState("#some comment");
@@ -117,24 +117,35 @@ const Main = () => {
   }
 
   const showValue = async () => {
+  var newData={};
     if (editorVisible == 1) {
-      const newData = {
-        code: editorRef1.current.getValue(),
+        newData = {
+        user_id: user_id,
+        question: question_no,
+
+
+        exe_result: editorRef1.current.getValue(),
       };
     } else if (editorVisible == 2) {
-      const newData = {
-        code: editorRef2.current.getValue(),
+        newData = {
+        user_id: user_id,
+        question: question_no,
+
+        exe_result: editorRef2.current.getValue(),
       };
     } else if (editorVisible == 3) {
-      const newData = {
-        code: editorRef3.current.getValue(),
+        newData = {
+        user_id: user_id,
+        question: question_no,
+
+        exe_result: editorRef3.current.getValue(),
       };
     }
 
     try {
       saveData();
-      const response = await axios.get("http://localhost:8000/api/results/", {
-        params: { code: editorRef1.current.getValue() },
+      const response = await axios.get("http://localhost:8000/api/execute2/", {
+        params: newData,
       });
       console.log("response >>", response);
       setResult(response["data"]);
@@ -153,13 +164,29 @@ const Main = () => {
   }, [monaco]);
 
   const saveData = async () => {
-    const newData = {
-      user_id: user_id,
-      question: question_no,
-      save1: editorRef1.current.getValue(),
-      save2: editorRef2.current.getValue(),
-      save3: editorRef3.current.getValue(),
-    };
+  var newData={};
+  if (editorVisible == 1) {
+        newData = {
+        user_id: user_id,
+        question: question_no,
+        count: editorVisible,
+        code: editorRef1.current.getValue(),
+      };
+    } else if (editorVisible == 2) {
+        newData = {
+        user_id: user_id,
+        question: question_no,
+        count: editorVisible,
+        code: editorRef2.current.getValue(),
+      };
+    } else if (editorVisible == 3) {
+        newData = {
+        user_id: user_id,
+        question: question_no,
+        count: editorVisible,
+        code: editorRef3.current.getValue(),
+      };
+    }
     try {
       const response = await axios.post(
         "http://localhost:8000/editor/save/",
@@ -258,6 +285,33 @@ const Main = () => {
     setOriginal();
     setModified();
     setEditorVisible(4);
+  };
+
+  const analyze_code = async () =>{
+  var newData={};
+    if (editorVisible == 1) {
+        newData = {
+        code: editorRef1.current.getValue(),
+      };
+    } else if (editorVisible == 2) {
+        newData = {
+        code: editorRef2.current.getValue(),
+      };
+    } else if (editorVisible == 3) {
+        newData = {
+        code: editorRef3.current.getValue(),
+      };
+    }
+
+    try {
+      const response = await axios.get("http://localhost:8000/api/editor/simple_explain/", {
+        params: newData,
+      });
+      console.log("response >>", response);
+      setResult(response["data"]);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
   };
 
   return (
@@ -540,7 +594,7 @@ const Main = () => {
                   cols="145"
                   rows="15"
                 />
-                <button>분석하기</button>
+                <button onClick={analyze_code}>분석하기</button>
               </div>
             </div>
           </div>
