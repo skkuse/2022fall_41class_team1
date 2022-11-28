@@ -3,6 +3,7 @@ import React, {useContext} from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { NowContext } from "../context/NowContext";
+import axios from "axios";
 
 
 const weeklist = [
@@ -48,6 +49,7 @@ function Dropdownlist (props) {
   const handleclick = (week) => {
     setNow(week);
   }
+  
 
   return (
     <ul css={dropdownul}>

@@ -265,6 +265,7 @@
 .saveBtn{
   width: 82px;
   height: 34px;
+  margin: 5px;
   position: relative;
   background: #4235D3;
   font-family: 'NeoDunggeunmo';
@@ -279,6 +280,7 @@
 .runBtn {
   width: 82px;
   height: 34px;
+  margin: 5px;
   position: relative;
   background: #4235D3;
   font-family: 'NeoDunggeunmo';
@@ -293,6 +295,7 @@
 .evalBtn {
   width: 82px;
   height: 34px;
+  margin: 5px;
   position: relative;
   background: #4235D3;
   font-family: 'NeoDunggeunmo';
@@ -306,6 +309,7 @@
 .submitBtn {
   width: 82px;
   height: 34px;
+  margin: 5px;
   position: relative;
   background: #4235D3;
   font-family: 'NeoDunggeunmo';
