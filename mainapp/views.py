@@ -62,7 +62,6 @@ class ListUserData(generics.ListCreateAPIView):
     queryset = UserData.objects.all()
     serializer_class = UserDataSerializer
 
-@swagger_auto_schema(tags=["detail user"], request_body=UserSerializer, query_serializer=UserSerializer)
 def detail_user(request, userid):
     data = User.objects.get(user_id=userid)
     queryset = User.objects.all()
@@ -71,7 +70,6 @@ def detail_user(request, userid):
         return JsonResponse(serializer_class.data, safe=False)
 
 class DetailUser(generics.RetrieveUpdateDestroyAPIView):
-    #   @swagger_auto_schema(tags=["detail user"], request_body=UserSerializer, query_serializer=UserSerializer)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -214,7 +212,6 @@ class RequestQuestionAPI(APIView):
 
 
 class UserApi(APIView):
-    
     def get_object(self,user_id):
         try:
             return User.objects.get(pk=user_id)
@@ -288,6 +285,7 @@ class CourseApi(APIView):
             return test_data #Http404
     
     #내용 추가
+    # request값: user_id아니고 user_id_id임.
     def post(self, request):
         serializer = CourseSerializer(request.data)
         course = serializer.create(request.data)
