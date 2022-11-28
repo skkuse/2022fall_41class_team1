@@ -15,3 +15,8 @@ class CheckTestcaseSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = CheckTestcase
+        
+class EvaluateCodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = EvaluateCode

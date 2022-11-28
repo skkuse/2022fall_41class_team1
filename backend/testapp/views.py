@@ -115,10 +115,6 @@ class ExecuteCodeV1API(APIView):
     def post(self,request):
         serializer = ExecuteCodeV1Serializer(data=request.data)
         if serializer.is_valid():
-            # code 실행한 후에 결과를 저장
-            # 실행할 때, 인자가 있는 경우 없는 경우를 구분.
-            # serializer에서 받은 exe_result -> code file을 실행한 후
-            # serializer의 exe_result를 실행결과로 덮어쓰기.
             serializer.exe_result = execute(serializer.exe_result)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -158,9 +154,6 @@ class ExecuteCodeV2API(APIView):
     def post(self,request):
         serializer = ExecuteCodeV2Serializer(data=request.data)
         if serializer.is_valid():
-            # code 실행한 후에 결과를 저장
-            # serializer에서 받은 exe_result -> code file을 실행한 후
-            # serializer의 exe_result를 실행결과로 덮어쓰기.
             serializer.exe_result = execute(serializer.exe_result)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -192,10 +185,11 @@ class CheckTestcaseAPI(APIView):
         try:
             return CheckTestcase.objects.get(user_id=user_id, question=question)
         except CheckTestcase.DoesNotExist:
-            test_data = {'user_id':'jcy9911','question':'SWE3002-01','score':'20','msg' :'In the line 0, correct answer is 10 but user answer is 30'}
+            test_data = {'user_id':'jcy9911','question':'SWE3002-01','msg' :'In the line 0, correct answer is 10 but user answer is 30'}
             return test_data
     
-    def post(self, request):
+    # 내용 확인
+    def get(self, request):
         q_serializers = QuestionSerializer(data=request.data)
         serializer = CheckTestcaseSerializer(data=request.data)
         if q_serializers.is_valid():
@@ -204,27 +198,26 @@ class CheckTestcaseAPI(APIView):
             result = testcase(answer, serializers.msg, testcase)
             serializer.msg = result['msg']
             serializer.score = result['score']
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            
-    #내용 조회
-    def get(self,request):
-        serializer = CheckTestcaseSerializer(data=request.data)
-        
-        if serializer.is_valid():
-            codedata = self.get_object(serializer.user_id, serializer.question)
-            codedata_serializer = CheckTestcaseSerializer(codedata)
-            return Response(codedata_serializer.data)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class EvaluateCodeAPI(APIView):
+    def get_object(self, user_id, question):
+        try:
+            return EvaluateCode.objects.get(user_id=user_id, question=question)
+        except EvaluateCode.DoesNotExist:
+            test_data = {'user_id':'jcy9911','question':'SWE3002-01','score':'20','msg' :'In the line 0, correct answer is 10 but user answer is 30'}
+            return test_data
     
-    #내용 삭제
-    def delete(self,request):
-        serializer = CheckTestcaseSerializer(data=request.data)
-        user_id = serializer.user_id
-        question = serializer.question
-
-        codedata = self.get_object(user_id,question)
-        codedata.delete()
-
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def post(self, request):
+        plagiarism = models.TextField()
+        function = models.TextField()
+        efficiency = models.TextField()
+        readability = models.TextField()
+        print("")
+    
+    def get(self, request):
+        print("")
+        
+    def delete(self, request):
+        print("")

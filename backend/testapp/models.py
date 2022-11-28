@@ -31,3 +31,14 @@ class CheckTestcase(models.Model):
     
     def __str__(self):
         return "Testcase execution result of " + self.user_id + "\'s " + self.question + " code"
+    
+class EvaluateCode(models.Models):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, db_column='user_id')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, db_column='question')
+    plagiarism = models.TextField()
+    function = models.TextField()
+    efficiency = models.TextField()
+    readability = models.TextField()
+    
+    def __str__(self):
+        return "Evaluate result of "+ self.user_id + "\'s " + self.question + " code"
