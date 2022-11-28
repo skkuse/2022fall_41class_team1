@@ -9,7 +9,7 @@ import { NowContext } from "../context/NowContext";
 
 const Main = () => {
   const [editorVisible, setEditorVisible] = useState(1);
-  const [user_id, setUser_id] = useState("jcy9911");
+  const [user_id, setUser_id] = useState("asdf@asdf.conm");
   const [question_no, setQuestion_no] = useState("SWE3002-01");
   const [code1, setCode1] = useState("#some comment");
   const [code2, setCode2] = useState("#some comment");
@@ -18,6 +18,7 @@ const Main = () => {
   const [modified_code, setModified_code] = useState("#some comment");
   const [result, setResult] = useState("result display");
   const [resultShow, setResultShow] = useState(0);
+  const [submitted,setSubmitted]=useState(0);
 
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
@@ -144,8 +145,8 @@ const Main = () => {
 
     try {
       saveData();
-      const response = await axios.get("http://localhost:8000/api/execute2/", {
-        params: newData,
+      const response = await axios.post("http://localhost:8000/api/execute2/", {
+        newData,
       });
       console.log("response >>", response);
       setResult(response["data"]);
@@ -168,7 +169,7 @@ const Main = () => {
   if (editorVisible == 1) {
         newData = {
         user_id: user_id,
-        question: question_no,
+        question: Dropdownlist.question,
         count: editorVisible,
         code: editorRef1.current.getValue(),
       };
@@ -281,6 +282,7 @@ const Main = () => {
   const submitResultDisplay = () => {};
 
   const submit = async () => {
+    setSubmitted(1);
     saveData();
     setOriginal();
     setModified();
@@ -540,13 +542,13 @@ const Main = () => {
             <button className="resultBtn1" onClick={() => setResultShow(0)}>
               실행결과
             </button>
-            <button className="resultBtn2" onClick={() => setResultShow(1)}>
+            <button className="resultBtn2" onClick={submitted==1?() => setResultShow(1):()=> {console.error("you should submit before")}}>
               제출결과
             </button>
-            <button className="resultBtn3" onClick={() => setResultShow(1)}>
+            <button className="resultBtn3" onClick={submitted==1?() => setResultShow(2):()=> {console.error("you should submit before")}}>
               테스트케이스
             </button>
-            <button className="resultBtn4" onClick={() => setResultShow(2)}>
+            <button className="resultBtn4" onClick={submitted==1?() => setResultShow(3):()=> {console.error("you should submit before")}}>
               코드분석
             </button>
             <div className="result_window">
@@ -579,6 +581,26 @@ const Main = () => {
               <div
                 css={
                   resultShow == 2
+                    ? css`
+                        display: flex;
+                        flex-direction: column;
+                      `
+                    : css`
+                        display: none;
+                      `
+                }
+              >
+                <textarea
+                  value="test case"
+                  disabled="True"
+                  cols="145"
+                  rows="15"
+                />
+                <button onClick={analyze_code}>분석하기</button>
+              </div>
+               <div
+                css={
+                  resultShow == 3
                     ? css`
                         display: flex;
                         flex-direction: column;
