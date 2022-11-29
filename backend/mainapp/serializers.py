@@ -1,3 +1,4 @@
+<<<<<<< HEAD:backend/mainapp/serializers.py
 from rest_framework import serializers
 from .models import *
 from django.contrib.auth.hashers import make_password
@@ -67,3 +68,27 @@ class SubmissionSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Submission
+=======
+from rest_framework import serializers
+from .models import *
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = User
+
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = Question
+        
+class UserDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = UserData
+
+class ReturnDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = ReturnData
+>>>>>>> b71e8bd3c7d48e401a6543aef7b9253bc6411713:mainapp/serializers.py

@@ -1,8 +1,23 @@
+<<<<<<< Updated upstream
 import React, {useCallback,useState,useContext} from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { NowContext } from "../context/NowContext";
 import axios from "axios";
+=======
+<<<<<<< HEAD
+=======
+import styles from "./Main.css";
+>>>>>>> b71e8bd3c7d48e401a6543aef7b9253bc6411713
+import React, {useContext} from 'react';
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+import { NowContext } from "../context/NowContext";
+<<<<<<< HEAD
+=======
+import axios from "axios";
+>>>>>>> b71e8bd3c7d48e401a6543aef7b9253bc6411713
+>>>>>>> Stashed changes
 
 
 const weeklist = [
@@ -50,6 +65,10 @@ function Dropdownlist (props) {
     getQuestionInf();
     setNow(week);
   }
+<<<<<<< HEAD
+=======
+  
+>>>>>>> b71e8bd3c7d48e401a6543aef7b9253bc6411713
 
   const getQuestionInf = async() =>{
      const newData = {
@@ -75,6 +94,7 @@ function Dropdownlist (props) {
     </ul> 
   );
 }
+<<<<<<< HEAD
   
 export {Dropdown, Dropdownlist};
 
@@ -90,6 +110,22 @@ const dropdownul = css`
   width: 300px;
 `;
 const dropdownli = css`
+=======
+
+export {Dropdown, Dropdownlist};
+
+const dropdownul =css`
+  position: relative;
+  top: 8px;
+  color: white;
+  background: #3F3F3F;
+  z-index: 2;
+  width: 300px;
+`;
+
+const dropdownli =css`
+  position: relative;
+>>>>>>> b71e8bd3c7d48e401a6543aef7b9253bc6411713
   color: white;
   margin-left: 0.75rem;
   margin-right: 0.75rem;

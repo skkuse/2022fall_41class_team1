@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .vscode/
 Pipfile
 Pipfile.lock
@@ -11,4 +12,20 @@ __pycache__/
 **/__pycache__/
 **/**/__pycache__/
 **/**/**/__pycache__/
+<<<<<<< Updated upstream
 backend/editor/api_secrets.py
+=======
+backend/editor/api_secrets.py
+.env
+backend/editor/ai_test.py
+=======
+playground/
+.vscode/
+Pipfile
+Pipfile.lock
+mainapp/__pycache__/*.pyc
+DB/__pycache__/settings.cpython-39.pyc
+mainapp/__pycache__/urls.cpython-39.pyc
+mainapp/__pycache__/views.cpython-39.pyc
+>>>>>>> b71e8bd3c7d48e401a6543aef7b9253bc6411713
+>>>>>>> Stashed changes
