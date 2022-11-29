@@ -196,8 +196,23 @@ class SkeletonApi(APIView):
             return Response(serializer.data)
         
 class ReferenceApi(APIView):
+
+    def get_object(self,question):
+        try:
+            return Question.objects.get(pk=question)
+        except Question.DoesNotExist:
+            test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
+                "answer":"12", "testcase":"[1,2,3,4]", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
+            }
+            return test_data #Http404
+
     def get(self,request):
         keyword = request.GET.get('keyword')
+        '''
+        question = request.GET.get('question')
+        question_object = self.get_object(question)
+        keyword = question_object['keyword']
+        '''
         links = crawling_link(keyword)
         links['keyword'] = keyword
         serializer = ReferenceSerializer(links)
