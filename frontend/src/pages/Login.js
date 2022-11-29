@@ -1,45 +1,57 @@
-import React, { useCallback,useState } from "react";
+import { useCallback, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from 'axios';
+import {baseURL} from '../utils/axios';
+
 
 const Login = () => {
-
+  const [email, setEmail] = useState('');
+  const [password, setPassword]= useState('');
   const navigate = useNavigate();
-  const [logAccount, setLogAccount] = useState({
-    user_email: "",
-    user_password: "",
-  });
 
-  const onChangeLogAccount = (e) => {
-    setLogAccount({
-      ...logAccount,
-      [e.target.name]: e.target.value,
-    });
-    console.log(logAccount);
+  const validateEmail = email => {
+    const regex = /^[0-9?A-z0-9?]+(\.)?[0-9?A-z0-9?]+@[0-9?A-z]+\.[A-z]{2}.?[A-z]{0,3}$/;
+    return regex.test(email);
   };
 
-  const onLogin1Click = useCallback(() => {
-    getLoginInf();
-    navigate("/main");
-  }, [navigate]);
+  const removeWhitespace = text => {
+    const regex = /\s/g;
+    return text.replace(regex, '');
+  };
 
-  const getLoginInf = async() =>{
-       const newData = {
-        user_id: logAccount.user_email,
-        user_pwd: logAccount.user_password,
-     };
-     try {
-        const response = await axios.post(
-        "http://localhost:8000/main/signin/",
-        newData
-     );
-     console.log("response >>", response);
-     console.log(response["data"]["msg"]);
-    } catch (err) {
-      console.log("Error >>", err);
+  const _handleEmailChange = (e) => {
+    const changeEmail = removeWhitespace(email);
+    setEmail(e.target.email);
+  }
+  const _handlePasswordChange = (e) => {
+    setPassword(e.target.password);
+  }
+
+  const onLoginClick = async (e) => {
+    try {
+      const response = await axios.post(`${baseURL}/main/signin/`, {
+          email: email,
+          password: password,
+      });
+      console.log('response : ', response);
+      if(response.data.success == true){
+        navigate("/main");
+      }
+    } catch (error) {
+        if (error.response) {
+            const errorResponse = error.response;
+            console.log('data : ', errorResponse.data);
+            console.log('status : ', errorResponse.status);
+            console.log('headers : ', errorResponse.headers);
+        } else if (error.request) {
+            console.log('request : ', error.request);
+        } else {
+            console.log('meassage : ', error.message);
+        }
     }
+    
   };
 
   return (
@@ -48,11 +60,20 @@ const Login = () => {
       <div className="login_title2">CODING TEST</div>
       <div className="login_input">
         <div className="email_text">E-mail</div>
-        <input name="user_email" className="email_input"></input>
+        <input 
+          type='text'
+          value={email}
+          className="email_input"
+          onChange={_handleEmailChange}
+        />
         <div className="pw_text">PW</div>
-        <input name="user_password" className="pw_input"></input>
+        <input
+          value={password}
+          className="pw_input"
+          onChange={_handlePasswordChange}
+        />
       </div>
-      <button className="loginBtn" onClick={onLogin1Click}>로그인</button>
+      <button className="loginBtn" onClick={onLoginClick}>로그인</button>
       <div className="link_findPw"><Link to="/find">PW 찾기</Link></div>
       <div className="link_register"><Link to="/register">회원가입</Link></div>
     </div>
