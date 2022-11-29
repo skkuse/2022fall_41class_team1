@@ -29,37 +29,79 @@ def execute(code):
     os.remove('temp.py') 
     return return_data
             
-def testcase(code1, code2, testcase):
+def testcase(answer, user, testcase):
     
-    def excute_testcase(code, type, stdin):
+    def excute_testcase(code, type, testcase):
         
         py = open('temp.txt','w')
         py.write(code)
         py.close()
-        os.rename('temp.txt','temp.py')
-        
+        os.rename('temp.txt','solution.py')
+
         sh = open('temp.txt','w')
-        sh.write('python temp.sh '+stdin)
+        sh.write('python main.py '+testcase)
         sh.close()
         os.rename('temp.txt','temp.sh')
+                
+        out = os.system(f'sh temp.sh > result_{type}.txt')
+        os.remove('temp.sh')
+    
         
-        out = subprocess.run(['sh','temp.sh',f'>result_{type}.txt'],capture_output=True)
-       
-        if (out.stderr):
-            print("")
-               
     if ("*" in testcase):
         testcase1 = testcase.split("*")
         testcase2 = testcase1[-1].split("&")
             
-        o_testcase = [tc for tc in testcase1] + [testcase2[0]]
-        h_testcase = [testcase2[i] for i in range(testcase2)-1]        
-    
+        o_testcase = [tc for tc in testcase1[:-1]] + [testcase2[0]]
+        h_testcase = [testcase2[i+1] for i in range(len(testcase2)-1)]     
+
     else:
         testcase = testcase.split("&")
         
         o_testcase = testcase[0]
         h_testcase = testcase[1]
+    
+    ots = []
+    hts = []
+    msg = []
+    
+    for idx, ot in enumerate(o_testcase):
+        excute_testcase(answer, 'answer', ot)
+        excute_testcase(user, 'my', ot)
+        out = subprocess.run(['diff','result_answer.txt','result_my.txt'], capture_output=True)
+        
+        if (out.stderr):
+            return_data = out.stderr.decode('utf-8')
+        else:
+            return_data = out.stdout.decode('utf-8')
+            if(return_data==""):
+                ots.append(1)
+            else:
+                ots.append(0)
+                line1 = return_data.split('\n')[1][-1]
+                line2 = return_data.split('\n')[-2][-1]
+                return_data = f'In the {idx} line, correct answer is {line1} but user answer is {line2}. (open case)'
+                msg.append(return_data)
+        
+    for idx, ht in enumerate(h_testcase):
+        excute_testcase(answer, 'answer', ht)
+        excute_testcase(user, 'my', ht)
+        out = subprocess.run(['diff','result_answer.txt','result_my.txt'], capture_output=True)
+        
+        if(out.stderr):
+            return_data = out.stderr.decode('utf-8')
+        else:
+            return_data = out.stdout.decode('utf-8')
+            if return_data == "":
+                hts.append(1)
+            else:
+                return_data = f'The {idx} line is not identical. (hidden case)'
+                msg.append(return_data)
+                hts.append(0)
+    
+    os.remove('result_answer.txt')
+    os.remove('result_my.txt')
+                    
+    return {'t_score':(sum(ots)+sum(hts))/(len(ots)+len(hts))*100, 'msg':msg}
     
 class ExecuteCodeV1API(APIView):
     def get_object(self,user_id,question,save_type):
@@ -73,10 +115,6 @@ class ExecuteCodeV1API(APIView):
     def post(self,request):
         serializer = ExecuteCodeV1Serializer(data=request.data)
         if serializer.is_valid():
-            # code 실행한 후에 결과를 저장
-            # 실행할 때, 인자가 있는 경우 없는 경우를 구분.
-            # serializer에서 받은 exe_result -> code file을 실행한 후
-            # serializer의 exe_result를 실행결과로 덮어쓰기.
             serializer.exe_result = execute(serializer.exe_result)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -116,9 +154,6 @@ class ExecuteCodeV2API(APIView):
     def post(self,request):
         serializer = ExecuteCodeV2Serializer(data=request.data)
         if serializer.is_valid():
-            # code 실행한 후에 결과를 저장
-            # serializer에서 받은 exe_result -> code file을 실행한 후
-            # serializer의 exe_result를 실행결과로 덮어쓰기.
             serializer.exe_result = execute(serializer.exe_result)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -144,32 +179,45 @@ class ExecuteCodeV2API(APIView):
         codedata.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
-# 마지막 제출한 결과를 테스트 케이스 점수들과 함께 저장함.
 
 class CheckTestcaseAPI(APIView):
     def get_object(self, user_id, question):
         try:
             return CheckTestcase.objects.get(user_id=user_id, question=question)
         except CheckTestcase.DoesNotExist:
-            test_data = {'user_id':'jcy9911','question':'SWE3002-01','exe_result':'line 1 : assertion error'}
+            test_data = {'user_id':'jcy9911','question':'SWE3002-01','msg' :'In the line 0, correct answer is 10 but user answer is 30'}
+            return test_data
+    
+    # 내용 확인
+    def get(self, request):
+        q_serializers = QuestionSerializer(data=request.data)
+        serializer = CheckTestcaseSerializer(data=request.data)
+        if q_serializers.is_valid():
+            testcase = q_serializers.testcase
+            answer = q_serializers.anwer
+            result = testcase(answer, serializers.msg, testcase)
+            serializer.msg = result['msg']
+            serializer.score = result['score']
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class EvaluateCodeAPI(APIView):
+    def get_object(self, user_id, question):
+        try:
+            return EvaluateCode.objects.get(user_id=user_id, question=question)
+        except EvaluateCode.DoesNotExist:
+            test_data = {'user_id':'jcy9911','question':'SWE3002-01','score':'20','msg' :'In the line 0, correct answer is 10 but user answer is 30'}
             return test_data
     
     def post(self, request):
-        # testcase에 대한 정보가 들어있는 question seraializer
-        q_serializers = QuestionSerializer(data=request.data)
-        # 실제로 데이터를 저장할 serializer
-        serializers = CheckTestcaseSerializer(data=request.data)
-        if q_serializers.is_valid():
-            # *로 구분 , &로 구분
-            # 예시 1 2 3 * 4 5 6 * 7 8 9 & 10 11 12 & 13 14 15 & 16 17 18
-            # split('*') = 1 2 3 , 4 5 6 , 7 8 9 & 10 11 12 & 13 14 15 & 16 17 18
-            # -1 index split('&') = 10 11 12 , 13 14 15 , 16 17 18
-            testcase = q_serializers.testcase
-            answer = q_serializers.anwer
-            
+        plagiarism = models.TextField()
+        function = models.TextField()
+        efficiency = models.TextField()
+        readability = models.TextField()
+        print("")
+    
     def get(self, request):
         print("")
         
-    def delete(self,request):
+    def delete(self, request):
         print("")

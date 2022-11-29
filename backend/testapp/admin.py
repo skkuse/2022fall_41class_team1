@@ -5,3 +5,4 @@ from testapp.models import *
 admin.site.register(ExecuteCodeV1)
 admin.site.register(ExecuteCodeV2)
 admin.site.register(CheckTestcase)
+admin.site.register(EvaluateCode)
