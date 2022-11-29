@@ -12,7 +12,7 @@ class User(models.Model):
     user_org = models.CharField(max_length=100, help_text="예: 소프트웨어학과")
 
     def __str__(self):
-        return self.user_name
+        return self.user_id
 
 class Course(models.Model):
     course= models.CharField(max_length=50, primary_key=True, help_text="예: SWE3002-41")
@@ -47,12 +47,12 @@ class Question(models.Model):
 class UserData(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE,db_column='user_id')
     question = models.ForeignKey(Question, on_delete=models.CASCADE,db_column='question')
-    save1 = models.TextField()
-    save2 = models.TextField()
-    save3 = models.TextField()
+    save1 = models.TextField(null=True)
+    save2 = models.TextField(null=True)
+    save3 = models.TextField(null=True)
 
     def __str__(self):
-        return "UserData of " + self.user_id + " " + self.question
+        return "UserData of " + str(self.user_id) + " " + str(self.question)
 
 # class Chat(models.Model):
 #     course = models.ForeignKey(Course,on_delete=models.CASCADE,db_column='course')
@@ -69,4 +69,4 @@ class Submission(models.Model):
     submission = models.BooleanField(help_text="제출: 1, 미제출: 0, null값 가능") 
 
     def __str__(self):
-        return "Submission of " + self.question
+        return "Submission of " + str(self.question)
