@@ -1,7 +1,7 @@
 from email.policy import default
 from django.db import models
 from jsonfield import JSONField
-from mainapp.models import User, Course, Question, UserData
+from mainapp.models import User, Question
 
 # Create your models here.
 
