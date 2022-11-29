@@ -44,7 +44,7 @@ const Dropdown = (props) => {
 
 function Dropdownlist (props) {
   const {now, setNow} = useContext(NowContext);
-  const [question, setQuestion]=useState("");
+  const [question, setQuestion]=useState("1");
 
   const handleclick = (week) => {
     getQuestionInf();
@@ -53,7 +53,7 @@ function Dropdownlist (props) {
 
   const getQuestionInf = async() =>{
      const newData = {
-        course: "SWE3002-41"
+        course: "1"
      };
      try {
         const response = await axios.get(

@@ -10,7 +10,7 @@ import { NowContext } from "../context/NowContext";
 const Main = () => {
   const [editorVisible, setEditorVisible] = useState(1);
   const [user_id, setUser_id] = useState("asdf@asdf.conm");
-  const [question_no, setQuestion_no] = useState("SWE3002-01");
+  const [question_no, setQuestion_no] = useState("1");
   const [code1, setCode1] = useState("#some comment");
   const [code2, setCode2] = useState("#some comment");
   const [code3, setCode3] = useState("#some comment");
@@ -120,6 +120,7 @@ const Main = () => {
   const showValue = async () => {
   var newData={};
     if (editorVisible == 1) {
+
         newData = {
         user_id: user_id,
         question: question_no,
@@ -169,10 +170,11 @@ const Main = () => {
   if (editorVisible == 1) {
         newData = {
         user_id: user_id,
-        question: Dropdownlist.question,
+        question: question_no,
         count: editorVisible,
         code: editorRef1.current.getValue(),
       };
+      console.log(newData)
     } else if (editorVisible == 2) {
         newData = {
         user_id: user_id,
@@ -199,19 +201,6 @@ const Main = () => {
     }
   };
 
-  const saveData2 = async () => {
-    const newData = {
-      user_id: user_id,
-    };
-    try {
-      const response = await axios.get("http://localhost:8000/api/userdata/", {
-        params: 0,
-      });
-      console.log("response >>", response);
-    } catch (err) {
-      console.log("Error >>", err);
-    }
-  };
 
   const onReset1 = () => {
     setCode1("#some comment");
