@@ -48,7 +48,7 @@ class SimpleExplainApi(APIView):
         serializer = CodeExplainSerializer(data=request.data)
 
         if serializer.is_valid():
-            code_analysis = analyzeCode(serializer.code,0)
+            code_analysis = analyzeCode(serializer.data['code'],0)
             output_serializer = CodeExplainSerializer(code_analysis)
             return Response(output_serializer.data)
 
@@ -60,7 +60,7 @@ class DetailExplainApi(APIView):
         serializer = CodeExplainSerializer(data=request.data)
 
         if serializer.is_valid():
-            code_analysis = analyzeCode(serializer.code,1)
+            code_analysis = analyzeCode(serializer.data['code'],1)
             output_serializer = CodeExplainSerializer(code_analysis)
             return Response(output_serializer.data)
 
@@ -89,7 +89,7 @@ class TranslationApi(APIView):
         serializer = TranslationSerializer(data=request.data)
 
         if serializer.is_valid():
-            output = self.translate(serializer.language)
+            output = self.translate(serializer.data['language'])
             output_serializer = TranslationSerializer(output)
             return Response(output_serializer.data)
 
@@ -131,10 +131,10 @@ class UserDataApi(APIView):
         serializer = SaveSerializer(data=request.data)
         
         if serializer.is_valid():
-            user_id = serializer.user_id
-            question = serializer.question
-            count = serializer.count
-            code = serializer.code
+            user_id = serializer.data['user_id']
+            question = serializer.data['question']
+            count = serializer.data['count']
+            code = serializer.data['code']
             
             count = count % 3 #저장 가능 개수 3회 제한
 
@@ -157,7 +157,7 @@ class UserDataApi(APIView):
         serializer = SaveSerializer(data=request.data)
 
         if serializer.is_valid():
-            userdata = self.get_object(serializer.user_id,serializer.question)
+            userdata = self.get_object(serializer.data['user_id'],serializer.data['question'])
             userdata_serializer = UserDataSerializer(userdata)
             return  Response(userdata_serializer.data)
 
@@ -166,8 +166,8 @@ class UserDataApi(APIView):
     #내용 삭제: user + question 조합의 레코드 전체 삭제
     def delete(self,request):
         serializer = SaveSerializer(data=request.data)
-        user_id = serializer.user_id
-        question = serializer.question
+        user_id = serializer.data['user_id']
+        question = serializer.data['question']
 
         userdata = self.get_object(user_id,question)
         userdata.delete()
@@ -188,10 +188,10 @@ class SkeletonApi(APIView):
     
     #내용 조회
     def get(self,request):
-        question = request.GET.get('question') #GET 리퀘스트로 들어온 JSON 데이터에서 user_id를 받아옴
+        question = request.data.get('question')
         question_object = self.get_object(question)
-        skeleton_code = {"skeleton": question_object["skeleton"]}
-        serializer = SkeletonSerializer(skeleton_code)
+        skeleton_code = {"skeleton": question_object.skeleton}
+        serializer = SkeletonSerializer(data=skeleton_code)
         if serializer.is_valid():
             return Response(serializer.data)
         
