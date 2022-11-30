@@ -21,7 +21,6 @@ const Login = () => {
   };
 
   const onLogin1Click = useCallback(() => {
-    getLoginInf();
     navigate("/main");
   }, [navigate]);
 
@@ -37,6 +36,12 @@ const Login = () => {
      );
      console.log("response >>", response);
      console.log(response["data"]["msg"]);
+     if(response["data"]["msg"]=="login sucess"){
+        onLogin1Click();
+     }
+     else{
+        alert("잘못된 아이디나 비밀번호 입니다.");
+     }
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -52,7 +57,7 @@ const Login = () => {
         <div className="pw_text">PW</div>
         <input name="user_password" className="pw_input"></input>
       </div>
-      <button className="loginBtn" onClick={onLogin1Click}>로그인</button>
+      <button className="loginBtn" onClick={getLoginInf}>로그인</button>
       <div className="link_findPw"><Link to="/find">PW 찾기</Link></div>
       <div className="link_register"><Link to="/register">회원가입</Link></div>
     </div>

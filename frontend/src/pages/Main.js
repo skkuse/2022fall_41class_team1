@@ -6,10 +6,12 @@ import Editor, { useMonaco, DiffEditor } from "@monaco-editor/react";
 import axios from "axios";
 import { Dropdown, Dropdownlist } from "./Dropdown";
 import { NowContext } from "../context/NowContext";
+import Login from "./Login"
 
 const Main = () => {
+  //console.log(Login.logAccount);
   const [editorVisible, setEditorVisible] = useState(1);
-  const [user_id, setUser_id] = useState("asdf@asdf.conm");
+  const [user_id, setUser_id] = useState("yali98@naver.com");
   const [question_no, setQuestion_no] = useState("1");
   const [code1, setCode1] = useState("#some comment");
   const [code2, setCode2] = useState("#some comment");
@@ -19,6 +21,8 @@ const Main = () => {
   const [result, setResult] = useState("result display");
   const [resultShow, setResultShow] = useState(0);
   const [submitted,setSubmitted]=useState(0);
+  const [analyzed_texts,setAnalyzed_texts]=useState("코드 분석");
+  const [test_case_texts,setTest_case_texts]=useState("테스트 케이스");
 
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
@@ -146,9 +150,9 @@ const Main = () => {
 
     try {
       saveData();
-      const response = await axios.post("http://localhost:8000/api/execute2/", {
-        newData,
-      });
+      const response = await axios.post("http://localhost:8000/test/execute2/",
+        newData
+      );
       console.log("response >>", response);
       setResult(response["data"]);
     } catch (err) {
@@ -278,6 +282,41 @@ const Main = () => {
     setEditorVisible(4);
   };
 
+  const get_testcase = async () => {
+  var newData={};
+  if (editorVisible == 1) {
+        newData = {
+        user_id: user_id,
+        question: question_no,
+        msg: editorRef1.current.getValue(),
+      };
+      console.log(newData)
+    } else if (editorVisible == 2) {
+        newData = {
+        user_id: user_id,
+        question: question_no,
+        msg: editorRef2.current.getValue(),
+      };
+    } else if (editorVisible == 3) {
+        newData = {
+        user_id: user_id,
+        question: question_no,
+        count: editorVisible,
+        msg: editorRef3.current.getValue(),
+      };
+    }
+    try {
+      const response = await axios.get(
+        "http://localhost:8000/test/testcase/",{
+        params:newData
+        }
+      );
+      console.log("response >>", response);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
+  };
+
   const analyze_code = async () =>{
   var newData={};
     if (editorVisible == 1) {
@@ -295,11 +334,12 @@ const Main = () => {
     }
 
     try {
+    console.log(newData)
       const response = await axios.get("http://localhost:8000/api/editor/simple_explain/", {
         params: newData,
       });
       console.log("response >>", response);
-      setResult(response["data"]);
+      setAnalyzed_texts(response["data"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -396,7 +436,6 @@ const Main = () => {
               defaultLanguage="python"
               defaultValue="# some comment"
               onMount={handleEditor1DidMount}
-              onValidate={handleEditorValidation}
             />
             <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
             <input
@@ -580,7 +619,7 @@ const Main = () => {
                 }
               >
                 <textarea
-                  value="test case"
+                  value={test_case_texts}
                   disabled="True"
                   cols="145"
                   rows="15"
@@ -600,7 +639,7 @@ const Main = () => {
                 }
               >
                 <textarea
-                  value="코드 분석"
+                  value={analyzed_texts}
                   disabled="True"
                   cols="145"
                   rows="15"

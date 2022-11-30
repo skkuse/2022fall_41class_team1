@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Register.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Select from 'react-select';
 
 const Register = () => {
 
@@ -12,15 +13,22 @@ const Register = () => {
     user_name: "",
     user_password: "",
     user_passwordcheck:"",
-    find_email:"",
-    find_answer:""
   });
 
+  const [user_class, setUser_class] = useState("");
+
   const onChangeAccount = (e) => {
+  console.log(e);
     setAccount({
       ...account,
       [e.target.name]: e.target.value,
     });
+    console.log(account);
+  };
+
+  const onClassChangeAccount = (e) => {
+  console.log(e);
+    setUser_class(e.value);
     console.log(account);
   };
 
@@ -30,7 +38,7 @@ const Register = () => {
         user_id: account.user_email,
         user_name: account.user_name,
         user_pwd: account.user_password,
-        user_type: "True",
+        user_type: user_class,
         user_org: "skku"
      };
      try {
@@ -39,16 +47,29 @@ const Register = () => {
         newData
      );
      console.log("response >>", response);
+     console.log(response["statusText"])
+     if(response["statusText"]=="OK"){
+        onRegisterClick();
+     }
+     else{
+        alert("Please fill the blanks. If you have, then there exists such e-mail.");
+     }
+
     } catch (err) {
       console.log("Error >>", err);
     }
-    onRegisterClick();
   };
 
 
   const onRegisterClick = useCallback(() => {
     navigate("/login");
   }, [navigate]);
+
+    const ops = [
+	{ value: "True", label: "학생" },
+	{ value: "False", label: "교수자" },
+	];
+
 
 
   return (
@@ -64,17 +85,16 @@ const Register = () => {
         <input name="user_password" className="pwInput" onChange={onChangeAccount}></input>
         <div className="checkText">PW 확인</div>
         <input name="user_passwordcheck" className="checkInput" onChange={onChangeAccount}></input>
-        <div className="findText">PW 찾기 질문</div>
-        <select name="find_email" className="findInput" reuqired>
-          <option value="hungry">아 배고프다</option>
-          <option>저녁을 먹어야 할 시간이네요</option>
-          <option>다들 데이트 중인가요? *윤진</option>
-          <option>행복하세요</option>
-        </select>
-        <div className="answerText">답변</div>
-        <input name="find_answer"className="answerInput"></input>
+        <div className="classText">직책</div>
+        <Select
+                name="user_class"
+                className="classInput"
+            	onChange={onClassChangeAccount}
+            	placeholder="직책을 선택하세요."
+                options={ops}
+            />
       </div>
-      <button className="registerBtn" onClick={account.user_password==account.user_passwordcheck?sendData:()=>{console.err("Password check is not same with password")}}>회원가입</button>
+      <button className="registerBtn" onClick={account.user_password==account.user_passwordcheck?sendData:()=>{alert("Password check is not same with password")}}>회원가입</button>
     </div>
   );
 };
