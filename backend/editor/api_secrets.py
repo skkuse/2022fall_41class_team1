@@ -1,0 +1,1 @@
+API_KEY="여기에 api key 복사"
