@@ -16,21 +16,11 @@ class ExecuteCodeV1(models.Model):
         return "Execute result of " + self.user_id + "\'s " + self.save_type + "th save " + self.question + " code"
 
 class ExecuteCodeV2(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, db_column='user_id')
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, db_column='question')
-    exe_result = models.TextField()
-    
-    def __str__(self):
-        return "Execute result of " + self.user_id + "\'s " + self.question + " code"
+    code = models.TextField()
     
 class CheckTestcase(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, db_column='user_id')
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, db_column='question')
     score = models.CharField(max_length=10)
     msg = models.TextField() # test case 정보 제공.
-    
-    def __str__(self):
-        return "Testcase execution result of " + self.user_id + "\'s " + self.question + " code"
     
 class EvaluateCode(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, db_column='user_id')
