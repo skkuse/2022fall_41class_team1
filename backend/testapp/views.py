@@ -145,7 +145,7 @@ class ExecuteCodeV2API(APIView):
         serializer = ExecuteCodeV2Serializer(data=request.data)
         if serializer.is_valid():
             codedata = execute(serializer.data['code'])
-            codedata_serializer = ExecuteCodeV2Serializer(data=codedata)
+            codedata_serializer = ExecuteCodeV2Serializer(codedata)
             return Response(codedata_serializer.data)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
@@ -177,7 +177,7 @@ class CheckTestcaseAPI(APIView):
             answer= question_object['answer']
         
         result = testcase(answer, code, testcase)
-        codedata_serializer = CheckTestcaseSerializer(data=result)
+        codedata_serializer = CheckTestcaseSerializer(result)
         return Response(codedata_serializer.data)
 
 class EvaluateCodeAPI(APIView):
