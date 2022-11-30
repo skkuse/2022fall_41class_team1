@@ -29,27 +29,27 @@ def execute(code):
     os.remove('temp.py') 
     data = {'code':return_data}
     return data
+
+def excute_testcase(code, type, testcase):
+        
+    py = open('temp.txt','w')
+    py.write(code)
+    py.close()
+    os.rename('temp.txt','solution.py')
+
+    sh = open('temp.txt','w')
+    sh.write('python main2.py '+testcase)
+    sh.close()
+    os.rename('temp.txt','temp.sh')
+                
+    out = os.system(f'sh temp.sh > result_{type}.txt')
+    os.remove('temp.sh')
             
 def testcase(answer, user, testcase):
-    
+        
     print(answer)
+    print(user)
     
-    def excute_testcase(code, type, testcase):
-        
-        py = open('temp.txt','w')
-        py.write(code)
-        py.close()
-        os.rename('temp.txt','solution.py')
-
-        sh = open('temp.txt','w')
-        sh.write('python main.py '+testcase)
-        sh.close()
-        os.rename('temp.txt','temp.sh')
-                
-        out = os.system(f'sh temp.sh > result_{type}.txt')
-        os.remove('temp.sh')
-    
-        
     if ("*" in testcase):
         testcase1 = testcase.split("*")
         testcase2 = testcase1[-1].split("&")
@@ -100,16 +100,13 @@ def testcase(answer, user, testcase):
                 return_data = f'The {idx} line is not identical. (hidden case)'
                 msg.append(return_data)
                 hts.append(0)
-    
-    os.remove('result_answer.txt')
-    os.remove('result_my.txt')
                     
-    return {'score':(sum(ots)+sum(hts))/(len(ots)+len(hts))*100, 'msg':f'{msg}'}
+    return {'score':f'{(sum(ots)+sum(hts))/(len(ots)+len(hts))*100}', 'msg':f'{msg}'}
     
 class ExecuteCodeV1API(APIView):
     def get_object(self,user_id,question,save_type):
         try:
-            return ExecuteCodeV1.objects.get(user_id=user_id, quetsion=question, save_type=save_type)
+            return ExecuteCodeV1.objects.get(user_id=user_id, question=question, save_type=save_type)
         except ExecuteCodeV1.DoesNotExist:
             test_data = {'user_id':'jcy9911','question':'SWE3002-01','save_type':'1','exe_result':'line 1 : assertion error'}
             return test_data #Http404
@@ -126,14 +123,13 @@ class ExecuteCodeV1API(APIView):
             save_type = serializer.data['save_type']
             exe_result = execute(serializer.data['exe_result'])
             
-            savecode = self.get_object(user_id, question)
+            savecode = self.get_object(user_id, question, save_type)
             
             savecode['user_id'] = user_id
             savecode['question'] = question
             savecode['save_type'] = save_type
             savecode['exe_result'] = exe_result
             
-            savecode.save()
             savecode_sericalizer = ExecuteCodeV1Serializer(savecode)
             
             return Response(savecode_sericalizer, status=status.HTTP_201_CREATED)
@@ -155,28 +151,31 @@ class CheckTestcaseAPI(APIView):
         try:
             return Question.objects.get(pk=question)
         except Question.DoesNotExist:
-            cl1 = '\n'
-    
-            for line in open('code1','r').readlines():
-                cl1 = cl1 + line
-            
             test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
-                "answer":f"{cl1}", "testcase":"1 2 1*4 5 0*7 8 9&3 3 3&4 4 4&5 5 0", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
+                "answer":"print(2)", "testcase":"1 2 1*4 5 0*7 8 9&3 3 3&4 4 4&5 5 0", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
             }
             return test_data #Http404
             
     def get(self, request):
+
         question = request.data.get('question')
         code = request.data.get('code')
+        '''
+        code = '\n'
+        
+        for line in open('code1','r').readlines():
+            code = code + line
+        '''
         question_object = self.get_object(question)
         try:
-            testcase = question_object.testcase
+            tc = question_object.testcase
             answer = question_object.answer
         except:
-            testcase = question_object['testcase']
+            tc = question_object['testcase']
             answer= question_object['answer']
+    
+        result = testcase(answer, code, tc)
         
-        result = testcase(answer, code, testcase)
         codedata_serializer = CheckTestcaseSerializer(result)
         return Response(codedata_serializer.data)
 

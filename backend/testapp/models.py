@@ -8,7 +8,6 @@ from mainapp.models import User, Question
 class ExecuteCodeV1(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, db_column='user_id')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, db_column='question')
-    # 다른 테이블에서 정보를 가져오는법?
     save_type = models.CharField(max_length=1) # type 1,2,3 -> 요거 까지 key로 하는법?
     exe_result = models.TextField()
     
