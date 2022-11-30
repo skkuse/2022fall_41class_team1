@@ -30,25 +30,23 @@ def execute(code):
     data = {'code':return_data}
     return data
 
-def excute_testcase(code, type, testcase):
-        
-    py = open('temp.txt','w')
-    py.write(code)
-    py.close()
-    os.rename('temp.txt','solution.py')
-
-    sh = open('temp.txt','w')
-    sh.write('python main2.py '+testcase)
-    sh.close()
-    os.rename('temp.txt','temp.sh')
-                
-    out = os.system(f'sh temp.sh > result_{type}.txt')
-    os.remove('temp.sh')
             
 def testcase(answer, user, testcase):
         
-    print(answer)
-    print(user)
+    def excute_testcase(code, type, testcase):
+            
+        py = open('temp.txt','w')
+        py.write(code)
+        py.close()
+        os.rename('temp.txt','solution.py')
+
+        sh = open('temp.txt','w')
+        sh.write('python main2.py '+testcase)
+        sh.close()
+        os.rename('temp.txt','temp.sh')
+                    
+        out = os.system(f'sh temp.sh > result_{type}.txt')
+        os.remove('temp.sh')
     
     if ("*" in testcase):
         testcase1 = testcase.split("*")
@@ -160,12 +158,12 @@ class CheckTestcaseAPI(APIView):
 
         question = request.data.get('question')
         code = request.data.get('code')
-        '''
+
         code = '\n'
         
         for line in open('code1','r').readlines():
             code = code + line
-        '''
+
         question_object = self.get_object(question)
         try:
             tc = question_object.testcase
