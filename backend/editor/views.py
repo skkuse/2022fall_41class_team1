@@ -101,11 +101,10 @@ class UserDataApi(APIView):
     def get_object(self,user_id,question):
         try:
             return UserData.objects.get(user_id=user_id,question=question)
-        except UserData.DoesNotExist:
-            test_data = {
-                "user_id":"coldmilk","question":"SWE3021-42-1","save1":"import numpy as np"
-            }
-            return test_data #Http404
+        except:
+            new = UserData(user_id=User.objects.get(user_id=user_id),question=Question(question=question))
+            new.save()
+            return new
     
     def post(self,request):
         serializer = SaveSerializer(data=request.data)
@@ -120,16 +119,16 @@ class UserDataApi(APIView):
 
             userdata = self.get_object(user_id,question)
             
-            if count == 0:
+            if count == 1:
                 userdata.save1 = code
-            elif count == 1:
+            elif count == 2:
                 userdata.save2 = code
             else:
                 userdata.save3 = code
             userdata.save() #UserData save
             userdata_serializer = UserDataSerializer(userdata)
-            return Response(userdata_serializer.data, status=status.HTTP_201_CREATED)
-
+            return Response(userdata_serializer.data,status=status.HTTP_201_CREATED)
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     #내용 조회
@@ -160,11 +159,8 @@ class SkeletonApi(APIView):
     def get_object(self,question):
         try:
             return Question.objects.get(pk=question)
-        except Question.DoesNotExist:
-            test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
-                "answer":"12", "testcase":"[1,2,3,4]", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
-            }
-            return test_data #Http404
+        except:
+            return Http404
     
     #내용 조회
     def get(self,request):
@@ -180,11 +176,8 @@ class ReferenceApi(APIView):
     def get_object(self,question):
         try:
             return Question.objects.get(pk=question)
-        except Question.DoesNotExist:
-            test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
-                "answer":"12", "testcase":"[1,2,3,4]", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
-            }
-            return test_data #Http404
+        except:
+            return Http404
 
     def get(self,request):
         keyword = request.data.get('keyword')
@@ -199,3 +192,4 @@ class ReferenceApi(APIView):
         serializer = ReferenceSerializer(data=links)
         if serializer.is_valid():
             return Response(serializer.data)
+        
