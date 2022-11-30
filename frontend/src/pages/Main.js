@@ -18,7 +18,7 @@ const Main = () => {
   const [modified_code, setModified_code] = useState("#some comment");
   const [result, setResult] = useState("result display");
   const [resultShow, setResultShow] = useState(0);
-  const [submitted,setSubmitted]=useState(0);
+  const [submitted, setSubmitted] = useState(0);
 
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
@@ -118,25 +118,23 @@ const Main = () => {
   }
 
   const showValue = async () => {
-  var newData={};
+    var newData = {};
     if (editorVisible == 1) {
-
-        newData = {
+      newData = {
         user_id: user_id,
         question: question_no,
-
 
         exe_result: editorRef1.current.getValue(),
       };
     } else if (editorVisible == 2) {
-        newData = {
+      newData = {
         user_id: user_id,
         question: question_no,
 
         exe_result: editorRef2.current.getValue(),
       };
     } else if (editorVisible == 3) {
-        newData = {
+      newData = {
         user_id: user_id,
         question: question_no,
 
@@ -166,26 +164,26 @@ const Main = () => {
   }, [monaco]);
 
   const saveData = async () => {
-  var newData={};
-  if (editorVisible == 1) {
-        newData = {
-        user_id: user_id,
-        question: question_no,
+    var newData = {};
+    if (editorVisible == 1) {
+      newData = {
+        user_id: "iksang98@gmail.com",
+        question: "2",
         count: editorVisible,
         code: editorRef1.current.getValue(),
       };
-      console.log(newData)
+      console.log(newData);
     } else if (editorVisible == 2) {
-        newData = {
-        user_id: user_id,
-        question: question_no,
+      newData = {
+        user_id: "iksang98@gmail.com",
+        question: "2",
         count: editorVisible,
         code: editorRef2.current.getValue(),
       };
     } else if (editorVisible == 3) {
-        newData = {
-        user_id: user_id,
-        question: question_no,
+      newData = {
+        user_id: "iksang98@gmail.com",
+        question: "2",
         count: editorVisible,
         code: editorRef3.current.getValue(),
       };
@@ -200,7 +198,6 @@ const Main = () => {
       console.log("Error >>", err);
     }
   };
-
 
   const onReset1 = () => {
     setCode1("#some comment");
@@ -278,26 +275,29 @@ const Main = () => {
     setEditorVisible(4);
   };
 
-  const analyze_code = async () =>{
-  var newData={};
+  const analyze_code = async () => {
+    var newData = {};
     if (editorVisible == 1) {
-        newData = {
+      newData = {
         code: editorRef1.current.getValue(),
       };
     } else if (editorVisible == 2) {
-        newData = {
+      newData = {
         code: editorRef2.current.getValue(),
       };
     } else if (editorVisible == 3) {
-        newData = {
+      newData = {
         code: editorRef3.current.getValue(),
       };
     }
 
     try {
-      const response = await axios.get("http://localhost:8000/api/editor/simple_explain/", {
-        params: newData,
-      });
+      const response = await axios.get(
+        "http://localhost:8000/api/editor/simple_explain/",
+        {
+          params: newData,
+        }
+      );
       console.log("response >>", response);
       setResult(response["data"]);
     } catch (err) {
@@ -531,13 +531,40 @@ const Main = () => {
             <button className="resultBtn1" onClick={() => setResultShow(0)}>
               실행결과
             </button>
-            <button className="resultBtn2" onClick={submitted==1?() => setResultShow(1):()=> {console.error("you should submit before")}}>
+            <button
+              className="resultBtn2"
+              onClick={
+                submitted == 1
+                  ? () => setResultShow(1)
+                  : () => {
+                      console.error("you should submit before");
+                    }
+              }
+            >
               제출결과
             </button>
-            <button className="resultBtn3" onClick={submitted==1?() => setResultShow(2):()=> {console.error("you should submit before")}}>
+            <button
+              className="resultBtn3"
+              onClick={
+                submitted == 1
+                  ? () => setResultShow(2)
+                  : () => {
+                      console.error("you should submit before");
+                    }
+              }
+            >
               테스트케이스
             </button>
-            <button className="resultBtn4" onClick={submitted==1?() => setResultShow(3):()=> {console.error("you should submit before")}}>
+            <button
+              className="resultBtn4"
+              onClick={
+                submitted == 1
+                  ? () => setResultShow(3)
+                  : () => {
+                      console.error("you should submit before");
+                    }
+              }
+            >
               코드분석
             </button>
             <div className="result_window">
@@ -587,7 +614,7 @@ const Main = () => {
                 />
                 <button onClick={analyze_code}>분석하기</button>
               </div>
-               <div
+              <div
                 css={
                   resultShow == 3
                     ? css`

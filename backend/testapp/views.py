@@ -15,6 +15,7 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from copydetect import CopyDetector
 
 def execute(code):
     py = open('temp.txt','w')
@@ -221,3 +222,20 @@ class EvaluateCodeAPI(APIView):
         
     def delete(self, request):
         print("")
+
+class CheckPlagiarismAPI(APIView):
+    def post(self, request):
+        ref_dir = "testapp"
+        code = request.data.get('code')
+        detector = CopyDetector(ref_dirs=[ref_dir], boilerplate_dirs=[ref_dir], extensions=["py"], display_t=0.5)
+        f=open("test.py", 'w')
+        f.write(code)
+        f.close()
+        detector.add_file("test.py")
+        detector.run()
+        os.remove("test.py")
+        return Response(detector.similarity_matrix[0][0][0])
+
+class CheckReadabilityAPI(APIView):
+    def post(self,request):
+        return
