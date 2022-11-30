@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.shortcuts import render
 from mainapp.serializers import *
 from mainapp.models import *

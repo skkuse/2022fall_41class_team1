@@ -25,6 +25,7 @@ const Register = () => {
   };
 
   const sendData=async()=>{
+  console.log(account);
      const newData = {
         user_id: account.user_email,
         user_name: account.user_name,
@@ -41,11 +42,11 @@ const Register = () => {
     } catch (err) {
       console.log("Error >>", err);
     }
+    onRegisterClick();
   };
 
 
   const onRegisterClick = useCallback(() => {
-    sendData();
     navigate("/login");
   }, [navigate]);
 
@@ -73,7 +74,7 @@ const Register = () => {
         <div className="answerText">답변</div>
         <input name="find_answer"className="answerInput"></input>
       </div>
-      <button className="registerBtn" onClick={account.user_password==account.user_passwordcheck?onRegisterClick:()=>{console.err("Password check is not same with password")}}>회원가입</button>
+      <button className="registerBtn" onClick={account.user_password==account.user_passwordcheck?sendData:()=>{console.err("Password check is not same with password")}}>회원가입</button>
     </div>
   );
 };
