@@ -237,5 +237,83 @@ class CheckPlagiarismAPI(APIView):
         return Response(detector.similarity_matrix[0][0][0])
 
 class CheckReadabilityAPI(APIView):
+    
+    def analyze(self,code):
+        mypy_score = 20
+        pylint_score = 20
+        eradicate_score = 20
+        radon_score = 20
+        pycodestyle_score = 20
+
+        user_code = open("./tmp/user_code.py",'w')
+        user_code.write(code)
+        user_code.close()
+
+        os.system("pylama " + "./tmp/user_code.py" + " > result.txt")
+
+        read_code = open("./tmp/user_code.py",'r')
+
+        ret_data = {"score":"","comment":""}
+        score = {"mypy":0,"pylint":0,"eradicate":0,"radon":0,"pycodestyle":0}
+        comment = {"mypy":[],"pylint":[],"eradicate":[],"radon":[],"pycodestyle":[]}
+
+        lines = read_code.readlines()
+        for line in lines:
+            res = ""
+            words = line.split()
+            if words[-1]=="[mypy]":
+                for word in words[2:-1]:
+                    res += word
+                mypy_score -= 1
+            elif words[-1]=="[pylint]":
+                for word in words[2:-1]:
+                    res += word
+                pylint_score -= 1
+            elif words[-1]=="[eradicate]":
+                for word in words[2:-1]:
+                    res += word
+                eradicate_score -= 1
+            elif words[-1]=="[radon]":
+                for word in words[2:-1]:
+                    res += word
+                radon_score -= 1
+            elif words[-1]=="[pycodestyle]":
+                for word in words[2:-1]:
+                    res += word
+                pycodestyle_score -= 1
+
+            #경우별 코멘트를 res에 받아왔음
+            #각 경우별 코멘트를 로그형식으로 추가
+            res += '\n'
+            comment[words[-1]].append(res)
+        
+        read_code.close()
+        os.remove("./tmp/user_code.py")
+
+        if mypy_score < 0:
+            mypy_score = 0
+        if pylint_score < 0:
+            pylint_score = 0
+        if eradicate_score < 0:
+            eradicate_score = 0
+        if radon_score < 0:
+            radon_score = 0
+        if pycodestyle_score < 0:
+            pycodestyle_score = 0
+
+        score['mypy'] = mypy_score
+        score['pylint'] = pylint_score
+        score['eradicate'] = eradicate_score
+        score['radon'] = radon_score
+        score['pycodestyle'] = pycodestyle_score
+
+        ret_data['score'] = score
+        ret_data['comment'] = comment
+
+        return ret_data
+
     def post(self,request):
-        return
+        
+        user_code = request.data.get('code')
+        return self.analyze(user_code)
+        
