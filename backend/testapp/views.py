@@ -104,7 +104,7 @@ def testcase(answer, user, testcase):
     os.remove('result_answer.txt')
     os.remove('result_my.txt')
                     
-    return {'score':(sum(ots)+sum(hts))/(len(ots)+len(hts))*100, 'msg':msg}
+    return {'score':(sum(ots)+sum(hts))/(len(ots)+len(hts))*100, 'msg':f'{msg}'}
     
 class ExecuteCodeV1API(APIView):
     def get_object(self,user_id,question,save_type):
