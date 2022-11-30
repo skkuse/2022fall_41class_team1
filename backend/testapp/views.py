@@ -32,6 +32,8 @@ def execute(code):
             
 def testcase(answer, user, testcase):
     
+    print(answer)
+    
     def excute_testcase(code, type, testcase):
         
         py = open('temp.txt','w')
@@ -102,7 +104,7 @@ def testcase(answer, user, testcase):
     os.remove('result_answer.txt')
     os.remove('result_my.txt')
                     
-    return {'score':str((sum(ots)+sum(hts))/(len(ots)+len(hts))*100), 'msg':msg}
+    return {'score':(sum(ots)+sum(hts))/(len(ots)+len(hts))*100, 'msg':msg}
     
 class ExecuteCodeV1API(APIView):
     def get_object(self,user_id,question,save_type):
@@ -114,9 +116,11 @@ class ExecuteCodeV1API(APIView):
     
     #내용 추가
     def post(self,request):
+        
         serializer = ExecuteCodeV1Serializer(data=request.data)
         
         if serializer.is_valid():
+            
             user_id = serializer.data['user_id']
             question = serializer.data['question']
             save_type = serializer.data['save_type']
@@ -124,32 +128,16 @@ class ExecuteCodeV1API(APIView):
             
             savecode = self.get_object(user_id, question)
             
+            savecode['user_id'] = user_id
+            savecode['question'] = question
+            savecode['save_type'] = save_type
+            savecode['exe_result'] = exe_result
+            
             savecode.save()
-            #savecode_serializer = 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            savecode_sericalizer = ExecuteCodeV1Serializer(savecode)
+            
+            return Response(savecode_sericalizer, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    #내용 조회
-    def get(self,request):
-        serializer = ExecuteCodeV1Serializer(data=request.data)
-        
-        if serializer.is_valid():
-            codedata = self.get_object(serializer.user_id, serializer.question, serializer.save_type)
-            codedata_serializer = ExecuteCodeV1Serializer(codedata)
-            return Response(codedata_serializer.data)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-    
-    #내용 삭제
-    def delete(self,request):
-        serializer = ExecuteCodeV1Serializer(data=request.data)
-        user_id = serializer.user_id
-        question = serializer.question
-        save_type = serializer.save_type
-
-        codedata = self.get_object(user_id,question,save_type)
-        codedata.delete()
-
-        return Response(status=status.HTTP_204_NO_CONTENT)
     
 # 현재 에디터에 있는 코드 바로 실행
 class ExecuteCodeV2API(APIView):
@@ -167,20 +155,27 @@ class CheckTestcaseAPI(APIView):
         try:
             return Question.objects.get(pk=question)
         except Question.DoesNotExist:
+            cl1 = '\n'
+    
+            for line in open('code1','r').readlines():
+                cl1 = cl1 + line
+            
             test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
-                "answer":"12", "testcase":"[1,2,3,4]", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
+                "answer":f"{cl1}", "testcase":"1 2 1*4 5 0*7 8 9&3 3 3&4 4 4&5 5 0", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
             }
             return test_data #Http404
             
     def get(self, request):
         question = request.data.get('question')
-        question_object = self.get_object(question)
-        testcase = question_object.testcase
-        answer = question_object.answer
         code = request.data.get('code')
+        question_object = self.get_object(question)
+        try:
+            testcase = question_object.testcase
+            answer = question_object.answer
+        except:
+            testcase = question_object['testcase']
+            answer= question_object['answer']
         
-        print(testcase)
-        print(question)
         result = testcase(answer, code, testcase)
         codedata_serializer = CheckTestcaseSerializer(data=result)
         return Response(codedata_serializer.data)
@@ -193,15 +188,5 @@ class EvaluateCodeAPI(APIView):
             test_data = {'user_id':'jcy9911','question':'SWE3002-01','score':'20','msg' :'In the line 0, correct answer is 10 but user answer is 30'}
             return test_data
     
-    def post(self, request):
-        plagiarism = models.TextField()
-        function = models.TextField()
-        efficiency = models.TextField()
-        readability = models.TextField()
-        print("")
-    
     def get(self, request):
-        print("")
-        
-    def delete(self, request):
         print("")
