@@ -18,17 +18,16 @@ from .reference import crawling_link
 
 openai.api_key = API_KEY
 
-def analyzeCode(self,user_code,mode):
+def analyzeCode(user_code,mode):
     #0: simple, 1:detail
-    if mode == 1:
+    if mode == 1:  #detail
         model = "text-davinci-002"
-        token = 500
-    else:
-        model = "text-curie-001"
         token = 2000
+    else:           #simple
+        model = "text-curie-001"
+        token = 500
 
-    analysis_prompt = user_code + """\nHere's what the code is doing:
-    """
+    analysis_prompt = user_code + """\nHere's what the code is doing:"""
 
     response = openai.Completion.create(
         model=model,
@@ -70,12 +69,12 @@ class TranslationApi(APIView):
 
     def translate(self,english):
         translation_prompt = """Translate this into Korean
-        """ + english + "\n"
+        """ + english
 
         response = openai.Completion.create(
             model="text-davinci-002",
             prompt=translation_prompt,
-            max_tokens=1000,
+            max_tokens=2000,
             temperature=0
         )
 
@@ -108,25 +107,6 @@ class UserDataApi(APIView):
             }
             return test_data #Http404
     
-    #내용 추가 => 코드를 저장하려고 하는 것임
-    success_response = openapi.Schema(
-        title='response',
-        type=openapi.TYPE_OBJECT,
-        properties={
-            'user id' : openapi.Schema(type=openapi.TYPE_STRING, description="사용자 ID"),
-        }
-    )
-    @swagger_auto_schema(tags=["userdata 추가"], 
-                    request_body=UserDataSerializer, 
-                    query_serializer=UserDataSerializer,
-                    responses={
-                        200 : success_response,
-                        404 : '찾을 수 없음',
-                        400 : '인풋값 에러',
-                        500 : '서버 에러',
-                    },
-                    operation_id='사용자 데이터 추가',
-                    operation_description="사용자 데이터 추가하는 API임...")
     def post(self,request):
         serializer = SaveSerializer(data=request.data)
         
@@ -207,7 +187,8 @@ class ReferenceApi(APIView):
             return test_data #Http404
 
     def get(self,request):
-        keyword = request.GET.get('keyword')
+        keyword = request.data.get('keyword')
+        keyword = keyword.replace(' ', '')
         '''
         question = request.GET.get('question')
         question_object = self.get_object(question)
@@ -215,6 +196,6 @@ class ReferenceApi(APIView):
         '''
         links = crawling_link(keyword)
         links['keyword'] = keyword
-        serializer = ReferenceSerializer(links)
+        serializer = ReferenceSerializer(data=links)
         if serializer.is_valid():
             return Response(serializer.data)
