@@ -158,12 +158,6 @@ class CheckTestcaseAPI(APIView):
 
         question = request.data.get('question')
         code = request.data.get('code')
-
-        code = '\n'
-        
-        for line in open('code1','r').readlines():
-            code = code + line
-
         question_object = self.get_object(question)
         try:
             tc = question_object.testcase
