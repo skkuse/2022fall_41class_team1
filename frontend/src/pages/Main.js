@@ -310,57 +310,60 @@ const Main = () => {
               <Editor
                 id = "Editor1"
                 value={code1}
-                height="60vh"
-                width="130vh"
+                height="70vh"
+                width="100%"
                 theme="myTheme"
                 defaultLanguage="python"
                 defaultValue="# some comment"
                 onMount={handleEditor1DidMount}
                 onValidate={handleEditorValidation}
               />
-              <div css={css`display: flex; flex-direction: row`}>
-                <button className="showvalueBtn" onClick={showValue}>Show value</button> 자동으로 저장됩니다.
+              <div className="editor_footer">
+              <div css={css`display: flex; flex-direction: row`}>.
                 <input className="uploadBtn" type="file" onChange={e => handleChangeFile1(e.target.files[0])} accept = ".py"/>
-                <button className="resetBtn" onClick={onReset1}>reset</button>
-                <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>copy</button>
-                <button className="downloadBtn" onClick ={()=>{saveFile(editorRef1.current.getValue(), "code1.py")}}>download</button>
+                <button className="resetBtn" onClick={onReset1}>초기화</button>
+                <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>복사</button>
+                <button className="downloadBtn" onClick ={()=>{saveFile(editorRef1.current.getValue(), "code1.py")}}>다운로드</button>
+              </div>
               </div>
             </div>
             <div css={editorVisible==2?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
               <Editor
                 value={code2}
-                height="60vh"
-                width="130vh"
+                height="51.5vh"
+                width="100%"
                 theme="myTheme"
                 defaultLanguage="python"
                 defaultValue="# some comment"
                 onMount={handleEditor2DidMount}
               />
-              <div css={css`display: flex; flex-direction: row`}>
-                <button className="showvalueBtn" onClick={showValue}>Show value</button> 자동으로 저장됩니다.
+              <div className="editor_footer">
+              <div css={css`display: flex; flex-direction: row-reverse`}>
                 <input className="uploadBtn" type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
-                <button className="resetBtn" onClick={onReset2}>reset</button>
-                <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>copy</button>
-                <button className="downloadBtn" onClick ={()=>{saveFile(editorRef2.current.getValue(), "code2.py")}}>download</button>
+                <button className="resetBtn" onClick={onReset2}>초기화</button>
+                <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>복사</button>
+                <button className="downloadBtn" onClick ={()=>{saveFile(editorRef2.current.getValue(), "code2.py")}}>다운로드</button>
+              </div>
               </div>
             </div>
             <div css={editorVisible==3?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
               <Editor
                 value={code3}
-                height="60vh"
-                width="130vh"
+                height="51.5vh"
+                width="100%"
                 theme="myTheme"
                 defaultLanguage="python"
                 defaultValue="# some comment"
                 onMount={handleEditor3DidMount}
               />
+              <div className="editor_footer">
               <div css={css`display: flex; flex-direction: row`}>
-                <button className="showvalueBtn" onClick={showValue}>Show value</button> 자동으로 저장됩니다.
                 <input className="uploadBtn" type="file" onChange={e => handleChangeFile3(e.target.files[0])} accept = ".py"/>
-                <button className="resetBtn" onClick={onReset3}>reset</button>
-                <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef3.current.getValue())}>copy</button>
-                <button className="downloadBtn" onClick ={()=>{saveFile(editorRef3.current.getValue(), "code3.py")}}>download</button>
+                <button className="resetBtn" onClick={onReset3}>초기화</button>
+                <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef3.current.getValue())}>복사</button>
+                <button className="downloadBtn" onClick ={()=>{saveFile(editorRef3.current.getValue(), "code3.py")}}>다운로드</button>
               </div>
+            </div>
             </div>
             <div css={editorVisible==4?css`display:block`:css`display:none`}>
               <DiffEditor
@@ -375,25 +378,31 @@ const Main = () => {
               />
             </div>
           </div>
+
           <div className="terminal" css={css`background-color:blue`}>
             <div className="terminal_header">
+            <div className="flex_left">
               <button className="resultBtn1" onClick={() => setResultShow(0)}>실행결과</button>
               <button className="resultBtn2" onClick={() => setResultShow(1)}>제출결과</button>
               <button className="resultBtn3" onClick={() => setResultShow(1)}>테스트케이스</button>
+            </div>
+            <div className="flex_right">
               <button className="resultBtn4" onClick={() => setResultShow(2)}>코드분석</button>
+            </div>
+            </div>
               <div className="result_window">
                 <div css={resultShow==0?css`display:block`:css`display:none`}>
-                  <textarea value={result} disabled='True' cols="145" rows="15"/>
+                  <textarea value={result} disabled='True' cols="140" rows="10"/>
                 </div>
                 <div css={resultShow==1?css`display:block`:css`display:none`}>
-                  <textarea value={result} disabled='True' cols="145" rows="15" />
+                  <textarea value={result} disabled='True' cols="140" rows="10" />
                 </div>
                 <div css={resultShow==2?css`display:flex; flex-direction: column;`:css`display:none;`}>
-                  <textarea value="코드 분석" disabled='True' cols="145" rows="15" />
+                  <textarea value="코드 분석" disabled='True' cols="140" rows="10" />
                   <button>분석하기</button>
                 </div>
               </div>
-            </div>
+
           </div>
         </div>
       </div>
