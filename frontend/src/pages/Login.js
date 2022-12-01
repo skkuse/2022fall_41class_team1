@@ -21,7 +21,6 @@ const Login = () => {
   };
 
   const onLogin1Click = useCallback(() => {
-    getLoginInf();
     navigate("/main");
   }, [navigate]);
 
@@ -32,11 +31,17 @@ const Login = () => {
      };
      try {
         const response = await axios.post(
-        "http://localhost:8000/main/signin/",
-        newData
-     );
+            "http://localhost:8000/main/signin/",
+            newData
+        );
      console.log("response >>", response);
      console.log(response["data"]["msg"]);
+     if(response["data"]["msg"]=="Login Sucess"){
+        onLogin1Click();
+     }
+     else{
+        alert("잘못된 아이디나 비밀번호 입니다.");
+     }
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -44,15 +49,16 @@ const Login = () => {
 
   return (
     <div className="desktop2">
+    <Link to={`/main`} state={{ user: "hello" }}> </Link>
       <div className="login_title1">CODING TEST</div>
       <div className="login_title2">CODING TEST</div>
       <div className="login_input">
         <div className="email_text">E-mail</div>
-        <input name="user_email" className="email_input"></input>
+        <input name="user_email" className="email_input" onChange={onChangeLogAccount}></input>
         <div className="pw_text">PW</div>
-        <input name="user_password" className="pw_input"></input>
+        <input name="user_password" className="pw_input" onChange={onChangeLogAccount}></input>
       </div>
-      <button className="loginBtn" onClick={onLogin1Click}>로그인</button>
+      <button className="loginBtn" onClick={getLoginInf}>로그인</button>
       <div className="link_findPw"><Link to="/find">PW 찾기</Link></div>
       <div className="link_register"><Link to="/register">회원가입</Link></div>
     </div>

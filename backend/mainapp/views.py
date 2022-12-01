@@ -33,7 +33,6 @@ class ListUserData(generics.ListCreateAPIView):
     queryset = UserData.objects.all()
     serializer_class = UserDataSerializer
 
-@swagger_auto_schema(tags=["detail user"], request_body=UserSerializer, query_serializer=UserSerializer)
 def detail_user(request, userid):
     data = User.objects.get(user_id=userid)
     queryset = User.objects.all()
@@ -42,7 +41,6 @@ def detail_user(request, userid):
         return JsonResponse(serializer_class.data, safe=False)
 
 class DetailUser(generics.RetrieveUpdateDestroyAPIView):
-    #   @swagger_auto_schema(tags=["detail user"], request_body=UserSerializer, query_serializer=UserSerializer)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -84,9 +82,21 @@ class RegistUser(APIView):
         return Response(data=UserSerializer(user).data)
     
 
+
+
+# 학생들이 강의 추가하는 API
+class LectureAPI(APIView):
+    def post(self, request):
+        serializers = LectureSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_200_OK)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
 # request로 user_id를 전달해준다 
 # 전달하는 값은 "student@skku.com"이다.
 class CourseFindAPI(APIView):
+<<<<<<< HEAD
     def post(self, request):
         # user_id = request.data['user_id']
         # course_list = Lecture.objects.filter(user_id=user_id).values()
@@ -99,10 +109,20 @@ class CourseFindAPI(APIView):
         serializer = CourseIdSerializer(data=request.POST)
         if serializer.is_valid():
             user_id = serializer.data.get('user_id')
+=======
+    def get(self, request):
+        print("hello")
+        serializer = CourseIdSerializer(data=request.GET)
+        print(serializer.is_valid())
+        if serializer.is_valid():
+            user_id = serializer.data.get('user_id')
+            print(user_id)
+>>>>>>> 280bdf59aac0f49709928f0f5a4a75befba6ede4
             course_list = Lecture.objects.filter(user_id=user_id)
+            print(course_list)
             serializer_list = LectureSerializer(course_list, many=True)
+            print(serializer_list)
             courses = []
-
             for i in serializer_list.data:
                 courses.append(i['course'])
             return Response(courses, status=status.HTTP_200_OK)
@@ -134,18 +154,9 @@ class RequestQuestionAPI(APIView):
             return Response(question_info, status=status.HTTP_200_OK)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# 학생들이 강의 추가하는 API
-class LectureAPI(APIView):
-    def post(self, request):
-        serializers = LectureSerializer(data=request.data)
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data, status=status.HTTP_200_OK)
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserApi(APIView):
-    
     def get_object(self,user_id):
         try:
             return User.objects.get(pk=user_id)
@@ -219,6 +230,8 @@ class CourseApi(APIView):
             return test_data #Http404
     
     #내용 추가
+    # request값: user_id아니고 user_id_id임.
+
     def post(self, request):
         serializer = CourseSerializer(request.data)
         course = serializer.create(request.data)

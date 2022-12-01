@@ -13,3 +13,5 @@ __pycache__/
 **/**/**/__pycache__/
 backend/editor/api_secrets.py
 .DS_Store
+backend/result_answer.txt
+backend/result_my.txt

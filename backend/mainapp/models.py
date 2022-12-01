@@ -16,27 +16,38 @@ class User(models.Model):
 
 class Course(models.Model):
     course= models.CharField(max_length=50, primary_key=True, help_text="예: SWE3002-41")
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE,db_column='user_id', help_text="예: sunkyun12@skku.edu")
+
+    user_id = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE,db_column='user_id', null=True, blank=True, help_text="예: sunkyun12@skku.edu")
+
     course_name = models.CharField(max_length=50, help_text="예: 소프트웨어공학개론")
 
     def __str__(self):
         return self.course
 
+
 class Lecture(models.Model):
+<<<<<<< HEAD
     course = models.ForeignKey(Course,on_delete=models.CASCADE, db_column='course', help_text="프로그래밍기초실습") 
     user_id = models.ForeignKey(User,on_delete=models.CASCADE, blank=True, db_column='user_id', help_text="예: sunkyun12@skku.edu")
    
+=======
+    course = models.ForeignKey(Course,on_delete=models.CASCADE, db_column='course', help_text="프로그래밍기초실습")
+    user_id = models.ForeignKey(User,on_delete=models.CASCADE,db_column='user_id', help_text="예: sunkyun12@skku.edu")
+
+>>>>>>> 280bdf59aac0f49709928f0f5a4a75befba6ede4
     def __str__(self):
         return str(self.course)
 
 
+
+
 class Question(models.Model):
     question = models.CharField(primary_key=True,max_length=50, help_text="예: 프로그래밍기초실습_week2")
-    course = models.ForeignKey(Course,on_delete=models.CASCADE, db_column='course', null=True, help_text="프로그래밍기초실습") 
+    course = models.ForeignKey(Course, related_name='question',on_delete=models.CASCADE, db_column='course', null=True, help_text="프로그래밍기초실습")
     skeleton = models.TextField(help_text="스켈레톤 코드") 
-    answer = models.CharField(max_length=1000)
+    answer = models.TextField()
     testcase = models.CharField(max_length=100)
-    reference = models.CharField(max_length=300, help_text="문제 설명 밑의 참고사항") 
+    reference = models.CharField(max_length=1000, help_text="문제 설명 밑의 참고사항") 
     duedate = models.DateTimeField(help_text="마감기한") 
     keyword = models.CharField(null=True, max_length=50)
 

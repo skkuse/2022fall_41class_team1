@@ -1,11 +1,14 @@
 import styles from "./Main.css";
 import React, { useState, useRef, useEffect, useContext } from "react";
+import { useLocation } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
 import Editor, { useMonaco, DiffEditor } from "@monaco-editor/react";
 import axios from "axios";
 // import { Dropdown, Dropdownlist } from "./Dropdown";
 import { NowContext } from "../context/NowContext";
+import Login from "./Login"
+
 
 
 const weeklist = [
@@ -42,17 +45,28 @@ const week6 = {problem: '문제 6번',constraint: '제약조건 6번',testcase: 
 
 
 const Main = () => {
+  //const location = useLocation();
+  //console.log(location);
+  //const user = location.state.user;
   const [editorVisible, setEditorVisible] = useState(1);
   const [user_id, setUser_id] = useState("skku@gmail.com");
-  const [question_no, setQuestion_no] = useState("1");
-  const [code1, setCode1] = useState("#some comment");
+  //console.log(user_id);
+  const [question_no, setQuestion_no] = useState("2");
+  const [code1, setCode1] = useState("# code에 함수 이거 넣어서 테스트 ㄱㄱ\ndef solution(add1, add2, add3):\n\tsum = add1 + add2 + add3\n\treturn sum\nif __name__ == \"__main__\":\n\tprint(solution(1, 2, 3))");
+
   const [code2, setCode2] = useState("#some comment");
   const [code3, setCode3] = useState("#some comment");
   const [original_code, setOriginal_code] = useState("#some comment");
   const [modified_code, setModified_code] = useState("#some comment");
   const [result, setResult] = useState("result display");
   const [resultShow, setResultShow] = useState(0);
-  const [submitted, setSubmitted] = useState(0);
+  const [submitted,setSubmitted]=useState(0);
+  const [analyzed_texts,setAnalyzed_texts]=useState("코드 분석");
+  const [test_case_texts,setTest_case_texts]=useState("테스트 케이스");
+  const [efficiency1,setEfficiency1]=useState("");
+  const [efficiency2,setEfficiency2]=useState("");
+  const [copy,setCopy]=useState("");
+  const [functionality,setFunctionality]=useState("");
 
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
@@ -154,35 +168,29 @@ const Main = () => {
   const showValue = async () => {
     var newData = {};
     if (editorVisible == 1) {
-      newData = {
-        user_id: user_id,
-        question: question_no,
-
-        exe_result: editorRef1.current.getValue(),
+        newData = {
+        "code": editorRef1.current.getValue(),
       };
     } else if (editorVisible == 2) {
       newData = {
-        user_id: user_id,
-        question: question_no,
-
-        exe_result: editorRef2.current.getValue(),
+        "code": editorRef2.current.getValue(),
       };
     } else if (editorVisible == 3) {
       newData = {
-        user_id: user_id,
-        question: question_no,
-
-        exe_result: editorRef3.current.getValue(),
+        "code": editorRef3.current.getValue(),
       };
     }
 
     try {
-      saveData();
-      const response = await axios.post("http://localhost:8000/api/execute2/", {
-        newData,
-      });
+        saveData();
+      const response = await axios.get(
+        "http://localhost:8000/test/execute2/",
+        {params: newData}
+      );
       console.log("response >>", response);
-      setResult(response["data"]);
+      console.log(response["data"]["code"]);
+      setResult(response["data"]["code"]);
+      console.log("실행결과 작성 완료");
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -195,11 +203,15 @@ const Main = () => {
     if (monaco) {
       console.log("here is the monaco instance:", monaco);
     }
-    
-    async function getAllCourse() {
+
+    getAllCourse();
+
+  }, [monaco]);
+
+  const getAllCourse = async()=>{
       try {
         console.log(user_id);
-        const response = await axios.get("http://localhost:8000/main/", {
+        const response = await axios.get("http://localhost:8000/main/testtest/", {
           params:{
           user_id: user_id,
         }});
@@ -209,36 +221,31 @@ const Main = () => {
         console.log("Error >>", error);
       }
     }
-    getAllCourse();
 
-
-
-
-  }, [monaco]);
 
   const saveData = async () => {
-    var newData = {};
-    if (editorVisible == 1) {
-      newData = {
-        user_id: "iksang98@gmail.com",
-        question: "2",
-        count: editorVisible,
-        code: editorRef1.current.getValue(),
-      };
+  var newData={};
+  if (editorVisible == 1) {
+        newData = {
+        "user_id": user_id,
+        "question": question_no,
+        "count": editorVisible,
+        "code": editorRef1.current.getValue()
+        }
       console.log(newData);
     } else if (editorVisible == 2) {
       newData = {
-        user_id: "iksang98@gmail.com",
-        question: "2",
-        count: editorVisible,
-        code: editorRef2.current.getValue(),
+        "user_id": user_id,
+        "question": question_no,
+        "count": editorVisible,
+        "code": editorRef2.current.getValue()
       };
     } else if (editorVisible == 3) {
       newData = {
-        user_id: "iksang98@gmail.com",
-        question: "2",
-        count: editorVisible,
-        code: editorRef3.current.getValue(),
+        "user_id": user_id,
+        "question": question_no,
+        "count": editorVisible,
+        "code": editorRef3.current.getValue()
       };
     }
     try {
@@ -320,16 +327,59 @@ const Main = () => {
   const excuteResultDisplay = () => {};
   const submitResultDisplay = () => {};
 
-  const submit = async () => {
-    setSubmitted(1);
-    saveData();
+  const submit = async() => {
+    await showValue();
+
+    await get_testcase();
+
+    await analyze_code();
+
+    await submit_evaluate();
+
+
+
     setOriginal();
     setModified();
+
     setEditorVisible(4);
+    setSubmitted(1);
   };
 
-  const analyze_code = async () => {
-    var newData = {};
+  const get_testcase = async () => {
+  var newData={};
+  if (editorVisible == 1) {
+        newData = {
+        "question": question_no,
+        "code": editorRef1.current.getValue()
+      };
+      console.log(newData)
+    } else if (editorVisible == 2) {
+        newData = {
+        "question": question_no,
+        "code": editorRef2.current.getValue()
+      };
+    } else if (editorVisible == 3) {
+        newData = {
+        "question": question_no,
+        "code": editorRef3.current.getValue()
+      };
+    }
+    try {
+      const response = await axios.get(
+        "http://localhost:8000/test/testcase/",{
+        params:newData
+        }
+      );
+      console.log("response >>", response);
+      console.log(response["data"]);
+      setTest_case_texts(response["data"]["msg"]);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
+  };
+
+  const analyze_code = async () =>{
+  var newData={};
     if (editorVisible == 1) {
       newData = {
         code: editorRef1.current.getValue(),
@@ -345,14 +395,58 @@ const Main = () => {
     }
 
     try {
-      const response = await axios.get(
-        "http://localhost:8000/api/editor/simple_explain/",
-        {
-          params: newData,
-        }
-      );
+    console.log(newData)
+      const response = await axios.get("http://localhost:8000/editor/simple_explain/", {
+        params: newData,
+      });
+
       console.log("response >>", response);
-      setResult(response["data"]);
+      setAnalyzed_texts(response["data"]["code"]);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
+  };
+
+  const submit_evaluate = async () =>{
+  var newData={};
+    if (editorVisible == 1) {
+      newData = {
+        code: editorRef1.current.getValue(),
+      };
+    } else if (editorVisible == 2) {
+      newData = {
+        code: editorRef2.current.getValue(),
+      };
+    } else if (editorVisible == 3) {
+      newData = {
+        code: editorRef3.current.getValue(),
+      };
+    }
+
+    try {
+    console.log(newData)
+      const response2 = await axios.post("http://localhost:8000/test/readability/",
+        newData,
+      );
+      const response3 = await axios.post("http://localhost:8000/test/copydetect/",
+       newData,
+      );
+      const response1 = await axios.get("http://localhost:8000/test/evaluate/", {
+        params: newData,
+      });
+
+
+
+      console.log("response >>", response1);
+      console.log(response1["data"]);
+      setEfficiency1(response1["data"]["e_score1"]);
+      setEfficiency1(response1["data"]["e_score2"]);
+      console.log("response >>", response2);
+      console.log(response2["data"]);
+      setCopy(response2["data"]);
+      console.log("response >>", response3);
+      console.log(response3["data"]);
+      setFunctionality(response3["data"]["score"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -467,7 +561,7 @@ const Main = () => {
           <button className="runBtn" onClick={showValue}>
             실행
           </button>
-          <button className="evalBtn">채점</button>
+          <button className="evalBtn" onClick={submit_evaluate}>채점</button>
           <button className="submitBtn" onClick={submit}>
             제출
           </button>
@@ -493,7 +587,6 @@ const Main = () => {
               defaultLanguage="python"
               defaultValue="# some comment"
               onMount={handleEditor1DidMount}
-              onValidate={handleEditorValidation}
             />
             <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
             <input
@@ -634,7 +727,7 @@ const Main = () => {
                 submitted == 1
                   ? () => setResultShow(1)
                   : () => {
-                      console.error("you should submit before");
+                      alert("you should submit before");
                     }
               }
             >
@@ -646,7 +739,7 @@ const Main = () => {
                 submitted == 1
                   ? () => setResultShow(2)
                   : () => {
-                      console.error("you should submit before");
+                      alert("you should submit before");
                     }
               }
             >
@@ -689,7 +782,7 @@ const Main = () => {
                       `
                 }
               >
-                <textarea value={result} disabled="True" cols="145" rows="15" />
+                <textarea value={efficiency1+efficiency2+functionality} disabled="True" cols="145" rows="15" />
               </div>
               <div
                 css={
@@ -704,12 +797,11 @@ const Main = () => {
                 }
               >
                 <textarea
-                  value="test case"
+                  value={test_case_texts}
                   disabled="True"
                   cols="145"
                   rows="15"
                 />
-                <button onClick={analyze_code}>분석하기</button>
               </div>
               <div
                 css={
@@ -724,12 +816,11 @@ const Main = () => {
                 }
               >
                 <textarea
-                  value="코드 분석"
+                  value={analyzed_texts}
                   disabled="True"
                   cols="145"
                   rows="15"
                 />
-                <button onClick={analyze_code}>분석하기</button>
               </div>
             </div>
           </div>

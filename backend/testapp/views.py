@@ -22,8 +22,9 @@ def execute(code):
     py = open('temp.txt','w')
     py.write(code)
     py.close()
+
     os.rename('temp.txt','solution.py')
-    out = subprocess.run(['python', 'solution.py'],capture_output=True)
+    out = subprocess.run(['python3', 'solution.py'],capture_output=True)
     if(out.stderr):
         return_data = out.stderr.decode('utf-8').split(',')[-1]
     else:
@@ -33,23 +34,24 @@ def execute(code):
     return data
             
 def testcase(answer, user, testcase):
-    
-    def excute_testcase(code, type, testcase):
         
+    def excute_testcase(code, type, testcase):
+            
         py = open('temp.txt','w')
         py.write(code)
         py.close()
         os.rename('temp.txt','solution.py')
 
         sh = open('temp.txt','w')
-        sh.write('python main2.py '+testcase)
+
+        sh.write('python3 main2.py '+testcase)
+
         sh.close()
         os.rename('temp.txt','temp.sh')
-                
+                    
         out = os.system(f'sh temp.sh > result_{type}.txt')
         os.remove('temp.sh')
     
-        
     if ("*" in testcase):
         testcase1 = testcase.split("*")
         testcase2 = testcase1[-1].split("&")
@@ -100,7 +102,7 @@ def testcase(answer, user, testcase):
                 return_data = f'The {idx} line is not identical. (hidden case)'
                 msg.append(return_data)
                 hts.append(0)
-    
+
     return {'score':f'{(sum(ots)+sum(hts))/(len(ots)+len(hts))*100}', 'msg':f'{msg}'}
     
 def evaluate(code):
@@ -183,7 +185,6 @@ class EvaluateCodeAPI(APIView):
         print(codedata)
         codedata_serializer = EvaluateCodeSerializer(codedata)
         return Response(codedata_serializer.data)
-    
     def delete(self, request):
         print("")
 
@@ -296,4 +297,4 @@ class CheckReadabilityAPI(APIView):
         data['comment']['radon'] = self.concatString(data['comment']['radon'])
         data['comment']['pycodestyle'] = self.concatString(data['comment']['pycodestyle'])
         return Response(data,status=status.HTTP_201_CREATED)
-        
+
