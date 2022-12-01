@@ -21,13 +21,14 @@ def execute(code):
     py = open('temp.txt','w')
     py.write(code)
     py.close()
-    os.rename('temp.txt','temp.py')
-    out = subprocess.run(['python3', 'temp.py'],capture_output=True)
+
+    os.rename('temp.txt','solution.py')
+    out = subprocess.run(['python3', 'solution.py'],capture_output=True)
     if(out.stderr):
         return_data = out.stderr.decode('utf-8').split(',')[-1]
     else:
         return_data = out.stdout.decode('utf-8')
-    os.remove('temp.py') 
+    os.remove('solution.py') 
     data = {'code':return_data}
     return data
 

@@ -23,7 +23,9 @@ const Main = () => {
   const [submitted,setSubmitted]=useState(0);
   const [analyzed_texts,setAnalyzed_texts]=useState("코드 분석");
   const [test_case_texts,setTest_case_texts]=useState("테스트 케이스");
-
+  const [efficiency,setEfficiency]=useState("");
+  const [copy,setCopy]=useState("");
+  const [functionality,setFunctionality]=useState("");
 
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
@@ -338,6 +340,50 @@ const Main = () => {
     }
   };
 
+  const submit_evaluate = async () =>{
+  var newData={};
+    if (editorVisible == 1) {
+      newData = {
+        code: editorRef1.current.getValue(),
+      };
+    } else if (editorVisible == 2) {
+      newData = {
+        code: editorRef2.current.getValue(),
+      };
+    } else if (editorVisible == 3) {
+      newData = {
+        code: editorRef3.current.getValue(),
+      };
+    }
+
+    try {
+    console.log(newData)
+      const response2 = await axios.post("http://localhost:8000/test/readability/",
+        newData,
+      );
+      const response3 = await axios.get("http://localhost:8000/test/copydetect/", {
+        params: newData,
+      });
+      const response1 = await axios.get("http://localhost:8000/test/evaluate/", {
+        params: newData,
+      });
+
+
+
+      console.log("response >>", response1);
+      console.log(response1["data"]);
+      setEfficiency(response1["data"]);
+      console.log("response >>", response2);
+      console.log(response2["data"]);
+      setCopy(response2["data"]);
+      console.log("response >>", response3);
+      console.log(response3["data"]);
+      setFunctionality(response3["data"]);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
+  };
+
   return (
     <div className="desktop13">
       <div className="header" />
@@ -403,7 +449,7 @@ const Main = () => {
           <button className="runBtn" onClick={showValue}>
             실행
           </button>
-          <button className="evalBtn">채점</button>
+          <button className="evalBtn" onClick={submit_evaluate}>채점</button>
           <button className="submitBtn" onClick={submit}>
             제출
           </button>
