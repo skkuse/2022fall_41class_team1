@@ -180,13 +180,11 @@ class ReferenceApi(APIView):
             return Http404
 
     def get(self,request):
-        keyword = request.GET.get('keyword')
-        keyword = keyword.replace(' ', '')
-        '''
         question = request.GET.get('question')
         question_object = self.get_object(question)
-        keyword = question_object['keyword']
-        '''
+        keyword = question_object.keyword
+        keyword = keyword.replace(' ', '')
+        
         links = crawling_link(keyword)
         links['keyword'] = keyword
         serializer = ReferenceSerializer(data=links)
