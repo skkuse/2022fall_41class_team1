@@ -81,47 +81,7 @@ class RegistUser(APIView):
         return Response(data=UserSerializer(user).data)
     
 
-# request로 user_id를 전달해준다 
-# 전달하는 값은 "student@skku.com"이다.
-class CourseFindAPI(APIView):
-    def get(self, request):
-        serializer = CourseIdSerializer(data=request.data)
-        if serializer.is_valid():
-            user_id = serializer.data['user_id']
-            course_list = Lecture.objects.filter(user_id=user_id)
-            serializer_list = LectureSerializer(course_list, many=True)
-            courses = []
 
-            for i in serializer_list.data:
-                courses.append(i['course'])
-            return Response(courses, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class QuestionFindAPI(APIView):
-    def get(self, request):
-        serializer = QuestionIdSerializer(data=request.data)
-        if serializer.is_valid():
-            course = serializer.data['course']
-            question_info = Question.objects.filter(course=course)
-            question_info = list(question_info.values())
-            print(question_info)
-            print("\n")
-            questions = []
-            for i in question_info:
-                questions.append(i['question'])
-            return Response(questions, status=status.HTTP_200_OK) 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-# request: 소프트공학개론_week2
-class RequestQuestionAPI(APIView):
-    def get(self, request):
-        serializers = QuestionNameSerializer(data=request.data)
-        if serializers.is_valid():
-            question = serializers.data['question']
-            question_info = Question.objects.filter(question=question)
-            question_info = list(question_info.values())
-            return Response(question_info, status=status.HTTP_200_OK)
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # 학생들이 강의 추가하는 API
 class LectureAPI(APIView):
@@ -132,44 +92,21 @@ class LectureAPI(APIView):
             return Response(serializers.data, status=status.HTTP_200_OK)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class Login(APIView):
-    def post(self, request):
-        serializer = LoginSerializer(request.data)
-        user = User.objects.filter(user_id=serializer.data['user_id']).first()
-        if user is None:
-            return Response(dict(msg="There's no such ID"))
-        if check_password(serializer.data['user_pwd'], user.user_pwd):
-            return Response(dict(msg="Login Sucess"))
-        else:
-            return Response(dict(msg="Login Failure"))
-
-
-class RegistUser(APIView):
-    def post(self, request):
-        serializer = UserSerializer(request.data)
-        if User.objects.filter(user_id=serializer.data['user_id']).exists():
-            user = User.objects.filter(user_id=serializer.data['user_id']).first()
-            data = dict(
-                msg="exist id"
-            )
-            return Response(data)
-        
-        user = serializer.create(request.data)
-        return Response(data=UserSerializer(user).data)
-    
-
 # request로 user_id를 전달해준다 
 # 전달하는 값은 "student@skku.com"이다.
 class CourseFindAPI(APIView):
     def get(self, request):
-        serializer = CourseIdSerializer(data=request.data)
+        print("hello")
+        serializer = CourseIdSerializer(data=request.GET)
+        print(serializer.is_valid())
         if serializer.is_valid():
-            user_id = serializer.data['user_id']
-            course_list = Course.objects.filter(user_id=user_id)
-            serializer_list = CourseSerializer(course_list, many=True)
+            user_id = serializer.data.get('user_id')
+            print(user_id)
+            course_list = Lecture.objects.filter(user_id=user_id)
+            print(course_list)
+            serializer_list = LectureSerializer(course_list, many=True)
+            print(serializer_list)
             courses = []
-
             for i in serializer_list.data:
                 courses.append(i['course'])
             return Response(courses, status=status.HTTP_200_OK)

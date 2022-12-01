@@ -1,5 +1,6 @@
 import styles from "./Main.css";
 import React, { useState, useRef, useEffect, useContext } from "react";
+import { useLocation } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
 import Editor, { useMonaco, DiffEditor } from "@monaco-editor/react";
@@ -44,9 +45,12 @@ const week6 = {problem: '문제 6번',constraint: '제약조건 6번',testcase: 
 
 
 const Main = () => {
-  console.log(Login.logAccount);
+  //const location = useLocation();
+  //console.log(location);
+  //const user = location.state.user;
   const [editorVisible, setEditorVisible] = useState(1);
-  const [user_id, setUser_id] = useState("yali98@naver.com");
+  const [user_id, setUser_id] = useState("skku@gmail.com");
+  //console.log(user_id);
   const [question_no, setQuestion_no] = useState("2");
   const [code1, setCode1] = useState("# code에 함수 이거 넣어서 테스트 ㄱㄱ\ndef solution(add1, add2, add3):\n\tsum = add1 + add2 + add3\n\treturn sum\nif __name__ == \"__main__\":\n\tprint(solution(1, 2, 3))");
 
@@ -199,11 +203,15 @@ const Main = () => {
     if (monaco) {
       console.log("here is the monaco instance:", monaco);
     }
-    
-    async function getAllCourse() {
+
+    getAllCourse();
+
+  }, [monaco]);
+
+  const getAllCourse = async()=>{
       try {
         console.log(user_id);
-        const response = await axios.get("http://localhost:8000/main/", {
+        const response = await axios.get("http://localhost:8000/main/testtest/", {
           params:{
           user_id: user_id,
         }});
@@ -213,12 +221,7 @@ const Main = () => {
         console.log("Error >>", error);
       }
     }
-    getAllCourse();
 
-
-
-
-  }, [monaco]);
 
   const saveData = async () => {
   var newData={};
