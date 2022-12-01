@@ -124,34 +124,30 @@ const Main = () => {
   const showValue = async () => {
   var newData={};
     if (editorVisible == 1) {
-
         newData = {
-        user_id: user_id,
-        question: question_no,
-
-
-        exe_result: editorRef1.current.getValue(),
+        "code": editorRef1.current.getValue(),
       };
     } else if (editorVisible == 2) {
         newData = {
         user_id: user_id,
         question: question_no,
-
+        save_type:'2',
         exe_result: editorRef2.current.getValue(),
       };
     } else if (editorVisible == 3) {
         newData = {
         user_id: user_id,
         question: question_no,
-
+        save_type3:'3',
         exe_result: editorRef3.current.getValue(),
       };
     }
 
     try {
-      saveData();
-      const response = await axios.post("http://localhost:8000/test/execute2/",
-        newData
+      console.log(newData);
+      const response = await axios.get(
+        "http://localhost:8000/test/execute2/",
+        {params: newData}
       );
       console.log("response >>", response);
       setResult(response["data"]);
@@ -173,10 +169,10 @@ const Main = () => {
   var newData={};
   if (editorVisible == 1) {
         newData = {
-        user_id: user_id,
-        question: question_no,
-        count: editorVisible,
-        code: editorRef1.current.getValue(),
+        "user_id": user_id,
+        "question": question_no,
+        "count": editorVisible,
+        "code": editorRef1.current.getValue(),
       };
       console.log(newData)
     } else if (editorVisible == 2) {

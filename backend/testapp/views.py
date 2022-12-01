@@ -21,32 +21,33 @@ def execute(code):
     py.write(code)
     py.close()
     os.rename('temp.txt','temp.py')
-    out = subprocess.run(['python', 'temp.py'],capture_output=True)
+    out = subprocess.run(['python3', 'temp.py'],capture_output=True)
     if(out.stderr):
         return_data = out.stderr.decode('utf-8').split(',')[-1]
     else:
         return_data = out.stdout.decode('utf-8')
     os.remove('temp.py') 
-    return return_data
+    data = {'code':return_data}
+    return data
+
             
 def testcase(answer, user, testcase):
-    
-    def excute_testcase(code, type, testcase):
         
+    def excute_testcase(code, type, testcase):
+            
         py = open('temp.txt','w')
         py.write(code)
         py.close()
         os.rename('temp.txt','solution.py')
 
         sh = open('temp.txt','w')
-        sh.write('python main.py '+testcase)
+        sh.write('python main2.py '+testcase)
         sh.close()
         os.rename('temp.txt','temp.sh')
-                
+                    
         out = os.system(f'sh temp.sh > result_{type}.txt')
         os.remove('temp.sh')
     
-        
     if ("*" in testcase):
         testcase1 = testcase.split("*")
         testcase2 = testcase1[-1].split("&")
@@ -97,109 +98,79 @@ def testcase(answer, user, testcase):
                 return_data = f'The {idx} line is not identical. (hidden case)'
                 msg.append(return_data)
                 hts.append(0)
-    
-    os.remove('result_answer.txt')
-    os.remove('result_my.txt')
                     
-    return {'t_score':(sum(ots)+sum(hts))/(len(ots)+len(hts))*100, 'msg':msg}
+    return {'score':f'{(sum(ots)+sum(hts))/(len(ots)+len(hts))*100}', 'msg':f'{msg}'}
     
 class ExecuteCodeV1API(APIView):
     def get_object(self,user_id,question,save_type):
         try:
-            return ExecuteCodeV1.objects.get(user_id=user_id, quetsion=question, save_type=save_type)
+            return ExecuteCodeV1.objects.get(user_id=user_id, question=question, save_type=save_type)
         except ExecuteCodeV1.DoesNotExist:
             test_data = {'user_id':'jcy9911','question':'SWE3002-01','save_type':'1','exe_result':'line 1 : assertion error'}
             return test_data #Http404
     
     #내용 추가
     def post(self,request):
-        serializer = ExecuteCodeV1Serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.exe_result = execute(serializer.exe_result)
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    #내용 조회
-    def get(self,request):
+        
         serializer = ExecuteCodeV1Serializer(data=request.data)
         
         if serializer.is_valid():
-            codedata = self.get_object(serializer.user_id, serializer.question, serializer.save_type)
-            codedata_serializer = ExecuteCodeV1Serializer(codedata)
-            return Response(codedata_serializer.data)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            
+            user_id = serializer.data['user_id']
+            question = serializer.data['question']
+            save_type = serializer.data['save_type']
+            exe_result = execute(serializer.data['exe_result'])
+            
+            savecode = self.get_object(user_id, question, save_type)
+            
+            savecode['user_id'] = user_id
+            savecode['question'] = question
+            savecode['save_type'] = save_type
+            savecode['exe_result'] = exe_result
+            
+            savecode_sericalizer = ExecuteCodeV1Serializer(savecode)
+            
+            return Response(savecode_sericalizer, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    #내용 삭제
-    def delete(self,request):
-        serializer = ExecuteCodeV1Serializer(data=request.data)
-        user_id = serializer.user_id
-        question = serializer.question
-        save_type = serializer.save_type
-
-        codedata = self.get_object(user_id,question,save_type)
-        codedata.delete()
-
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    
+# 현재 에디터에 있는 코드 바로 실행
 class ExecuteCodeV2API(APIView):
-    def get_object(self,user_id,question):
-        try:
-            return ExecuteCodeV2.objects.get(user_id=user_id, quetsion=question)
-        except ExecuteCodeV2.DoesNotExist:
-            test_data = {'user_id':'jcy9911','question':'SWE3002-01','exe_result':'line 1 : assertion error'}
-            return test_data #Http404
-    
-    #내용 추가
-    def post(self,request):
-        serializer = ExecuteCodeV2Serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.exe_result = execute(serializer.exe_result)
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    #내용 조회
     def get(self,request):
-        serializer = ExecuteCodeV2Serializer(data=request.data)
-        
+        serializer = ExecuteCodeV2Serializer(data=request.GET)
         if serializer.is_valid():
-            codedata = self.get_object(serializer.user_id, serializer.question)
+            codedata = execute(serializer.data.get('code'))
+            print(codedata)
             codedata_serializer = ExecuteCodeV2Serializer(codedata)
             return Response(codedata_serializer.data)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-    
-    #내용 삭제
-    def delete(self,request):
-        serializer = ExecuteCodeV2Serializer(data=request.data)
-        user_id = serializer.user_id
-        question = serializer.question
 
-        codedata = self.get_object(user_id,question)
-        codedata.delete()
-
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
+# 현재 에디터에 있는 코드 테스트 케이스 실행
 class CheckTestcaseAPI(APIView):
-    def get_object(self, user_id, question):
+    def get_object(self,question):
         try:
-            return CheckTestcase.objects.get(user_id=user_id, question=question)
-        except CheckTestcase.DoesNotExist:
-            test_data = {'user_id':'jcy9911','question':'SWE3002-01','msg' :'In the line 0, correct answer is 10 but user answer is 30'}
-            return test_data
-    
-    # 내용 확인
+            return Question.objects.get(pk=question)
+        except Question.DoesNotExist:
+            test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
+                "answer":"print(2)", "testcase":"1 2 1*4 5 0*7 8 9&3 3 3&4 4 4&5 5 0", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
+            }
+            return test_data #Http404
+            
     def get(self, request):
-        q_serializers = QuestionSerializer(data=request.data)
-        serializer = CheckTestcaseSerializer(data=request.data)
-        if q_serializers.is_valid():
-            testcase = q_serializers.testcase
-            answer = q_serializers.anwer
-            result = testcase(answer, serializers.msg, testcase)
-            serializer.msg = result['msg']
-            serializer.score = result['score']
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        question = request.data.get('question')
+        code = request.data.get('code')
+        question_object = self.get_object(question)
+        try:
+            tc = question_object.testcase
+            answer = question_object.answer
+        except:
+            tc = question_object['testcase']
+            answer= question_object['answer']
+    
+        result = testcase(answer, code, tc)
+        
+        codedata_serializer = CheckTestcaseSerializer(result)
+        return Response(codedata_serializer.data)
 
 class EvaluateCodeAPI(APIView):
     def get_object(self, user_id, question):
@@ -209,15 +180,5 @@ class EvaluateCodeAPI(APIView):
             test_data = {'user_id':'jcy9911','question':'SWE3002-01','score':'20','msg' :'In the line 0, correct answer is 10 but user answer is 30'}
             return test_data
     
-    def post(self, request):
-        plagiarism = models.TextField()
-        function = models.TextField()
-        efficiency = models.TextField()
-        readability = models.TextField()
-        print("")
-    
     def get(self, request):
-        print("")
-        
-    def delete(self, request):
         print("")
