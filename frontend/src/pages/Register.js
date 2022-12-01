@@ -59,11 +59,11 @@ const Register = () => {
       <div className="register_input">
         <div className="register_subcontainer">
           <div className="text_containerbox">
-            <div className="emailText">E-mail</div>
-            <div className="nameText">Name</div>
-            <div className="pwText">PW</div>
-            <div className="checkText">PW 확인</div>
-            <div className="findText">PW 찾기 질문</div>
+            <div className="emailText">이메일</div>
+            <div className="nameText">이름</div>
+            <div className="pwText">비밀번호</div>
+            <div className="checkText">비밀번호 확인</div>
+            <div className="findText">비밀번호 찾기 질문</div>
             <div className="answerText">답변</div>
           </div>
           <div className="input_containerbox">

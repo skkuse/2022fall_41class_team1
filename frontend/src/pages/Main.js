@@ -310,7 +310,7 @@ const Main = () => {
               <Editor
                 id = "Editor1"
                 value={code1}
-                height="70vh"
+                height="64vh"
                 width="100%"
                 theme="myTheme"
                 defaultLanguage="python"
@@ -330,7 +330,7 @@ const Main = () => {
             <div css={editorVisible==2?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
               <Editor
                 value={code2}
-                height="51.5vh"
+                height="64vh"
                 width="100%"
                 theme="myTheme"
                 defaultLanguage="python"
@@ -349,7 +349,7 @@ const Main = () => {
             <div css={editorVisible==3?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
               <Editor
                 value={code3}
-                height="51.5vh"
+                height="64vh"
                 width="100%"
                 theme="myTheme"
                 defaultLanguage="python"
@@ -367,7 +367,7 @@ const Main = () => {
             </div>
             <div css={editorVisible==4?css`display:block`:css`display:none`}>
               <DiffEditor
-                height="60vh"
+                height="64vh"
                 width="130vh"
                 theme="myTheme"
                 defaultLanguage="python"

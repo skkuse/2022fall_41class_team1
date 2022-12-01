@@ -66,106 +66,79 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-right: 20px;
+  margin-right: 15px;
 
 }
 
 .emailText{
-  position: relative;
-  height: 58px;
-
+  width: 200px;
+  height: 50px;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
-  font-size: 48px;
-  line-height: 48px;
-  /* identical to box height */
-
-
-  color: #FFFFFF;
+  font-size: 30px;
+  line-height: 30px;
+  color: #E9D738;
+  position: relative;
 }
 .pwText {
-  position: relative;
+  width: 200px;
   height: 58px;
-  margin-top: 10px;
-
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
-  font-size: 48px;
-  line-height: 48px;
-  
-  color: #FFFFFF;
+  font-size: 30px;
+  line-height: 30px;
+  color: #E9D738;
+  position: relative;
 }
 .checkText {
-  position: relative;
+  width: 200px;
   height: 58px;
-  margin-top: 10px;
-
-  
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
-  font-size: 48px;
-  line-height: 48px;
-  
-  color: #FFFFFF;
+  font-size: 30px;
+  line-height: 30px;
+  color: #E9D738;
+  position: relative;
 }
 .findText {
-
-  position: relative;
+  width: 200px;
   height: 58px;
-  margin-top: 10px;
-
-
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
-  font-size: 48px;
-  line-height: 48px;
-
-  color: #FFFFFF;
+  font-size: 30px;
+  line-height: 30px;
+  color: #E9D738;
+  position: relative;
 }
 
 
 .answerText {
-  position: relative;
+  width: 200px;
   height: 58px;
-  margin-top: 10px;
-
-  
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
-  font-size: 48px;
-  line-height: 48px;
-  
-  color: #FFFFFF;
-
+  font-size: 30px;
+  line-height: 30px;
+  color: #E9D738;
+  position: relative;
 }
 
 .nameText {
-  position: relative;
+  width: 200px;
   height: 58px;
-  margin-top: 10px;
-
-  
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
-  font-size: 48px;
-  line-height: 48px;
-  
-  color: #FFFFFF;
-
+  font-size: 30px;
+  line-height: 30px;
+  color: #E9D738;
+  position: relative;
 }
-
-
-
-
-
-
-
 
 
 .input_containerbox{

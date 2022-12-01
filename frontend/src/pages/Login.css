@@ -1,97 +1,84 @@
 
 .desktop2 {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
   background-color: black;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  line-height: 140%;
+  letter-spacing: -0.5px;
+  color: #0d0d0d;
+  flex-direction: column;
   width: 100%;
   height: 1024px;
 }
 
-.title_box{
-  margin-top: 10%;
-  height: 128px;
-}
-.login_title1{
-  position: absolute;
-  width: 100%;
-  height: 128px;
-  font-family: 'NeoDunggeunmo';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 128px;
-  line-height: 128px;
-  /* identical to box height */
-  text-align: center;
-  letter-spacing: 0.12em;
-  mix-blend-mode: screen;
-  text-shadow: -3px 0 white, 0 3px white, 3px 0 white, 0 -3px white;
-}
-.login_title2{
-  position: absolute;
-  width: 100%;
-  height: 128px;
-  font-family: 'NeoDunggeunmo';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 128px;
-  line-height: 128px;
-  /* identical to box height */
-  text-align: center;
-  letter-spacing: 0.12em;
-  color: rgba(255, 167, 34, 0.8);
-  text-shadow: -9px 4px 0px rgba(123, 213, 101, 0.4);
+.logo {
+  width: 50%;
+  margin-left: 0px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  cursor: pointer;
 }
 
-
-
+.login_container {
+  display: flex;
+  padding: 5px 40px;
+  width: 800px;
+  box-sizing: border-box;
+  border-radius: 32px;
+  flex-direction: column;
+  margin-top: 50px;
+}
 
 .login_input {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 100px;
+  
 }
 .login_subsection{
   position: relative;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  padding: 0;
 }
 
 .text_container{
   position: relative;
   flex-direction: column;
-  align-items: stretch;
   display: flex;
   height: 132px;
-  justify-content: center;
   margin-right: 20px;
+  width: 120px;
 
 }
 
 .email_text{
-  position: relative;
-  height: 61px;
+  padding-top: 15px;
+  width: 120px;
+  height: 58px;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
-  font-size: 50px;
-  text-align: right;
-  letter-spacing: 0.07em;
+  font-size: 30px;
+  line-height: 30px;
   color: #E9D738;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  position: relative;
+
 }
 .pw_text {
-  position: relative;
-  height: 61px;
-  margin-top:10px;
+  padding-top: 23px;
+  width: 120px;
+  height: 58px;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
-  font-size: 50px;
-  letter-spacing: 0.07em;
+  font-size: 30px;
+  line-height: 30px;
   color: #E9D738;
 }
 
@@ -101,21 +88,30 @@
   position: relative;
   flex-direction: column;
   display: flex;
+  padding-top: 2.5px;
 }
 .email_input {
   position: relative;
-  width: 486px;
-  height: 49px;
-  border: 5px solid #FFFFFF;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  width: 430px;
+  height: 50px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
 }
 .pw_input {
   position: relative;
-  margin-top: 10px;
-  width: 486px;
-  height: 49px;
-  border: 5px solid #FFFFFF;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  margin-top: 15px;
+  width: 430px;
+  height: 50px;
+  width: 430px;
+  height: 50px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
 }
 
 .login_conatiner{
@@ -128,18 +124,20 @@
 
 .loginBtn{
   position: relative;
-  margin-left: 10px;
+  margin-left: 15px;
   width: 154px;
-  height: 132px;
+  height: 99%;
   background: #4235D3;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
-  font-size: 36px;
-  line-height: 36px;
+  font-size: 35px;
+  line-height: 40px;
   text-align: center;
   letter-spacing: 0.07em;
   color: #FFFFFF;
+  cursor: pointer;
+
 }
 
 
@@ -176,9 +174,10 @@ filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 font-family: 'NeoDunggeunmo';
 font-style: normal;
 font-weight: 400;
-font-size: 25px;
+font-size: 20px;
+line-height: 30px;
 /* identical to box height */
-
+cursor: pointer;
 
 color: #FFFFFF;
 

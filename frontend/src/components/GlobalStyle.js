@@ -8,23 +8,23 @@
 //     display: flex;
 //     justify-content: center;
 //     align-items: center;
-//     font-family: NeoDunggeunmo;
+//     font-family: Pretendard;
 //     min-height: 100vh;
 //     text-align: center;
 //     line-height: 140%;
 //     letter-spacing: -0.5px;
 //     color: #0d0d0d;
 //   }
-//   @media (min-width: 650px) {
-//     .App {
-//       width: 640px;
-//     }
-//   }
-//   @media (max-width: 650px) {
-//     .App {
-//       width: 90vw;
-//     }
-//   }
+  // @media (min-width: 650px) {
+  //   .App {
+  //     width: 640px;
+  //   }
+  // }
+  // @media (max-width: 650px) {
+  //   .App {
+  //     width: 90vw;
+  //   }
+  // }
 //   #root {
 //     position: relative;
 //     padding: 90px 160px;
