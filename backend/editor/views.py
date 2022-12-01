@@ -44,10 +44,12 @@ def analyzeCode(user_code,mode):
 class SimpleExplainApi(APIView):
     
     def get(self,request):
-        serializer = CodeExplainSerializer(data=request.data)
-
+        print("working")
+        serializer = CodeExplainSerializer(data=request.GET)
+        print(serializer.is_valid())
         if serializer.is_valid():
-            code_analysis = analyzeCode(serializer.data['code'],0)
+            print(serializer.data)
+            code_analysis = analyzeCode(serializer.data.get('code'),0)
             output_serializer = CodeExplainSerializer(code_analysis)
             return Response(output_serializer.data)
 
@@ -56,10 +58,10 @@ class SimpleExplainApi(APIView):
 class DetailExplainApi(APIView):
     
     def get(self,request):
-        serializer = CodeExplainSerializer(data=request.data)
+        serializer = CodeExplainSerializer(data=request.GET)
 
         if serializer.is_valid():
-            code_analysis = analyzeCode(serializer.data['code'],1)
+            code_analysis = analyzeCode(serializer.data.get('code'),1)
             output_serializer = CodeExplainSerializer(code_analysis)
             return Response(output_serializer.data)
 

@@ -31,9 +31,9 @@ const Login = () => {
      };
      try {
         const response = await axios.post(
-        "http://localhost:8000/main/signin/",
-        newData
-     );
+            "http://localhost:8000/main/signin/",
+            newData
+        );
      console.log("response >>", response);
      console.log(response["data"]["msg"]);
      if(response["data"]["msg"]=="login sucess"){

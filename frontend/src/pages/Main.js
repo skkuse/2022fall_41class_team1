@@ -12,21 +12,18 @@ const Main = () => {
   //console.log(Login.logAccount);
   const [editorVisible, setEditorVisible] = useState(1);
   const [user_id, setUser_id] = useState("yali98@naver.com");
-  const [question_no, setQuestion_no] = useState("1");
-  const [code1, setCode1] = useState("#some comment");
+  const [question_no, setQuestion_no] = useState("2");
+  const [code1, setCode1] = useState("# code에 함수 이거 넣어서 테스트 ㄱㄱ\ndef solution(add1, add2, add3):\n\tsum = add1 + add2 + add3\n\treturn sum\nif __name__ == \"__main__\":\n\tsolution(1, 2, 3)");
   const [code2, setCode2] = useState("#some comment");
   const [code3, setCode3] = useState("#some comment");
   const [original_code, setOriginal_code] = useState("#some comment");
   const [modified_code, setModified_code] = useState("#some comment");
   const [result, setResult] = useState("result display");
   const [resultShow, setResultShow] = useState(0);
-<<<<<<< HEAD
   const [submitted,setSubmitted]=useState(0);
   const [analyzed_texts,setAnalyzed_texts]=useState("코드 분석");
   const [test_case_texts,setTest_case_texts]=useState("테스트 케이스");
-=======
-  const [submitted, setSubmitted] = useState(0);
->>>>>>> e475e9b7d913098efcc962702471b892e6cbd43f
+
 
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
@@ -128,41 +125,29 @@ const Main = () => {
   const showValue = async () => {
     var newData = {};
     if (editorVisible == 1) {
-<<<<<<< HEAD
         newData = {
         "code": editorRef1.current.getValue(),
-=======
-      newData = {
-        user_id: user_id,
-        question: question_no,
-
-        exe_result: editorRef1.current.getValue(),
->>>>>>> e475e9b7d913098efcc962702471b892e6cbd43f
       };
     } else if (editorVisible == 2) {
       newData = {
-        user_id: user_id,
-        question: question_no,
-        save_type:'2',
-        exe_result: editorRef2.current.getValue(),
+        "code": editorRef2.current.getValue(),
       };
     } else if (editorVisible == 3) {
       newData = {
-        user_id: user_id,
-        question: question_no,
-        save_type3:'3',
-        exe_result: editorRef3.current.getValue(),
+        "code": editorRef3.current.getValue(),
       };
     }
 
     try {
-      console.log(newData);
+        saveData();
       const response = await axios.get(
         "http://localhost:8000/test/execute2/",
         {params: newData}
       );
       console.log("response >>", response);
-      setResult(response["data"]);
+      console.log(response["data"]["code"]);
+      setResult(response["data"]["code"]);
+      console.log("실행결과 작성 완료");
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -178,38 +163,28 @@ const Main = () => {
   }, [monaco]);
 
   const saveData = async () => {
-<<<<<<< HEAD
   var newData={};
   if (editorVisible == 1) {
         newData = {
         "user_id": user_id,
         "question": question_no,
         "count": editorVisible,
-        "code": editorRef1.current.getValue(),
-=======
-    var newData = {};
-    if (editorVisible == 1) {
-      newData = {
-        user_id: "iksang98@gmail.com",
-        question: "2",
-        count: editorVisible,
-        code: editorRef1.current.getValue(),
->>>>>>> e475e9b7d913098efcc962702471b892e6cbd43f
-      };
+        "code": editorRef1.current.getValue()
+        }
       console.log(newData);
     } else if (editorVisible == 2) {
       newData = {
-        user_id: "iksang98@gmail.com",
-        question: "2",
-        count: editorVisible,
-        code: editorRef2.current.getValue(),
+        "user_id": user_id,
+        "question": question_no,
+        "count": editorVisible,
+        "code": editorRef2.current.getValue()
       };
     } else if (editorVisible == 3) {
       newData = {
-        user_id: "iksang98@gmail.com",
-        question: "2",
-        count: editorVisible,
-        code: editorRef3.current.getValue(),
+        "user_id": user_id,
+        "question": question_no,
+        "count": editorVisible,
+        "code": editorRef3.current.getValue()
       };
     }
     try {
@@ -293,34 +268,31 @@ const Main = () => {
 
   const submit = async () => {
     setSubmitted(1);
-    saveData();
+    showValue();
+    get_testcase();
+    analyze_code();
     setOriginal();
     setModified();
     setEditorVisible(4);
   };
 
-<<<<<<< HEAD
   const get_testcase = async () => {
   var newData={};
   if (editorVisible == 1) {
         newData = {
-        user_id: user_id,
-        question: question_no,
-        msg: editorRef1.current.getValue(),
+        "question": question_no,
+        "code": editorRef1.current.getValue()
       };
       console.log(newData)
     } else if (editorVisible == 2) {
         newData = {
-        user_id: user_id,
-        question: question_no,
-        msg: editorRef2.current.getValue(),
+        "question": question_no,
+        "code": editorRef2.current.getValue()
       };
     } else if (editorVisible == 3) {
         newData = {
-        user_id: user_id,
-        question: question_no,
-        count: editorVisible,
-        msg: editorRef3.current.getValue(),
+        "question": question_no,
+        "code": editorRef3.current.getValue()
       };
     }
     try {
@@ -330,6 +302,8 @@ const Main = () => {
         }
       );
       console.log("response >>", response);
+      console.log(response["data"]);
+      setTest_case_texts(response["data"]["msg"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -337,10 +311,6 @@ const Main = () => {
 
   const analyze_code = async () =>{
   var newData={};
-=======
-  const analyze_code = async () => {
-    var newData = {};
->>>>>>> e475e9b7d913098efcc962702471b892e6cbd43f
     if (editorVisible == 1) {
       newData = {
         code: editorRef1.current.getValue(),
@@ -356,19 +326,11 @@ const Main = () => {
     }
 
     try {
-<<<<<<< HEAD
     console.log(newData)
-      const response = await axios.get("http://localhost:8000/api/editor/simple_explain/", {
+      const response = await axios.get("http://localhost:8000/editor/simple_explain/", {
         params: newData,
       });
-=======
-      const response = await axios.get(
-        "http://localhost:8000/api/editor/simple_explain/",
-        {
-          params: newData,
-        }
-      );
->>>>>>> e475e9b7d913098efcc962702471b892e6cbd43f
+
       console.log("response >>", response);
       setAnalyzed_texts(response["data"]);
     } catch (err) {
@@ -682,7 +644,6 @@ const Main = () => {
                   cols="145"
                   rows="15"
                 />
-                <button onClick={analyze_code}>분석하기</button>
               </div>
               <div
                 css={

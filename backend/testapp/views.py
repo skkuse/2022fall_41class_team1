@@ -42,7 +42,7 @@ def testcase(answer, user, testcase):
         os.rename('temp.txt','solution.py')
 
         sh = open('temp.txt','w')
-        sh.write('python main2.py '+testcase)
+        sh.write('python3 main2.py '+testcase)
         sh.close()
         os.rename('temp.txt','temp.sh')
                     
@@ -159,6 +159,7 @@ class CheckTestcaseAPI(APIView):
             return test_data #Http404
             
     def get(self, request):
+        print(request.GET)
         question = request.GET['question']
         code = request.GET['code']
         question_object = self.get_object(question)
@@ -170,8 +171,7 @@ class CheckTestcaseAPI(APIView):
             answer= question_object['answer']
     
         result = testcase(answer, code, tc)
-        
-<<<<<<< HEAD
+
         codedata_serializer = CheckTestcaseSerializer(result)
         return Response(codedata_serializer.data)
 
@@ -184,7 +184,7 @@ class EvaluateCodeAPI(APIView):
         print(codedata)
         codedata_serializer = EvaluateCodeSerializer(codedata)
         return Response(codedata_serializer.data)
-=======
+
     def delete(self, request):
         print("")
 
@@ -297,5 +297,4 @@ class CheckReadabilityAPI(APIView):
         data['comment']['radon'] = self.concatString(data['comment']['radon'])
         data['comment']['pycodestyle'] = self.concatString(data['comment']['pycodestyle'])
         return Response(data,status=status.HTTP_201_CREATED)
-        
->>>>>>> e475e9b7d913098efcc962702471b892e6cbd43f
+
