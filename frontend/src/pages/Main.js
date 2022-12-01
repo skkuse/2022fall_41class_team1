@@ -13,7 +13,7 @@ const Main = () => {
   const [editorVisible, setEditorVisible] = useState(1);
   const [user_id, setUser_id] = useState("yali98@naver.com");
   const [question_no, setQuestion_no] = useState("2");
-  const [code1, setCode1] = useState("# code에 함수 이거 넣어서 테스트 ㄱㄱ\ndef solution(add1, add2, add3):\n\tsum = add1 + add2 + add3\n\treturn sum\nif __name__ == \"__main__\":\n\tsolution(1, 2, 3)");
+  const [code1, setCode1] = useState("# code에 함수 이거 넣어서 테스트 ㄱㄱ\ndef solution(add1, add2, add3):\n\tsum = add1 + add2 + add3\n\treturn sum\nif __name__ == \"__main__\":\n\tprint(solution(1, 2, 3))");
   const [code2, setCode2] = useState("#some comment");
   const [code3, setCode3] = useState("#some comment");
   const [original_code, setOriginal_code] = useState("#some comment");
@@ -23,7 +23,8 @@ const Main = () => {
   const [submitted,setSubmitted]=useState(0);
   const [analyzed_texts,setAnalyzed_texts]=useState("코드 분석");
   const [test_case_texts,setTest_case_texts]=useState("테스트 케이스");
-  const [efficiency,setEfficiency]=useState("");
+  const [efficiency1,setEfficiency1]=useState("");
+  const [efficiency2,setEfficiency2]=useState("");
   const [copy,setCopy]=useState("");
   const [functionality,setFunctionality]=useState("");
 
@@ -268,14 +269,22 @@ const Main = () => {
   const excuteResultDisplay = () => {};
   const submitResultDisplay = () => {};
 
-  const submit = async () => {
-    setSubmitted(1);
-    showValue();
-    get_testcase();
-    analyze_code();
+  const submit = async() => {
+    await showValue();
+
+    await get_testcase();
+
+    await analyze_code();
+
+    await submit_evaluate();
+
+
+
     setOriginal();
     setModified();
+
     setEditorVisible(4);
+    setSubmitted(1);
   };
 
   const get_testcase = async () => {
@@ -334,7 +343,7 @@ const Main = () => {
       });
 
       console.log("response >>", response);
-      setAnalyzed_texts(response["data"]);
+      setAnalyzed_texts(response["data"]["code"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -361,9 +370,9 @@ const Main = () => {
       const response2 = await axios.post("http://localhost:8000/test/readability/",
         newData,
       );
-      const response3 = await axios.get("http://localhost:8000/test/copydetect/", {
-        params: newData,
-      });
+      const response3 = await axios.post("http://localhost:8000/test/copydetect/",
+       newData,
+      );
       const response1 = await axios.get("http://localhost:8000/test/evaluate/", {
         params: newData,
       });
@@ -372,13 +381,14 @@ const Main = () => {
 
       console.log("response >>", response1);
       console.log(response1["data"]);
-      setEfficiency(response1["data"]);
+      setEfficiency1(response1["data"]["e_score1"]);
+      setEfficiency1(response1["data"]["e_score2"]);
       console.log("response >>", response2);
       console.log(response2["data"]);
       setCopy(response2["data"]);
       console.log("response >>", response3);
       console.log(response3["data"]);
-      setFunctionality(response3["data"]);
+      setFunctionality(response3["data"]["score"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -615,7 +625,7 @@ const Main = () => {
                 submitted == 1
                   ? () => setResultShow(1)
                   : () => {
-                      console.error("you should submit before");
+                      alert("you should submit before");
                     }
               }
             >
@@ -627,7 +637,7 @@ const Main = () => {
                 submitted == 1
                   ? () => setResultShow(2)
                   : () => {
-                      console.error("you should submit before");
+                      alert("you should submit before");
                     }
               }
             >
@@ -670,7 +680,7 @@ const Main = () => {
                       `
                 }
               >
-                <textarea value={result} disabled="True" cols="145" rows="15" />
+                <textarea value={efficiency1+efficiency2+functionality} disabled="True" cols="145" rows="15" />
               </div>
               <div
                 css={
@@ -709,7 +719,6 @@ const Main = () => {
                   cols="145"
                   rows="15"
                 />
-                <button onClick={analyze_code}>분석하기</button>
               </div>
             </div>
           </div>

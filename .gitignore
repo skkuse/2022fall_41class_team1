@@ -12,3 +12,4 @@ __pycache__/
 **/**/__pycache__/
 **/**/**/__pycache__/
 backend/editor/api_secrets.py
+.DS_Store

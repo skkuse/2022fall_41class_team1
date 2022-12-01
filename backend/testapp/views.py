@@ -16,6 +16,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from copydetect import CopyDetector
+from django.http import JsonResponse
 
 def execute(code):
     py = open('temp.txt','w')
@@ -31,7 +32,6 @@ def execute(code):
     os.remove('solution.py') 
     data = {'code':return_data}
     return data
-
             
 def testcase(answer, user, testcase):
         
@@ -43,7 +43,9 @@ def testcase(answer, user, testcase):
         os.rename('temp.txt','solution.py')
 
         sh = open('temp.txt','w')
+
         sh.write('python3 main2.py '+testcase)
+
         sh.close()
         os.rename('temp.txt','temp.sh')
                     
@@ -100,7 +102,7 @@ def testcase(answer, user, testcase):
                 return_data = f'The {idx} line is not identical. (hidden case)'
                 msg.append(return_data)
                 hts.append(0)
-                    
+
     return {'score':f'{(sum(ots)+sum(hts))/(len(ots)+len(hts))*100}', 'msg':f'{msg}'}
     
 def evaluate(code):
@@ -160,7 +162,6 @@ class CheckTestcaseAPI(APIView):
             return test_data #Http404
             
     def get(self, request):
-        print(request.GET)
         question = request.GET['question']
         code = request.GET['code']
         question_object = self.get_object(question)
@@ -172,7 +173,6 @@ class CheckTestcaseAPI(APIView):
             answer= question_object['answer']
     
         result = testcase(answer, code, tc)
-
         codedata_serializer = CheckTestcaseSerializer(result)
         return Response(codedata_serializer.data)
 
@@ -185,9 +185,9 @@ class EvaluateCodeAPI(APIView):
         print(codedata)
         codedata_serializer = EvaluateCodeSerializer(codedata)
         return Response(codedata_serializer.data)
-
     def delete(self, request):
         print("")
+
 
 class CheckPlagiarismAPI(APIView):
     def post(self, request):
@@ -200,7 +200,7 @@ class CheckPlagiarismAPI(APIView):
         detector.add_file("test.py")
         detector.run()
         os.remove("test.py")
-        return Response(detector.similarity_matrix[0][0][0])
+        return JsonResponse({"score":detector.similarity_matrix[0][0][0]})
 
 class CheckReadabilityAPI(APIView):
     
@@ -227,7 +227,6 @@ class CheckReadabilityAPI(APIView):
         comment = {"mypy":[],"pylint":[],"eradicate":[],"radon":[],"pycodestyle":[]}
 
         lines = read_code.readlines()
-        print(lines)
         for line in lines:
             res = ""
             words = line.split()
