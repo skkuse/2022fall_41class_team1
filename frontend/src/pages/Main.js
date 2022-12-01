@@ -203,7 +203,7 @@ const Main = () => {
     async function getAllCourse() {
       try {
         console.log(user_id);
-        const response = await axios.get("http://localhost:8000/main/", {
+        const response = await axios.get("http://localhost:8000/main/getcourse/", {
           params:{
           user_id: user_id,
         }});

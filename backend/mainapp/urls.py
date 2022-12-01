@@ -15,7 +15,7 @@ urlpatterns = [
     path('signup/', RegistUser.as_view()),  # 회원가입
     path('course/',CourseApi.as_view()), # 교수의 과목추가
     path('lecture/', LectureAPI.as_view()), # 학생의 과목추가
-    path('', CourseFindAPI.as_view()), # 메인 페이지 진입시, default정보 불러오기, 해당 유저의 모든 과목명 불러오기
+    path('getcourse/', CourseFindAPI.as_view()), # 메인 페이지 진입시, default정보 불러오기, 해당 유저의 모든 과목명 불러오기
     path('question/', QuestionFindAPI.as_view()), # 문제 리스트 불러오기
     path('question/info/', RequestQuestionAPI.as_view()) # 문제 정보 다 불러오기
 

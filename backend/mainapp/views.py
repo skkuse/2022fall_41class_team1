@@ -85,9 +85,9 @@ class RegistUser(APIView):
 # 전달하는 값은 "student@skku.com"이다.
 class CourseFindAPI(APIView):
     def get(self, request):
-        serializer = CourseIdSerializer(data=request.data)
+        serializer = CourseIdSerializer(data=request.GET)
         if serializer.is_valid():
-            user_id = serializer.data['user_id']
+            user_id = serializer.data.get('user_id')
             course_list = Lecture.objects.filter(user_id=user_id)
             serializer_list = LectureSerializer(course_list, many=True)
             courses = []
