@@ -12,7 +12,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
 class CourseIdSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Course
+        model = Lecture
         fields = ('user_id', )
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -23,7 +23,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     # question = QuestionSerializer(many=True, read_only=True)
     class Meta:
-        fields = ('course', 'user_id', 'course_name', 'question')
+        fields = ('course', 'user_id', 'course_name')
         model = Course
 
 class UserSerializer(serializers.ModelSerializer):
@@ -58,12 +58,13 @@ class UserDataSerializer(serializers.ModelSerializer):
         model = UserData
 
 
-class ChatSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = '__all__'
-        model = Chat
-
 class SubmissionSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Submission
+
+class LectureSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = Lecture
+

@@ -19,6 +19,9 @@ class Skeleton(models.Model):
     skeleton = models.TextField()
 
 
+class QuestionReceiver(models.Model):
+    question = models.ForeignKey(Question,on_delete=models.CASCADE,db_column='question')
+
 class Reference(models.Model):
     keyword = models.TextField()
     youtube = models.TextField()

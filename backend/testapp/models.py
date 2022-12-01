@@ -1,7 +1,7 @@
 from email.policy import default
 from django.db import models
 from jsonfield import JSONField
-from mainapp.models import User, Course, Question, UserData
+from mainapp.models import User, Question
 
 # Create your models here.
 
@@ -32,7 +32,7 @@ class CheckTestcase(models.Model):
     def __str__(self):
         return "Testcase execution result of " + self.user_id + "\'s " + self.question + " code"
     
-class EvaluateCode(models.Models):
+class EvaluateCode(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, db_column='user_id')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, db_column='question')
     plagiarism = models.TextField()

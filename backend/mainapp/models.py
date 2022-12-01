@@ -12,25 +12,33 @@ class User(models.Model):
     user_org = models.CharField(max_length=100, help_text="예: 소프트웨어학과")
 
     def __str__(self):
-        return self.user_name
+        return self.user_id
 
 class Course(models.Model):
     course= models.CharField(max_length=50, primary_key=True, help_text="예: SWE3002-41")
-    user_id = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE,db_column='user_id', null=True, blank=True, help_text="예: sunkyun12@skku.edu")
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE,db_column='user_id', help_text="예: sunkyun12@skku.edu")
     course_name = models.CharField(max_length=50, help_text="예: 소프트웨어공학개론")
 
     def __str__(self):
         return self.course
 
+class Lecture(models.Model):
+    course = models.ForeignKey(Course,on_delete=models.CASCADE, db_column='course', help_text="프로그래밍기초실습") 
+    user_id = models.ForeignKey(User,on_delete=models.CASCADE,db_column='user_id', help_text="예: sunkyun12@skku.edu")
+   
+    def __str__(self):
+        return str(self.course)
+
 
 class Question(models.Model):
     question = models.CharField(primary_key=True,max_length=50, help_text="예: 프로그래밍기초실습_week2")
-    course = models.ForeignKey(Course, related_name='question',on_delete=models.CASCADE, db_column='course', null=True, help_text="프로그래밍기초실습") 
+    course = models.ForeignKey(Course,on_delete=models.CASCADE, db_column='course', null=True, help_text="프로그래밍기초실습") 
     skeleton = models.TextField(help_text="스켈레톤 코드") 
     answer = models.CharField(max_length=1000)
     testcase = models.CharField(max_length=100)
     reference = models.CharField(max_length=300, help_text="문제 설명 밑의 참고사항") 
     duedate = models.DateTimeField(help_text="마감기한") 
+    keyword = models.CharField(null=True, max_length=50)
 
     def __str__(self):
         return self.question
@@ -40,21 +48,21 @@ class Question(models.Model):
 class UserData(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE,db_column='user_id')
     question = models.ForeignKey(Question, on_delete=models.CASCADE,db_column='question')
-    save1 = models.TextField()
-    save2 = models.TextField()
-    save3 = models.TextField()
+    save1 = models.TextField(null=True)
+    save2 = models.TextField(null=True)
+    save3 = models.TextField(null=True)
 
     def __str__(self):
-        return "UserData of " + self.user_id + " " + self.question
+        return "UserData of " + str(self.user_id) + " " + str(self.question)
 
-class Chat(models.Model):
-    course = models.ForeignKey(Course,on_delete=models.CASCADE,db_column='course')
-    user_id = models.ForeignKey(User,on_delete=models.CASCADE,db_column='user_id')
-    time = models.TimeField(help_text="글을 남긴 시간") 
-    comment = models.TextField(help_text="글 내용")
+# class Chat(models.Model):
+#     course = models.ForeignKey(Course,on_delete=models.CASCADE,db_column='course')
+#     user_id = models.ForeignKey(User,on_delete=models.CASCADE,db_column='user_id')
+#     time = models.TimeField(help_text="글을 남긴 시간") 
+#     comment = models.TextField(help_text="글 내용")
 
-    def __str__(self):
-        return "Chat of " + self.course + " " + self.user_id + " " + self.time
+#     def __str__(self):
+#         return "Chat of " + self.course + " " + self.user_id + " " + self.time
 
 class Submission(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE,db_column='user_id')
@@ -62,4 +70,4 @@ class Submission(models.Model):
     submission = models.BooleanField(help_text="제출: 1, 미제출: 0, null값 가능") 
 
     def __str__(self):
-        return "Submission of " + self.question
+        return "Submission of " + str(self.question)

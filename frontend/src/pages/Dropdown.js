@@ -1,7 +1,8 @@
-import React, {useContext} from 'react';
+import React, {useCallback,useState,useContext} from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { NowContext } from "../context/NowContext";
+import axios from "axios";
 
 
 const weeklist = [
@@ -43,10 +44,28 @@ const Dropdown = (props) => {
 
 function Dropdownlist (props) {
   const {now, setNow} = useContext(NowContext);
+  const [question, setQuestion]=useState("1");
 
   const handleclick = (week) => {
+    getQuestionInf();
     setNow(week);
   }
+
+  const getQuestionInf = async() =>{
+     const newData = {
+        course: "1"
+     };
+     try {
+        const response = await axios.get(
+        "http://localhost:8000/main/main/question/",
+        {params:newData}
+     );
+     console.log("response >>", response);
+     setQuestion(response["data"]);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
+  };
 
   return (
     <ul css={dropdownul}>

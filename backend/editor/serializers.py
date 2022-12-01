@@ -26,3 +26,8 @@ class ReferenceSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Reference
+
+class QuestionReceiverSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = QuestionReceiver

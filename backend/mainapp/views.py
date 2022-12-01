@@ -90,8 +90,8 @@ class CourseFindAPI(APIView):
         serializer = CourseIdSerializer(data=request.data)
         if serializer.is_valid():
             user_id = serializer.data['user_id']
-            course_list = Course.objects.filter(user_id=user_id)
-            serializer_list = CourseSerializer(course_list, many=True)
+            course_list = Lecture.objects.filter(user_id=user_id)
+            serializer_list = LectureSerializer(course_list, many=True)
             courses = []
 
             for i in serializer_list.data:
@@ -125,6 +125,14 @@ class RequestQuestionAPI(APIView):
             return Response(question_info, status=status.HTTP_200_OK)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# 학생들이 강의 추가하는 API
+class LectureAPI(APIView):
+    def post(self, request):
+        serializers = LectureSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_200_OK)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserApi(APIView):
@@ -291,50 +299,6 @@ class UserDataApi(APIView):
     def get_object(self,user_id,question):
         try:
             return Question.objects.get(user_id=user_id,question=question)
-        except Question.DoesNotExist:
-            test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
-                "answer":"12", "testcase":"[1,2,3,4]", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
-            }
-            return test_data #Http404
-    
-    #내용 추가
-    def post(self,request):
-        serializer = QuestionSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    #내용 조회
-    def get(self,request):
-        question = request.GET.get('question') #GET 리퀘스트로 들어온 JSON 데이터에서 user_id를 받아옴
-        question_object = self.get_object(question)
-        serializer = UserSerializer(question_object)
-
-        return Response(serializer.data)
-    
-    #내용 수정
-    def put(self,request):
-        question = request.PUT.get('question')
-        question_object = self.get_object(question)
-        serializer = QuestionSerializer(question_object,data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-    
-    #내용 삭제
-    def delete(self,request):
-        question = request.DELETE.get('question')
-        question_object = self.get_object(question)
-        question_object.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-class ChatApi(APIView): 
-
-    def get_object(self,question):
-        try:
-            return Question.objects.get(pk=question)
         except Question.DoesNotExist:
             test_data = {"question":"프기실_week3","course":"프기실","skeleton":"import numpy as np",
                 "answer":"12", "testcase":"[1,2,3,4]", "reference": "잘 풀어봐요", "duedate": "2022-11-17 23:59:59"
