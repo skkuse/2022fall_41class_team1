@@ -245,50 +245,54 @@ class CheckReadabilityAPI(APIView):
         radon_score = 20
         pycodestyle_score = 20
 
-        user_code = open("./tmp/user_code.py",'w')
-        user_code.write(code)
-        user_code.close()
+        try:
+            user_code = open("./user_code.py",'w')
+            user_code.write(code)
+            user_code.close()
+        except IOError:
+            raise AssertionError
 
-        os.system("pylama " + "./tmp/user_code.py" + " > result.txt")
+        os.system("pylama ./user_code.py > result.txt")
 
-        read_code = open("./tmp/user_code.py",'r')
+        read_code = open("./result.txt",'r')
 
         ret_data = {"score":"","comment":""}
         score = {"mypy":0,"pylint":0,"eradicate":0,"radon":0,"pycodestyle":0}
         comment = {"mypy":[],"pylint":[],"eradicate":[],"radon":[],"pycodestyle":[]}
 
         lines = read_code.readlines()
+        print(lines)
         for line in lines:
             res = ""
             words = line.split()
             if words[-1]=="[mypy]":
                 for word in words[2:-1]:
-                    res += word
+                    res += word + " "
                 mypy_score -= 1
             elif words[-1]=="[pylint]":
                 for word in words[2:-1]:
-                    res += word
+                    res += word + " "
                 pylint_score -= 1
             elif words[-1]=="[eradicate]":
                 for word in words[2:-1]:
-                    res += word
+                    res += word + " "
                 eradicate_score -= 1
             elif words[-1]=="[radon]":
                 for word in words[2:-1]:
-                    res += word
+                    res += word + " "
                 radon_score -= 1
             elif words[-1]=="[pycodestyle]":
                 for word in words[2:-1]:
-                    res += word
+                    res += word + " "
                 pycodestyle_score -= 1
 
-            #경우별 코멘트를 res에 받아왔음
-            #각 경우별 코멘트를 로그형식으로 추가
             res += '\n'
+            words[-1] = words[-1][1:-1]
             comment[words[-1]].append(res)
         
         read_code.close()
-        os.remove("./tmp/user_code.py")
+        os.remove("./user_code.py")
+        os.remove("./result.txt")
 
         if mypy_score < 0:
             mypy_score = 0
@@ -311,9 +315,21 @@ class CheckReadabilityAPI(APIView):
         ret_data['comment'] = comment
 
         return ret_data
+    
+    def concatString(self,lines):
+        ret = ""
+        for line in lines:
+            ret += line
+        return ret
 
     def post(self,request):
         
         user_code = request.data.get('code')
-        return self.analyze(user_code)
+        data = self.analyze(user_code)
+        data['comment']['mypy'] = self.concatString(data['comment']['mypy'])
+        data['comment']['pylint'] = self.concatString(data['comment']['pylint'])
+        data['comment']['eradicate'] = self.concatString(data['comment']['eradicate'])
+        data['comment']['radon'] = self.concatString(data['comment']['radon'])
+        data['comment']['pycodestyle'] = self.concatString(data['comment']['pycodestyle'])
+        return Response(data,status=status.HTTP_201_CREATED)
         
