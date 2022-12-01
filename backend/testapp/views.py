@@ -15,6 +15,7 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from copydetect import CopyDetector
 
 def execute(code):
     py = open('temp.txt','w')
@@ -170,6 +171,7 @@ class CheckTestcaseAPI(APIView):
     
         result = testcase(answer, code, tc)
         
+<<<<<<< HEAD
         codedata_serializer = CheckTestcaseSerializer(result)
         return Response(codedata_serializer.data)
 
@@ -182,3 +184,118 @@ class EvaluateCodeAPI(APIView):
         print(codedata)
         codedata_serializer = EvaluateCodeSerializer(codedata)
         return Response(codedata_serializer.data)
+=======
+    def delete(self, request):
+        print("")
+
+class CheckPlagiarismAPI(APIView):
+    def post(self, request):
+        ref_dir = "testapp"
+        code = request.data.get('code')
+        detector = CopyDetector(ref_dirs=[ref_dir], boilerplate_dirs=[ref_dir], extensions=["py"], display_t=0.5)
+        f=open("test.py", 'w')
+        f.write(code)
+        f.close()
+        detector.add_file("test.py")
+        detector.run()
+        os.remove("test.py")
+        return Response(detector.similarity_matrix[0][0][0])
+
+class CheckReadabilityAPI(APIView):
+    
+    def analyze(self,code):
+        mypy_score = 20
+        pylint_score = 20
+        eradicate_score = 20
+        radon_score = 20
+        pycodestyle_score = 20
+
+        try:
+            user_code = open("./user_code.py",'w')
+            user_code.write(code)
+            user_code.close()
+        except IOError:
+            raise AssertionError
+
+        os.system("pylama ./user_code.py > result.txt")
+
+        read_code = open("./result.txt",'r')
+
+        ret_data = {"score":"","comment":""}
+        score = {"mypy":0,"pylint":0,"eradicate":0,"radon":0,"pycodestyle":0}
+        comment = {"mypy":[],"pylint":[],"eradicate":[],"radon":[],"pycodestyle":[]}
+
+        lines = read_code.readlines()
+        print(lines)
+        for line in lines:
+            res = ""
+            words = line.split()
+            if words[-1]=="[mypy]":
+                for word in words[2:-1]:
+                    res += word + " "
+                mypy_score -= 1
+            elif words[-1]=="[pylint]":
+                for word in words[2:-1]:
+                    res += word + " "
+                pylint_score -= 1
+            elif words[-1]=="[eradicate]":
+                for word in words[2:-1]:
+                    res += word + " "
+                eradicate_score -= 1
+            elif words[-1]=="[radon]":
+                for word in words[2:-1]:
+                    res += word + " "
+                radon_score -= 1
+            elif words[-1]=="[pycodestyle]":
+                for word in words[2:-1]:
+                    res += word + " "
+                pycodestyle_score -= 1
+
+            res += '\n'
+            words[-1] = words[-1][1:-1]
+            comment[words[-1]].append(res)
+        
+        read_code.close()
+        os.remove("./user_code.py")
+        os.remove("./result.txt")
+
+        if mypy_score < 0:
+            mypy_score = 0
+        if pylint_score < 0:
+            pylint_score = 0
+        if eradicate_score < 0:
+            eradicate_score = 0
+        if radon_score < 0:
+            radon_score = 0
+        if pycodestyle_score < 0:
+            pycodestyle_score = 0
+
+        score['mypy'] = mypy_score
+        score['pylint'] = pylint_score
+        score['eradicate'] = eradicate_score
+        score['radon'] = radon_score
+        score['pycodestyle'] = pycodestyle_score
+
+        ret_data['score'] = score
+        ret_data['comment'] = comment
+
+        return ret_data
+    
+    def concatString(self,lines):
+        ret = ""
+        for line in lines:
+            ret += line
+        return ret
+
+    def post(self,request):
+        
+        user_code = request.data.get('code')
+        data = self.analyze(user_code)
+        data['comment']['mypy'] = self.concatString(data['comment']['mypy'])
+        data['comment']['pylint'] = self.concatString(data['comment']['pylint'])
+        data['comment']['eradicate'] = self.concatString(data['comment']['eradicate'])
+        data['comment']['radon'] = self.concatString(data['comment']['radon'])
+        data['comment']['pycodestyle'] = self.concatString(data['comment']['pycodestyle'])
+        return Response(data,status=status.HTTP_201_CREATED)
+        
+>>>>>>> e475e9b7d913098efcc962702471b892e6cbd43f
