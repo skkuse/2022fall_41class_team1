@@ -36,7 +36,7 @@ const Login = () => {
         );
      console.log("response >>", response);
      console.log(response["data"]["msg"]);
-     if(response["data"]["msg"]=="login sucess"){
+     if(response["data"]["msg"]=="Login Sucess"){
         onLogin1Click();
      }
      else{
@@ -53,9 +53,9 @@ const Login = () => {
       <div className="login_title2">CODING TEST</div>
       <div className="login_input">
         <div className="email_text">E-mail</div>
-        <input name="user_email" className="email_input"></input>
+        <input name="user_email" className="email_input" onChange={onChangeLogAccount}></input>
         <div className="pw_text">PW</div>
-        <input name="user_password" className="pw_input"></input>
+        <input name="user_password" className="pw_input" onChange={onChangeLogAccount}></input>
       </div>
       <button className="loginBtn" onClick={getLoginInf}>로그인</button>
       <div className="link_findPw"><Link to="/find">PW 찾기</Link></div>

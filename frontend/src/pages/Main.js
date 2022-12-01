@@ -8,8 +8,9 @@ import { Dropdown, Dropdownlist } from "./Dropdown";
 import { NowContext } from "../context/NowContext";
 import Login from "./Login"
 
+
 const Main = () => {
-  //console.log(Login.logAccount);
+  console.log(Login.logAccount);
   const [editorVisible, setEditorVisible] = useState(1);
   const [user_id, setUser_id] = useState("yali98@naver.com");
   const [question_no, setQuestion_no] = useState("2");
