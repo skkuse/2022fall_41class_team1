@@ -496,7 +496,7 @@ const Main = () => {
 
   return (
     <div className="desktop13">
-      <div className="header" />
+      <div className="header">
         <ul className="problemname" onClick={(e) => setDropdownVisibility(!dropdownVisibility)}>
           week1 : 피보나치 수{dropdownVisibility ? " △" : " ▽"}
         </ul>
@@ -514,7 +514,7 @@ const Main = () => {
             <div className="constraint_line"/>
             <div className="constraint_content">{now.constraint}</div>
           </div>
-          <div className="section2" />
+          <div className="section2">
             <div className="testcase_title">테스트케이스</div>
             <div className="testcase_line"/>
             <div className="testcase_content">{now.testcase}</div>
