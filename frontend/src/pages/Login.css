@@ -1,17 +1,21 @@
 
 .desktop2 {
-  position: relative;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
   background-color: black;
   width: 100%;
   height: 1024px;
 }
 
+.title_box{
+  margin-top: 10%;
+  height: 128px;
+}
 .login_title1{
   position: absolute;
   width: 100%;
   height: 128px;
-  left: 0px;
-  top: 232px;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
@@ -23,13 +27,10 @@
   mix-blend-mode: screen;
   text-shadow: -3px 0 white, 0 3px white, 3px 0 white, 0 -3px white;
 }
-
 .login_title2{
   position: absolute;
   width: 100%;
   height: 128px;
-  left: 0px;
-  top: 237px;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
@@ -43,64 +44,93 @@
 }
 
 
+
+
+.login_input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+.login_subsection{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.text_container{
+  position: relative;
+  flex-direction: column;
+  align-items: stretch;
+  display: flex;
+  height: 132px;
+  justify-content: center;
+  margin-right: 20px;
+
+}
+
 .email_text{
-  position: absolute;
-  width: 363px;
-  height: 50px;
-  left: 113px;
-  top: 479px;
+  position: relative;
+  height: 61px;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
   font-size: 50px;
-  line-height: 50px;
   text-align: right;
   letter-spacing: 0.07em;
   color: #E9D738;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-
 .pw_text {
-  position: absolute;
-  width: 310px;
-  height: 50px;
-  left: 309px;
-  top: 559px;
+  position: relative;
+  height: 61px;
+  margin-top:10px;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
   font-size: 50px;
-  line-height: 50px;
   letter-spacing: 0.07em;
   color: #E9D738;
 }
 
+
+
+.input_container{
+  position: relative;
+  flex-direction: column;
+  display: flex;
+}
 .email_input {
-  position: absolute;
+  position: relative;
   width: 486px;
   height: 49px;
-  left: 500px;
-  top: 479px;
+  border: 5px solid #FFFFFF;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+.pw_input {
+  position: relative;
+  margin-top: 10px;
+  width: 486px;
+  height: 49px;
   border: 5px solid #FFFFFF;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
-.pw_input {
-  position: absolute;
-  width: 486px;
-  height: 49px;
-  left: 500px;
-  top: 560px;
-  border: 5px solid #FFFFFF;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+.login_conatiner{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+
 }
+
 
 .loginBtn{
-  position: absolute;
+  position: relative;
+  margin-left: 10px;
   width: 154px;
-  height: 146px;
-  left: 1030px;
-  top: 477px;
+  height: 132px;
   background: #4235D3;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
@@ -112,19 +142,24 @@
   color: #FFFFFF;
 }
 
+
+.otherbutton{
+  position:relative;
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-left: 300px;
+}
+
 .link_findPw{
-  position: absolute;
-  width: 109px;
-  height: 25px;
-  left: 780px;
-  top: 649px;
+  position: relative;
   
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   font-family: 'NeoDunggeunmo';
 font-style: normal;
 font-weight: 400;
 font-size: 25px;
-line-height: 25px;
+
 /* identical to box height */
 
 
@@ -134,19 +169,14 @@ color: #FFFFFF;
 }
 
 .link_register {
-position: absolute;
-width: 141px;
-height: 25px;
-left: 900px;
-top: 649px;
-
+position: relative;
+margin-left: 30px;
 filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
 font-family: 'NeoDunggeunmo';
 font-style: normal;
 font-weight: 400;
 font-size: 25px;
-line-height: 25px;
 /* identical to box height */
 
 

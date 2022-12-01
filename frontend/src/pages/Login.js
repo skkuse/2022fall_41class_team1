@@ -56,26 +56,36 @@ const Login = () => {
 
   return (
     <div className="desktop2">
-      <div className="login_title1">CODING TEST</div>
-      <div className="login_title2">CODING TEST</div>
-      <div className="login_input">
-        <div className="email_text">E-mail</div>
-        <input 
-          type='text'
-          value={email}
-          className="email_input"
-          onChange={_handleEmailChange}
-        />
-        <div className="pw_text">PW</div>
-        <input
-          value={password}
-          className="pw_input"
-          onChange={_handlePasswordChange}
-        />
+      <div className="title_box">
+        <div className="login_title1">CODING TEST</div>
+        <div className="login_title2">CODING TEST</div>
       </div>
-      <button className="loginBtn" onClick={onLoginClick}>로그인</button>
-      <div className="link_findPw"><Link to="/find">PW 찾기</Link></div>
-      <div className="link_register"><Link to="/register">회원가입</Link></div>
+      <div className="login_input">
+        <div className="login_subsection">
+          <div className="text_container">
+            <div className="email_text">E-mail</div>
+            <div className="pw_text">PW</div>
+          </div>
+          <div className="input_container">
+            <input 
+              type='text'
+              value={email}
+              className="email_input"
+              onChange={_handleEmailChange}
+            />
+            <input
+              value={password}
+              className="pw_input"
+              onChange={_handlePasswordChange}
+            />
+          </div>
+          <button className="loginBtn" onClick={onLoginClick}>로그인</button>
+        </div>
+        <div className="otherbutton">
+          <div className="link_findPw"><Link to="/find">PW 찾기</Link></div>
+          <div className="link_register"><Link to="/register">회원가입</Link></div>
+        </div>
+      </div> 
     </div>
   );
 };

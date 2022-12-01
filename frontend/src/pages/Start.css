@@ -1,17 +1,23 @@
 
 .desktop1 {
-  position: relative;
+  position: absolute;
   background-color: black;
   width: 100%;
   height: 1024px;
 }
 
+
+
+
+.title_box{
+  margin-top: 20%;
+  height: 128px;
+}
 .title1 {
   position: absolute;
   width: 100%;
   height: 128px;
-  left: 0px;
-  top: 319px;
+
   font-family: 'NeoDunggeunmo';
   font-style: normal;
   font-weight: 400;
@@ -28,8 +34,6 @@
   position: absolute;
   width: 100%;
   height: 128px;
-  left: 0px;
-  top: 322px;
   
   font-family: 'NeoDunggeunmo';
   font-style: normal;
@@ -47,11 +51,11 @@
 }
 
 .start {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 148px;
-  left: 0px;
-  top: 530px;
+
+  margin-top: 50px;
   
   font-family: 'NeoDunggeunmo';
   font-style: normal;
