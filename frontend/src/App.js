@@ -7,9 +7,8 @@ import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 //import AddPage from "./pages/AddPage";
-import FindPage1 from "./pages/FindPage1";
-import FindPage2 from "./pages/FindPage2";
 import Start from "./pages/Start";
+import SubjectPage from "./pages/SubjectPage";
 
 function App() {
     const dispatch = useDispatch();
@@ -27,14 +26,11 @@ function App() {
       <Route exact path="/" element={<Start />} />
       <Route path="/main" element={<Main />} />
       <Route path="/login" element={<Login />} />
+      <Route exact path="/subject" element={<SubjectPage />} />
       <Route path="/register" element={<Register />} />
-
-      <Route path="/find1" element={<FindPage1 />} />
-      <Route path="/find2" element={<FindPage2 />} />
     </Routes>
     );
     //<Route path="/add" element={<AddPage />} />
 
 }
-
 export default App;

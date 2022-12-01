@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Login.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import {baseURL} from '../utils/axios';
+import Logo from "../assets/Logo.png";
 
 const Login = () => {
 
@@ -19,6 +21,26 @@ const Login = () => {
     });
     console.log(logAccount);
   };
+
+  const validateEmail = email => {
+    const regex = /^[0-9?A-z0-9?]+(\.)?[0-9?A-z0-9?]+@[0-9?A-z]+\.[A-z]{2}.?[A-z]{0,3}$/;
+    return regex.test(email);
+  };
+  const removeWhitespace = text => {
+    const regex = /\s/g;
+    return text.replace(regex, '');
+  };
+
+  //const _handleEmailChange = (e) => {
+    //const changeEmail = removeWhitespace(email);
+    //setEmail(e.target.email);
+  //}
+  //const _handlePasswordChange = (e) => {
+    //setPassword(e.target.password);
+  //}
+  //const onRegisterClick = (e) => {
+    //navigate("/register");
+  //}
 
   const onLogin1Click = useCallback(() => {
     navigate("/main",{state: logAccount});
@@ -49,17 +71,25 @@ const Login = () => {
 
   return (
     <div className="desktop2">
-      <div className="login_title1">CODING TEST</div>
-      <div className="login_title2">CODING TEST</div>
-      <div className="login_input">
-        <div className="email_text">E-mail</div>
-        <input name="user_email" className="email_input" onChange={onChangeLogAccount}></input>
-        <div className="pw_text">PW</div>
-        <input name="user_password" className="pw_input" onChange={onChangeLogAccount}></input>
+      <img src={Logo} alt="codingtest" className="logo"></img>
+      <div className="login_container">
+        <div className="login_input">
+          <div className="login_subsection">
+            <div className="text_container">
+              <div className="email_text">이메일</div>
+              <div className="pw_text">비밀번호</div>
+            </div>
+            <div className="input_container">
+              <input type='text' name="user_email" className="email_input" onChange={onChangeLogAccount}></input>
+              <input  name="user_password" className="pw_input" onChange={onChangeLogAccount}></input>
+            </div>
+            <button className="loginBtn" onClick={getLoginInf}>로그인</button>
+            <div className="otherbutton">
+              <div className="link_register"><Link to="/register">회원가입</Link></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <button className="loginBtn" onClick={getLoginInf}>로그인</button>
-      <div className="link_findPw"><Link to="/find">PW 찾기</Link></div>
-      <div className="link_register"><Link to="/register">회원가입</Link></div>
     </div>
   );
 };

@@ -1,0 +1,99 @@
+.desktop5 {
+  background-color: black;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  line-height: 140%;
+  letter-spacing: -0.5px;
+  color: #0d0d0d;
+  flex-direction: column;
+  width: 100%;
+  height: 1024px;
+}
+
+  @media (min-width: 650px) {
+    .App {
+      width: 640px;
+    }
+  }
+  @media (max-width: 650px) {
+    .App {
+      width: 90vw;
+    }
+  }
+
+
+.container {
+  display: flex;
+  padding: 5px 40px;
+  align-items: center;
+  width: 640px;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 32px;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.subject_option {
+  width: 430px;
+  height: 50px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+
+}
+
+.logo {
+  width: 50%;
+  margin-left: 0px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.startBtn {
+  position: relative;
+  margin: 0;
+  margin-top: 50px;
+  width: 94%;
+  height: 70px;
+  background: #4235D3;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 35px;
+  line-height: 40px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #FFFFFF;
+  cursor: pointer;
+
+}
+
+.select {
+  align-items: center;
+  display: flex;
+  margin:0;
+  padding:0;
+  gap: 15px;
+  padding-right: 20px;
+}
+
+.select_txt {
+  padding-top: 30px;
+  width: 100px;
+  height: 58px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  
+  color: #FFFFFF;
+}
