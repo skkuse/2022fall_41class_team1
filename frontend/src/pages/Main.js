@@ -45,12 +45,9 @@ const week6 = {problem: '문제 6번',constraint: '제약조건 6번',testcase: 
 
 
 const Main = () => {
-  //const location = useLocation();
-  //console.log(location);
-  //const user = location.state.user;
+  const {state} = useLocation();
   const [editorVisible, setEditorVisible] = useState(1);
-  const [user_id, setUser_id] = useState("skku@gmail.com");
-  //console.log(user_id);
+  const [user_id, setUser_id] = useState(state);
   const [question_no, setQuestion_no] = useState("2");
   const [code1, setCode1] = useState("# code에 함수 이거 넣어서 테스트 ㄱㄱ\ndef solution(add1, add2, add3):\n\tsum = add1 + add2 + add3\n\treturn sum\nif __name__ == \"__main__\":\n\tprint(solution(1, 2, 3))");
 

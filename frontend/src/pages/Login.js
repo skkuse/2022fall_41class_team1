@@ -21,7 +21,7 @@ const Login = () => {
   };
 
   const onLogin1Click = useCallback(() => {
-    navigate("/main");
+    navigate("/main",{state: logAccount});
   }, [navigate]);
 
   const getLoginInf = async() =>{
@@ -49,7 +49,6 @@ const Login = () => {
 
   return (
     <div className="desktop2">
-    <Link to={`/main`} state={{ user: "hello" }}> </Link>
       <div className="login_title1">CODING TEST</div>
       <div className="login_title2">CODING TEST</div>
       <div className="login_input">
