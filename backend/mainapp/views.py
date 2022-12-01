@@ -33,7 +33,6 @@ class ListUserData(generics.ListCreateAPIView):
     queryset = UserData.objects.all()
     serializer_class = UserDataSerializer
 
-@swagger_auto_schema(tags=["detail user"], request_body=UserSerializer, query_serializer=UserSerializer)
 def detail_user(request, userid):
     data = User.objects.get(user_id=userid)
     queryset = User.objects.all()
@@ -42,7 +41,6 @@ def detail_user(request, userid):
         return JsonResponse(serializer_class.data, safe=False)
 
 class DetailUser(generics.RetrieveUpdateDestroyAPIView):
-    #   @swagger_auto_schema(tags=["detail user"], request_body=UserSerializer, query_serializer=UserSerializer)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -135,8 +133,77 @@ class LectureAPI(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserApi(APIView):
+class Login(APIView):
+    def post(self, request):
+        serializer = LoginSerializer(request.data)
+        user = User.objects.filter(user_id=serializer.data['user_id']).first()
+        if user is None:
+            return Response(dict(msg="There's no such ID"))
+        if check_password(serializer.data['user_pwd'], user.user_pwd):
+            return Response(dict(msg="Login Sucess"))
+        else:
+            return Response(dict(msg="Login Failure"))
+
+
+class RegistUser(APIView):
+    def post(self, request):
+        serializer = UserSerializer(request.data)
+        if User.objects.filter(user_id=serializer.data['user_id']).exists():
+            user = User.objects.filter(user_id=serializer.data['user_id']).first()
+            data = dict(
+                msg="exist id"
+            )
+            return Response(data)
+        
+        user = serializer.create(request.data)
+        return Response(data=UserSerializer(user).data)
     
+
+# request로 user_id를 전달해준다 
+# 전달하는 값은 "student@skku.com"이다.
+class CourseFindAPI(APIView):
+    def get(self, request):
+        serializer = CourseIdSerializer(data=request.data)
+        if serializer.is_valid():
+            user_id = serializer.data['user_id']
+            course_list = Course.objects.filter(user_id=user_id)
+            serializer_list = CourseSerializer(course_list, many=True)
+            courses = []
+
+            for i in serializer_list.data:
+                courses.append(i['course'])
+            return Response(courses, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class QuestionFindAPI(APIView):
+    def get(self, request):
+        serializer = QuestionIdSerializer(data=request.data)
+        if serializer.is_valid():
+            course = serializer.data['course']
+            question_info = Question.objects.filter(course=course)
+            question_info = list(question_info.values())
+            print(question_info)
+            print("\n")
+            questions = []
+            for i in question_info:
+                questions.append(i['question'])
+            return Response(questions, status=status.HTTP_200_OK) 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+# request: 소프트공학개론_week2
+class RequestQuestionAPI(APIView):
+    def get(self, request):
+        serializers = QuestionNameSerializer(data=request.data)
+        if serializers.is_valid():
+            question = serializers.data['question']
+            question_info = Question.objects.filter(question=question)
+            question_info = list(question_info.values())
+            return Response(question_info, status=status.HTTP_200_OK)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class UserApi(APIView):
     def get_object(self,user_id):
         try:
             return User.objects.get(pk=user_id)
@@ -210,6 +277,8 @@ class CourseApi(APIView):
             return test_data #Http404
     
     #내용 추가
+    # request값: user_id아니고 user_id_id임.
+
     def post(self, request):
         serializer = CourseSerializer(request.data)
         course = serializer.create(request.data)

@@ -1,7 +1,7 @@
 from solution import solution
 import sys
 
-def main():
+def main2():
     
     total_argv = len(sys.argv)
     
@@ -13,4 +13,4 @@ def main():
     print(eval(start_string))
 
 if __name__ == "__main__":
-    main()
+    main2()
