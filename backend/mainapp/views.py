@@ -17,7 +17,7 @@ from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.parsers import JSONParser
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from django.contrib.auth.hashers import make_password, check_password, get_hasher
+from django.contrib.auth.hashers import make_password, check_password
 from django.core import serializers
 from mainapp.serializers import CourseIdSerializer
 
@@ -68,7 +68,8 @@ class Login(APIView):
             return Response(dict(msg="Login Sucess"))
         else:
             return Response(dict(msg="Login Failure"))
-        
+
+
 class RegistUser(APIView):
     def post(self, request):
         serializer = UserSerializer(request.data)
@@ -86,14 +87,20 @@ class RegistUser(APIView):
 # request로 user_id를 전달해준다 
 # 전달하는 값은 "student@skku.com"이다.
 class CourseFindAPI(APIView):
-    def get(self, request):
-        serializer = CourseIdSerializer(data=request.GET)
-        print(serializer)
+    def post(self, request):
+        # user_id = request.data['user_id']
+        # course_list = Lecture.objects.filter(user_id=user_id).values()
+        # courses = []
+
+        # for i in course_list:
+        #     courses.append(i['course_id'])
+        # return Response(courses)
+
+        serializer = CourseIdSerializer(data=request.POST)
         if serializer.is_valid():
             user_id = serializer.data.get('user_id')
             course_list = Lecture.objects.filter(user_id=user_id)
             serializer_list = LectureSerializer(course_list, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
             courses = []
 
             for i in serializer_list.data:

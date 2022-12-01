@@ -13,7 +13,7 @@ class LoginSerializer(serializers.ModelSerializer):
 class CourseIdSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lecture
-        fields = ('user_id', )
+        fields = '__all__'
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
