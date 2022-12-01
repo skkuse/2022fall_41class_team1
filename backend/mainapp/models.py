@@ -41,7 +41,7 @@ class Question(models.Model):
     skeleton = models.TextField(help_text="스켈레톤 코드") 
     answer = models.TextField()
     testcase = models.CharField(max_length=100)
-    reference = models.CharField(max_length=300, help_text="문제 설명 밑의 참고사항") 
+    reference = models.CharField(max_length=1000, help_text="문제 설명 밑의 참고사항") 
     duedate = models.DateTimeField(help_text="마감기한") 
     keyword = models.CharField(null=True, max_length=50)
 
