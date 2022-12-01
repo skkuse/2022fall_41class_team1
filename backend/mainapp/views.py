@@ -17,7 +17,7 @@ from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.parsers import JSONParser
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import make_password, check_password, get_hasher
 from django.core import serializers
 from mainapp.serializers import CourseIdSerializer
 
@@ -57,16 +57,16 @@ class DetailUserData(generics.RetrieveUpdateDestroyAPIView):
 
 class Login(APIView):
     def post(self, request):
-        serializer = LoginSerializer(request.data)
-        user = User.objects.filter(user_id=serializer.data['user_id']).first()
+        user_id = request.data['user_id']
+        user_pwd = request.data['user_pwd']
+        user = User.objects.filter(user_id=user_id).first()
         if user is None:
-            return Response(dict(msg="There's no such ID"))
-        if check_password(serializer.data['user_pwd'], user.user_pwd):
+            return Response({"msg":"There's no such ID"})
+        if check_password(user.user_pwd, make_password(user.user_pwd)):
             return Response(dict(msg="Login Sucess"))
         else:
             return Response(dict(msg="Login Failure"))
-
-
+        
 class RegistUser(APIView):
     def post(self, request):
         serializer = UserSerializer(request.data)
