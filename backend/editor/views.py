@@ -44,11 +44,11 @@ def analyzeCode(user_code,mode):
 class SimpleExplainApi(APIView):
     
     def get(self,request):
-        print("working")
+
         serializer = CodeExplainSerializer(data=request.GET)
-        print(serializer.is_valid())
+
         if serializer.is_valid():
-            print(serializer.data)
+
             code_analysis = analyzeCode(serializer.data.get('code'),0)
             output_serializer = CodeExplainSerializer(code_analysis)
             return Response(output_serializer.data)
@@ -87,10 +87,10 @@ class TranslationApi(APIView):
         return data
 
     def get(self,request):
-        serializer = TranslationSerializer(data=request.data)
+        serializer = TranslationSerializer(data=request.GET)
 
         if serializer.is_valid():
-            output = self.translate(serializer.data['language'])
+            output = self.translate(serializer.data.get('language'))
             output_serializer = TranslationSerializer(output)
             return Response(output_serializer.data)
 
@@ -135,10 +135,10 @@ class UserDataApi(APIView):
     
     #내용 조회
     def get(self,request):
-        serializer = SaveSerializer(data=request.data)
+        serializer = SaveSerializer(data=request.GET)
 
         if serializer.is_valid():
-            userdata = self.get_object(serializer.data['user_id'],serializer.data['question'])
+            userdata = self.get_object(serializer.data.get('user_id'),serializer.data.get('question'))
             userdata_serializer = UserDataSerializer(userdata)
             return  Response(userdata_serializer.data)
 
@@ -166,7 +166,7 @@ class SkeletonApi(APIView):
     
     #내용 조회
     def get(self,request):
-        question = request.data.get('question')
+        question = request.GET.get('question')
         question_object = self.get_object(question)
         skeleton_code = {"skeleton": question_object.skeleton}
         serializer = SkeletonSerializer(data=skeleton_code)
@@ -182,13 +182,11 @@ class ReferenceApi(APIView):
             return Http404
 
     def get(self,request):
-        keyword = request.data.get('keyword')
-        keyword = keyword.replace(' ', '')
-        '''
         question = request.GET.get('question')
         question_object = self.get_object(question)
-        keyword = question_object['keyword']
-        '''
+        keyword = question_object.keyword
+        keyword = keyword.replace(' ', '')
+        
         links = crawling_link(keyword)
         links['keyword'] = keyword
         serializer = ReferenceSerializer(data=links)
