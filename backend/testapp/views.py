@@ -261,7 +261,6 @@ class CheckReadabilityAPI(APIView):
         comment = {"mypy":[],"pylint":[],"eradicate":[],"radon":[],"pycodestyle":[]}
 
         lines = read_code.readlines()
-        print(lines)
         for line in lines:
             res = ""
             words = line.split()
