@@ -101,6 +101,9 @@ def testcase(answer, user, testcase):
                     
     return {'score':f'{(sum(ots)+sum(hts))/(len(ots)+len(hts))*100}', 'msg':f'{msg}'}
     
+def evaluate(code):
+    return {'e_score1':'60','e_score2':'50'}
+    
 class ExecuteCodeV1API(APIView):
     def get_object(self,user_id,question,save_type):
         try:
@@ -136,9 +139,9 @@ class ExecuteCodeV1API(APIView):
 # 현재 에디터에 있는 코드 바로 실행
 class ExecuteCodeV2API(APIView):
     def get(self,request):
-        serializer = ExecuteCodeV2Serializer(data=request.data)
+        serializer = ExecuteCodeV2Serializer(data=request.GET)
         if serializer.is_valid():
-            codedata = execute(serializer.data['code'])
+            codedata = execute(serializer.data.get('code'))
             codedata_serializer = ExecuteCodeV2Serializer(codedata)
             return Response(codedata_serializer.data)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
@@ -155,9 +158,8 @@ class CheckTestcaseAPI(APIView):
             return test_data #Http404
             
     def get(self, request):
-
-        question = request.data.get('question')
-        code = request.data.get('code')
+        question = request.GET['question']
+        code = request.GET['code']
         question_object = self.get_object(question)
         try:
             tc = question_object.testcase
@@ -171,13 +173,12 @@ class CheckTestcaseAPI(APIView):
         codedata_serializer = CheckTestcaseSerializer(result)
         return Response(codedata_serializer.data)
 
+# 현재 에디터에 있는 코드 가져와서 효율 채점하기
 class EvaluateCodeAPI(APIView):
-    def get_object(self, user_id, question):
-        try:
-            return EvaluateCode.objects.get(user_id=user_id, question=question)
-        except EvaluateCode.DoesNotExist:
-            test_data = {'user_id':'jcy9911','question':'SWE3002-01','score':'20','msg' :'In the line 0, correct answer is 10 but user answer is 30'}
-            return test_data
-    
-    def get(self, request):
-        print("")
+    def get(self,request):
+        #code = request.data.get('code')
+        code = request.GET['code']
+        codedata = evaluate(code)
+        print(codedata)
+        codedata_serializer = EvaluateCodeSerializer(codedata)
+        return Response(codedata_serializer.data)
