@@ -60,14 +60,16 @@ const Main = () => {
   const [original_code, setOriginal_code] = useState("#some comment");
   const [modified_code, setModified_code] = useState("#some comment");
   const [result, setResult] = useState("result display");
+  const [efficiencya,setEfficiencya]=useState(0);
+  const [efficiencyb,setEfficiencyb]=useState(0);
   const [resultShow, setResultShow] = useState(0);
   const [submitted,setSubmitted]=useState(0);
   const [analyzed_texts,setAnalyzed_texts]=useState("코드 분석");
   const [test_case_texts,setTest_case_texts]=useState("테스트 케이스");
-  const [efficiency1,setEfficiency1]=useState("");
-  const [efficiency2,setEfficiency2]=useState("");
-  const [copy,setCopy]=useState("");
-  const [functionality,setFunctionality]=useState("");
+  const [score,setScore]=useState(0);
+
+  const [copy,setCopy]=useState();
+  const [functionality,setFunctionality]=useState(0);
 
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
@@ -330,6 +332,7 @@ const Main = () => {
   const submitResultDisplay = () => {};
 
   const submit = async() => {
+     setSubmitted(1);
     await showValue();
 
     await get_testcase();
@@ -344,7 +347,7 @@ const Main = () => {
     setModified();
 
     setEditorVisible(4);
-    setSubmitted(1);
+
   };
 
   const get_testcase = async () => {
@@ -375,6 +378,7 @@ const Main = () => {
       console.log("response >>", response);
       console.log(response["data"]);
       setTest_case_texts(response["data"]["msg"]);
+      setScore(response["data"]["score"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -441,11 +445,15 @@ const Main = () => {
 
       console.log("response >>", response1);
       console.log(response1["data"]);
-      setEfficiency1(response1["data"]["e_score1"]);
-      setEfficiency1(response1["data"]["e_score2"]);
+
+      setEfficiencya(response1["data"]["e_score1"]);
+      setEfficiencyb(response1["data"]["e_score2"]);
+      console.log(efficiencya);
+      console.log(efficiencyb);
       console.log("response >>", response2);
       console.log(response2["data"]);
       setCopy(response2["data"]);
+      console.log(copy);
       console.log("response >>", response3);
       console.log(response3["data"]);
       setFunctionality(response3["data"]["score"]);
@@ -641,7 +649,7 @@ const Main = () => {
                 <textarea value={result} disabled="True" cols="140" rows="10" />
               </div>
               <div css={ resultShow == 1 ? css` display: block;`: css`display: none;`}>
-                <textarea value={efficiency1+efficiency2+functionality} disabled="True" cols="140" rows="10" />
+                <textarea value={"Score: "+score+"\nMemory-efficiency: "+efficiencya+"\nTime-efficiency: "+efficiencyb} disabled="True" cols="140" rows="10" />
               </div>
               <div css={ resultShow == 2 ? css`display: flex;flex-direction: column;`: css`display: none;`}>
                 <textarea value={test_case_texts} disabled="True" cols="140" rows="10"/>
