@@ -62,29 +62,29 @@ const Login = () => {
       <img src={Logo} alt="codingtest" className="logo"></img>
       <div className="login_container">
       <div className="login_input">
-        <div className="login_subsection">
-          <div className="text_container">
-            <div className="email_text">이메일</div>
-            <div className="pw_text">비밀번호</div>
-          </div>
-          <div className="input_container">
+        <div className="register_subcontainer">
+          <div className="text_containerbox">
+            <div className="emailText">이메일</div>
             <input 
               type='text'
               value={email}
               className="email_input"
               onChange={_handleEmailChange}
             />
+          </div>
+          <div className="text_containerbox">
+            <div className="nameText">비밀번호</div>
             <input
               value={password}
               className="pw_input"
               onChange={_handlePasswordChange}
             />
           </div>
+          </div>
           <button className="loginBtn" onClick={onLoginClick}>로그인</button>
         </div>
         <div className="otherbutton">
           <div className="link_register" onClick={onRegisterClick}>회원가입</div>
-        </div>
       </div> 
     </div>
     </div>

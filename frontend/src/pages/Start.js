@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Start.css";
+import Logo from "../assets/Logo.png"
 
 const Start = () => {
   const navigate = useNavigate();
@@ -11,10 +12,7 @@ const Start = () => {
 
   return (
     <div className="desktop1" onClick={onDesktop1Click}>
-      <div className="title_box">
-        <div className="title1">CODING TEST</div>
-        <div className="title2">CODING TEST</div>
-      </div>
+      <img src={Logo} alt="codingtest" className="logo"></img>
       <div className="start">Click anywhere...</div>
     </div>
   );

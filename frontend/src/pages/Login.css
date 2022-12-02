@@ -8,7 +8,7 @@
   min-height: 100vh;
   text-align: center;
   line-height: 140%;
-  letter-spacing: -0.5px;
+  letter-spacing: -3px;
   color: #0d0d0d;
   flex-direction: column;
   width: 100%;
@@ -26,11 +26,12 @@
 .login_container {
   display: flex;
   padding: 5px 40px;
-  width: 800px;
+  width: 900px;
   box-sizing: border-box;
   border-radius: 32px;
   flex-direction: column;
   margin-top: 50px;
+  justify-content: center;
 }
 
 .login_input {
@@ -38,6 +39,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
   
 }
 .login_subsection{
@@ -45,6 +47,8 @@
   display: flex;
   flex-direction: row;
   padding: 0;
+  justify-content: center;
+  
 }
 
 .text_container{
@@ -52,14 +56,15 @@
   flex-direction: column;
   display: flex;
   height: 132px;
-  margin-right: 20px;
-  width: 120px;
+  width: 170px;
+  justify-content: center;
+  
 
 }
 
 .email_text{
   padding-top: 15px;
-  width: 120px;
+  width: 110px;
   height: 58px;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
@@ -68,11 +73,12 @@
   line-height: 30px;
   color: #E9D738;
   position: relative;
+  letter-spacing: 10px;
 
 }
 .pw_text {
   padding-top: 23px;
-  width: 120px;
+  width: 110px;
   height: 58px;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
@@ -80,6 +86,7 @@
   font-size: 30px;
   line-height: 30px;
   color: #E9D738;
+  letter-spacing: 10px;
 }
 
 
@@ -102,7 +109,6 @@
 }
 .pw_input {
   position: relative;
-  margin-top: 15px;
   width: 430px;
   height: 50px;
   width: 430px;
@@ -124,9 +130,8 @@
 
 .loginBtn{
   position: relative;
-  margin-left: 15px;
   width: 154px;
-  height: 99%;
+  height: 100%;
   background: #4235D3;
   font-family: 'NeoDunggeunmo';
   font-style: normal;
@@ -137,6 +142,7 @@
   letter-spacing: 0.07em;
   color: #FFFFFF;
   cursor: pointer;
+  letter-spacing: 5px;
 
 }
 
@@ -144,19 +150,18 @@
 .otherbutton{
   position:relative;
   display: flex;
-  flex-direction: row;
-  margin-top: 20px;
-  margin-left: 300px;
+  margin-top: 15px;
+  flex-direction: row-reverse;
 }
 
 .link_findPw{
   position: relative;
   
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  font-family: 'NeoDunggeunmo';
-font-style: normal;
-font-weight: 400;
-font-size: 25px;
+    font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
 
 /* identical to box height */
 
@@ -180,5 +185,13 @@ line-height: 30px;
 cursor: pointer;
 
 color: #FFFFFF;
+letter-spacing: 5px;
 
+
+
+}
+
+.login_input {
+  display: flex;
+  flex-direction: row;
 }

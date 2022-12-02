@@ -339,7 +339,8 @@ const Main = () => {
               />
               <div className="editor_footer">
               <div css={css`display: flex; flex-direction: row-reverse`}>
-                <input className="uploadBtn" type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
+                <button className="input-file-button" for="input-file">파일선택</button>
+                <input className="uploadBtn" type="file" id="input-file" onChange={e => handleChangeFile2(e.target.files[0])} style={{display:"none"}} accept = ".py"/>
                 <button className="resetBtn" onClick={onReset2}>초기화</button>
                 <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>복사</button>
                 <button className="downloadBtn" onClick ={()=>{saveFile(editorRef2.current.getValue(), "code2.py")}}>다운로드</button>
