@@ -1,3 +1,4 @@
+
 import styles from "./Main.css";
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
@@ -45,12 +46,9 @@ const week6 = {problem: '문제 6번',constraint: '제약조건 6번',testcase: 
 
 
 const Main = () => {
-  //const location = useLocation();
-  //console.log(location);
-  //const user = location.state.user;
+  const {state} = useLocation();
   const [editorVisible, setEditorVisible] = useState(1);
-  const [user_id, setUser_id] = useState("skku@gmail.com");
-  //console.log(user_id);
+  const [user_id, setUser_id] = useState(state);
   const [question_no, setQuestion_no] = useState("2");
   const [code1, setCode1] = useState("# code에 함수 이거 넣어서 테스트 ㄱㄱ\ndef solution(add1, add2, add3):\n\tsum = add1 + add2 + add3\n\treturn sum\nif __name__ == \"__main__\":\n\tprint(solution(1, 2, 3))");
 
@@ -498,329 +496,154 @@ const Main = () => {
 
   return (
     <div className="desktop13">
-      <div className="header" />
-      <ul
-        className="problemname"
-        onClick={(e) => setDropdownVisibility(!dropdownVisibility)}
-      >
-        week1 : 피보나치 수{dropdownVisibility ? " △" : " ▽"}
-      </ul>
-      <Dropdown visibility={dropdownVisibility}>
-        <Dropdownlist />
-      </Dropdown>
-      <div className="section_left">
-        <div className="section1" />
-        <div className="line1" />
-        <dlv className="line2" />
-        <div className="line3" />
-        <div className="question_title1">문제</div>
-        <div className="question_content1">{now.problem}</div>
-        <div className="line4" />
-        <div className="question_title2">참조 / 제약사항</div>
-        <div className="question_content2">{now.constraint}</div>
-        <div className="section2" />
-        <div className="testcase_title">테스트케이스</div>
-        <div className="line5" />
-        <div className="testcase_content">{now.testcase}</div>
+      <div className="header">
+        <ul className="problemname" onClick={(e) => setDropdownVisibility(!dropdownVisibility)}>
+          week1 : 피보나치 수{dropdownVisibility ? " △" : " ▽"}
+        </ul>
+        <Dropdown visibility={dropdownVisibility}>
+          <Dropdownlist />
+        </Dropdown>
       </div>
-
-      <div
-        className="editor"
-        css={css`
-          background-color: red;
-        `}
-      >
-        <div className="editor_header">
-          <button
-            className="codeBtn1"
-            onClick={() => {
-              setEditorVisible(1);
-            }}
-          >
-            1
-          </button>
-          <button
-            className="codeBtn2"
-            onClick={() => {
-              setEditorVisible(2);
-            }}
-          >
-            2
-          </button>
-          <button
-            className="codeBtn3"
-            onClick={() => {
-              setEditorVisible(3);
-            }}
-          >
-            3
-          </button>
-          <button className="saveBtn" onClick={saveData}>
-            저장
-          </button>
-          <button className="runBtn" onClick={showValue}>
-            실행
-          </button>
-          <button className="evalBtn" onClick={submit_evaluate}>채점</button>
-          <button className="submitBtn" onClick={submit}>
-            제출
-          </button>
-        </div>
-        <div className="onlyEditors">
-          <div
-            css={
-              editorVisible == 1
-                ? css`
-                    display: block;
-                  `
-                : css`
-                    display: none;
-                  `
-            }
-          >
-            <Editor
-              id="Editor1"
-              value={code1}
-              height="60vh"
-              width="130vh"
-              theme="myTheme"
-              defaultLanguage="python"
-              defaultValue="# some comment"
-              onMount={handleEditor1DidMount}
-            />
-            <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
-            <input
-              type="file"
-              onChange={(e) => handleChangeFile1(e.target.files[0])}
-              accept=".py"
-            />
-            <button onClick={onReset1}>reset</button>
-            <button
-              onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}
-            >
-              copy
-            </button>
-            <button
-              onClick={() => {
-                saveFile(editorRef1.current.getValue(), "code1.py");
-              }}
-            >
-              download
-            </button>
+      <div className="main_section">
+        <div className="section_left">
+          <div className="section1">
+            <div className="question_title1">문제</div>
+            <dlv className="question_line"/>
+            <div className="question_content1">{now.problem}</div>
+            <div className="constraint_title">참조 / 제약사항</div>
+            <div className="constraint_line"/>
+            <div className="constraint_content">{now.constraint}</div>
           </div>
-          <div
-            css={
-              editorVisible == 2
-                ? css`
-                    display: block;
-                  `
-                : css`
-                    display: none;
-                  `
-            }
-          >
-            <Editor
-              value={code2}
-              height="60vh"
-              width="130vh"
-              theme="myTheme"
-              defaultLanguage="python"
-              defaultValue="# some comment"
-              onMount={handleEditor2DidMount}
-            />
-            <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
-            <input
-              type="file"
-              onChange={(e) => handleChangeFile2(e.target.files[0])}
-              accept=".py"
-            />
-            <button onClick={onReset2}>reset</button>
-            <button
-              onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}
-            >
-              copy
-            </button>
-            <button
-              onClick={() => {
-                saveFile(editorRef2.current.getValue(), "code2.py");
-              }}
-            >
-              download
-            </button>
-          </div>
-          <div
-            css={
-              editorVisible == 3
-                ? css`
-                    display: block;
-                  `
-                : css`
-                    display: none;
-                  `
-            }
-          >
-            <Editor
-              value={code3}
-              height="60vh"
-              width="130vh"
-              theme="myTheme"
-              defaultLanguage="python"
-              defaultValue="# some comment"
-              onMount={handleEditor3DidMount}
-            />
-            <button onClick={showValue}>Show value</button> 자동으로 저장됩니다.
-            <input
-              type="file"
-              onChange={(e) => handleChangeFile3(e.target.files[0])}
-              accept=".py"
-            />
-            <button onClick={onReset3}>reset</button>
-            <button
-              onClick={() => handleCopyClipBoard(editorRef3.current.getValue())}
-            >
-              copy
-            </button>
-            <button
-              onClick={() => {
-                saveFile(editorRef3.current.getValue(), "code3.py");
-              }}
-            >
-              download
-            </button>
-          </div>
-          <div
-            css={
-              editorVisible == 4
-                ? css`
-                    display: block;
-                  `
-                : css`
-                    display: none;
-                  `
-            }
-          >
-            <DiffEditor
-              height="60vh"
-              width="130vh"
-              theme="myTheme"
-              defaultLanguage="python"
-              original={original_code}
-              modified={modified_code}
-              onMount={handleDiffEditorDidMount}
-              readOnly={true}
-            />
+          <div className="section2">
+            <div className="testcase_title">테스트케이스</div>
+            <div className="testcase_line"/>
+            <div className="testcase_content">{now.testcase}</div>
           </div>
         </div>
-        <div
-          className="terminal"
-          css={css`
-            background-color: blue;
-          `}
-        >
-          <div className="terminal_header">
-            <button className="resultBtn1" onClick={() => setResultShow(0)}>
-              실행결과
-            </button>
-            <button
-              className="resultBtn2"
-              onClick={
-                submitted == 1
-                  ? () => setResultShow(1)
-                  : () => {
-                      alert("you should submit before");
-                    }
-              }
-            >
-              제출결과
-            </button>
-            <button
-              className="resultBtn3"
-              onClick={
-                submitted == 1
-                  ? () => setResultShow(2)
-                  : () => {
-                      alert("you should submit before");
-                    }
-              }
-            >
-              테스트케이스
-            </button>
-            <button
-              className="resultBtn4"
-              onClick={
-                submitted == 1
-                  ? () => setResultShow(3)
-                  : () => {
-                      console.error("you should submit before");
-                    }
-              }
-            >
-              코드분석
-            </button>
+        <div className="editor">
+          <div className="editor_header">
+            <div classname="savebutton">
+              <button className="codeBtn1" onClick={() => {setEditorVisible(1);}}>1</button>
+              <button className="codeBtn2" onClick={() => {setEditorVisible(2);}}>2</button>
+              <button className="codeBtn3" onClick={() => {setEditorVisible(3);}}>3</button>
+            </div>
+            <div classname="functionbutton">
+              <button className="saveBtn" onClick={saveData}>저장</button>
+              <button className="runBtn" onClick={showValue}>실행</button>
+              <button className="evalBtn" onClick={submit_evaluate}>채점</button>
+              <button className="submitBtn" onClick={submit}>제출</button>
+            </div>
+          </div>
+          <div className="onlyEditors">
+            <div css={editorVisible==1?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
+              <Editor
+                id="Editor1"
+                value={code1}
+                height="64vh"
+                width="100%"
+                theme="myTheme"
+                defaultLanguage="python"
+                defaultValue="# some comment"
+                onMount={handleEditor1DidMount}
+              />
+              <div className="editor_footer">
+                <div css={css`display: flex; flex-direction: row`}>.
+                  <input className="uploadBtn" type="file" onChange={e => handleChangeFile1(e.target.files[0])} accept = ".py"/>
+                  <button className="resetBtn" onClick={onReset1}>초기화</button>
+                  <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>복사</button>
+                  <button className="downloadBtn" onClick ={()=>{saveFile(editorRef1.current.getValue(), "code1.py")}}>다운로드</button>
+                </div>
+              </div>
+            </div>
+            <div css={editorVisible==2?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
+              <Editor
+                value={code2}
+                height="64vh"
+                width="100%"
+                theme="myTheme"
+                defaultLanguage="python"
+                defaultValue="# some comment"
+                onMount={handleEditor2DidMount}
+              />
+              <div className="editor_footer">
+                <div css={css`display: flex; flex-direction: row-reverse`}>
+                  <input className="uploadBtn" type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
+                  <button className="resetBtn" onClick={onReset2}>초기화</button>
+                  <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>복사</button>
+                  <button className="downloadBtn" onClick ={()=>{saveFile(editorRef2.current.getValue(), "code2.py")}}>다운로드</button>
+                </div>
+              </div>
+            </div>
+            <div css={editorVisible==3?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
+              <Editor
+                value={code3}
+                height="64vh"
+                width="100%"
+                theme="myTheme"
+                defaultLanguage="python"
+                defaultValue="# some comment"
+                onMount={handleEditor3DidMount}
+              />
+              <div className="editor_footer">
+                <div css={css`display: flex; flex-direction: row`}>
+                  <input className="uploadBtn" type="file" onChange={e => handleChangeFile3(e.target.files[0])} accept = ".py"/>
+                  <button className="resetBtn" onClick={onReset3}>초기화</button>
+                  <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef3.current.getValue())}>복사</button>
+                  <button className="downloadBtn" onClick ={()=>{saveFile(editorRef3.current.getValue(), "code3.py")}}>다운로드</button>
+                </div>
+              </div>
+            </div>
+            <div css={editorVisible==4?css`display:block`:css`display:none`}>
+              <DiffEditor
+                height="64vh"
+                width="130vh"
+                theme="myTheme"
+                defaultLanguage="python"
+                original={original_code}
+                modified={modified_code}
+                onMount={handleDiffEditorDidMount}
+                readOnly={true}
+              />
+            </div>
+          </div>
+          <div className="terminal" css={css` background-color: blue;`}>
+            <div className="terminal_header">
+              <div className="flex_left">
+                <button className="resultBtn1" onClick={() => setResultShow(0)}>실행결과 </button>
+                <button
+                  className="resultBtn2"
+                  onClick={submitted == 1? () => setResultShow(1): () => {alert("you should submit before");}}
+                >
+                제출결과
+                </button>
+                <button
+                  className="resultBtn3"
+                  onClick={ submitted == 1? () => setResultShow(2): () => { alert("you should submit before");} }
+                >
+                테스트케이스
+                </button>
+              </div>
+              <div className="flex_right">
+                <button
+                  className="resultBtn4"
+                  onClick={submitted == 1? () => setResultShow(3): () => { console.error("you should submit before");}}
+                >
+                코드분석
+                </button>
+              </div>
+            </div>
             <div className="result_window">
-              <div
-                css={
-                  resultShow == 0
-                    ? css`
-                        display: block;
-                      `
-                    : css`
-                        display: none;
-                      `
-                }
-              >
-                <textarea value={result} disabled="True" cols="145" rows="15" />
+              <div css={ resultShow == 0 ? css`display: block;`: css`display: none;`}>
+                <textarea value={result} disabled="True" cols="140" rows="10" />
               </div>
-              <div
-                css={
-                  resultShow == 1
-                    ? css`
-                        display: block;
-                      `
-                    : css`
-                        display: none;
-                      `
-                }
-              >
-                <textarea value={efficiency1+efficiency2+functionality} disabled="True" cols="145" rows="15" />
+              <div css={ resultShow == 1 ? css` display: block;`: css`display: none;`}>
+                <textarea value={efficiency1+efficiency2+functionality} disabled="True" cols="140" rows="10" />
               </div>
-              <div
-                css={
-                  resultShow == 2
-                    ? css`
-                        display: flex;
-                        flex-direction: column;
-                      `
-                    : css`
-                        display: none;
-                      `
-                }
-              >
-                <textarea
-                  value={test_case_texts}
-                  disabled="True"
-                  cols="145"
-                  rows="15"
-                />
+              <div css={ resultShow == 2 ? css`display: flex;flex-direction: column;`: css`display: none;`}>
+                <textarea value={test_case_texts} disabled="True" cols="140" rows="10"/>
               </div>
-              <div
-                css={
-                  resultShow == 3
-                    ? css`
-                        display: flex;
-                        flex-direction: column;
-                      `
-                    : css`
-                        display: none;
-                      `
-                }
-              >
-                <textarea
-                  value={analyzed_texts}
-                  disabled="True"
-                  cols="145"
-                  rows="15"
-                />
+              <div css={ resultShow == 3 ? css` display: flex; flex-direction: column;`: css`display: none;`}>
+                <textarea value={analyzed_texts} disabled="True" cols="145" rows="15"/>
               </div>
             </div>
           </div>
