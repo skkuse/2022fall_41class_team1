@@ -96,28 +96,12 @@ class LectureAPI(APIView):
 # request로 user_id를 전달해준다 
 # 전달하는 값은 "student@skku.com"이다.
 class CourseFindAPI(APIView):
-<<<<<<< HEAD
-    def post(self, request):
-        # user_id = request.data['user_id']
-        # course_list = Lecture.objects.filter(user_id=user_id).values()
-        # courses = []
-
-        # for i in course_list:
-        #     courses.append(i['course_id'])
-        # return Response(courses)
-
-        serializer = CourseIdSerializer(data=request.POST)
-        if serializer.is_valid():
-            user_id = serializer.data.get('user_id')
-=======
     def get(self, request):
         print("hello")
         serializer = CourseIdSerializer(data=request.GET)
         print(serializer.is_valid())
         if serializer.is_valid():
             user_id = serializer.data.get('user_id')
-            print(user_id)
->>>>>>> 280bdf59aac0f49709928f0f5a4a75befba6ede4
             course_list = Lecture.objects.filter(user_id=user_id)
             print(course_list)
             serializer_list = LectureSerializer(course_list, many=True)

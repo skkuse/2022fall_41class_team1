@@ -109,7 +109,7 @@ const Register = () => {
           </div>
         </div>
       </div>
-      <button className="registerBtn" onClick={account.user_password==account.user_passwordcheck?onRegisterClick:()=>{console.err("Password check is not same with password")}}>회원가입</button>
+      <button className="registerBtn" onClick={account.user_password==account.user_passwordcheck?sendData:()=>{console.err("Password check is not same with password")}}>회원가입</button>
     </div>
     </div>
 

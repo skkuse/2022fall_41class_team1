@@ -26,15 +26,11 @@ class Course(models.Model):
 
 
 class Lecture(models.Model):
-<<<<<<< HEAD
-    course = models.ForeignKey(Course,on_delete=models.CASCADE, db_column='course', help_text="프로그래밍기초실습") 
-    user_id = models.ForeignKey(User,on_delete=models.CASCADE, blank=True, db_column='user_id', help_text="예: sunkyun12@skku.edu")
-   
-=======
+
     course = models.ForeignKey(Course,on_delete=models.CASCADE, db_column='course', help_text="프로그래밍기초실습")
     user_id = models.ForeignKey(User,on_delete=models.CASCADE,db_column='user_id', help_text="예: sunkyun12@skku.edu")
 
->>>>>>> 280bdf59aac0f49709928f0f5a4a75befba6ede4
+
     def __str__(self):
         return str(self.course)
 
