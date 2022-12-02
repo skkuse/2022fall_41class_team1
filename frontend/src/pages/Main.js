@@ -188,6 +188,7 @@ const Main = () => {
         "http://localhost:8000/test/execute2/",
         {params: newData}
       );
+      get_testcase();
       console.log("response >>", response);
       console.log(response["data"]["code"]);
       setResult(response["data"]["code"]);
@@ -621,7 +622,7 @@ const Main = () => {
                 </button>
                 <button
                   className="resultBtn3"
-                  onClick={ submitted == 1? () => setResultShow(2): () => { alert("you should submit before");} }
+                  onClick={() => setResultShow(2) }
                 >
                 테스트케이스
                 </button>
@@ -629,7 +630,7 @@ const Main = () => {
               <div className="flex_right">
                 <button
                   className="resultBtn4"
-                  onClick={submitted == 1? () => setResultShow(3): () => { console.error("you should submit before");}}
+                  onClick={submitted == 1? () => setResultShow(3): () => { alert("you should submit before");}}
                 >
                 코드분석
                 </button>
