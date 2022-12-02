@@ -42,7 +42,8 @@ const Login = () => {
     //navigate("/register");
   //}
 
-  const onLogin1Click = useCallback(() => {
+  const onLogin1Click = useCallback((logAccount) => {
+  console.log(logAccount);
     navigate("/main",{state: logAccount});
   }, [navigate]);
 
@@ -59,7 +60,8 @@ const Login = () => {
      console.log("response >>", response);
      console.log(response["data"]["msg"]);
      if(response["data"]["msg"]=="Login Sucess"){
-        onLogin1Click();
+        console.log(logAccount);
+        onLogin1Click(logAccount);
      }
      else{
         alert("잘못된 아이디나 비밀번호 입니다.");

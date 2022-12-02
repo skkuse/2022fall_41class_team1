@@ -46,9 +46,12 @@ const week6 = {problem: '문제 6번',constraint: '제약조건 6번',testcase: 
 
 
 const Main = () => {
+
   const {state} = useLocation();
+
+  console.log(state);
   const [editorVisible, setEditorVisible] = useState(1);
-  const [user_id, setUser_id] = useState(state);
+  const [user_id, setUser_id] = useState(state.user_email);
   const [question_no, setQuestion_no] = useState("2");
   const [code1, setCode1] = useState("# code에 함수 이거 넣어서 테스트 ㄱㄱ\ndef solution(add1, add2, add3):\n\tsum = add1 + add2 + add3\n\treturn sum\nif __name__ == \"__main__\":\n\tprint(solution(1, 2, 3))");
 
@@ -508,7 +511,7 @@ const Main = () => {
         <div className="section_left">
           <div className="section1">
             <div className="question_title1">문제</div>
-            <dlv className="question_line"/>
+            <div className="question_line"/>
             <div className="question_content1">{now.problem}</div>
             <div className="constraint_title">참조 / 제약사항</div>
             <div className="constraint_line"/>
