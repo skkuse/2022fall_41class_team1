@@ -84,9 +84,10 @@ const Login = () => {
               <input  name="user_password" className="pw_input" onChange={onChangeLogAccount}></input>
             </div>
             <button className="loginBtn" onClick={getLoginInf}>로그인</button>
+          </div>
             <div className="otherbutton">
               <div className="link_register"><Link to="/register">회원가입</Link></div>
-            </div>
+
           </div>
         </div>
       </div>

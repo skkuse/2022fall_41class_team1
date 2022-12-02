@@ -4,6 +4,7 @@ import styles from "./Register.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Select from 'react-select';
+import Logo from "../assets/Logo.png";
 
 const Register = () => {
 
@@ -73,29 +74,45 @@ const Register = () => {
 
 
   return (
+
+
     <div className="desktop3">
-      <div className="register_title1">CODING TEST</div>
-      <div className="register_title2">CODING TEST</div>
+      <img src={Logo} alt="codingtest" className="logo"></img>
+      <div className="container">
       <div className="register_input">
-        <div className="emailText">E-mail</div>
-        <input name="user_email" className="emailInput" onChange={onChangeAccount}></input>
-        <div className="nameText">Name</div>
-        <input name="user_name" className="nameInput" onChange={onChangeAccount}></input>
-        <div className="pwText">PW</div>
-        <input name="user_password" className="pwInput" onChange={onChangeAccount}></input>
-        <div className="checkText">PW 확인</div>
-        <input name="user_passwordcheck" className="checkInput" onChange={onChangeAccount}></input>
-        <div className="classText">직책</div>
-        <Select
+        <div className="register_subcontainer">
+          <div className="text_containerbox">
+            <div className="emailText">이메일</div>
+            <input name="user_email" className="emailInput" onChange={onChangeAccount}></input>
+          </div>
+          <div className="text_containerbox">
+            <div className="nameText">이름</div>
+            <input name="user_name" className="nameInput" onChange={onChangeAccount}></input>
+          </div>
+          <div className="text_containerbox">
+            <div className="pwText">비밀번호</div>
+            <input name="user_password" className="pwInput" onChange={onChangeAccount}></input>
+          </div>
+          <div className="text_containerbox">
+            <div className="checkText">확인</div>
+            <input name="user_passwordcheck" className="pwcheckInput" onChange={onChangeAccount}></input>
+          </div>
+          <div className="text_containerbox">
+          <div className="classText">직책</div>
+            <Select
                 name="user_class"
                 className="classInput"
             	onChange={onClassChangeAccount}
             	placeholder="직책을 선택하세요."
                 options={ops}
             />
+          </div>
+        </div>
       </div>
-      <button className="registerBtn" onClick={account.user_password==account.user_passwordcheck?sendData:()=>{alert("Password check is not same with password")}}>회원가입</button>
+      <button className="registerBtn" onClick={account.user_password==account.user_passwordcheck?onRegisterClick:()=>{console.err("Password check is not same with password")}}>회원가입</button>
     </div>
+    </div>
+
   );
 };
 
