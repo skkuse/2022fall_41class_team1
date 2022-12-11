@@ -20,6 +20,7 @@
     "react-router-dom": "^6.4.2",
     "react-scripts": "^5.0.1",
     "react-select": "^5.6.1",
+    "react-split": "^2.0.14",
     "redux": "^4.2.0",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.4.2",
