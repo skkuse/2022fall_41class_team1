@@ -1,6 +1,6 @@
 from email.policy import default
 from django.db import models
-from jsonfield import JSONField
+# from jsonfield import JSONField
 
 # Create your models here.
 
