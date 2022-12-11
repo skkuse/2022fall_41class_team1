@@ -1,0 +1,184 @@
+
+.desktop2 {
+  background-color: black;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  line-height: 140%;
+  letter-spacing: -0.5px;
+  color: #0d0d0d;
+  flex-direction: column;
+  width: 100%;
+  height: 1024px;
+}
+
+.logo {
+  width: 50%;
+  margin-left: 0px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.login_container {
+  display: flex;
+  padding: 5px 40px;
+  width: 800px;
+  box-sizing: border-box;
+  border-radius: 32px;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.login_input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+.login_subsection{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+
+.text_container{
+  position: relative;
+  flex-direction: column;
+  display: flex;
+  height: 132px;
+  margin-right: 20px;
+  width: 120px;
+
+}
+
+.email_text{
+  padding-top: 15px;
+  width: 120px;
+  height: 58px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  color: #E9D738;
+  position: relative;
+
+}
+.pw_text {
+  padding-top: 23px;
+  width: 120px;
+  height: 58px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  color: #E9D738;
+}
+
+
+
+.input_container{
+  position: relative;
+  flex-direction: column;
+  display: flex;
+  padding-top: 2.5px;
+}
+.email_input {
+  position: relative;
+  width: 430px;
+  height: 50px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+}
+.pw_input {
+  position: relative;
+  margin-top: 15px;
+  width: 430px;
+  height: 50px;
+  width: 430px;
+  height: 50px;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+}
+
+.login_conatiner{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+
+}
+
+
+.loginBtn{
+  position: relative;
+  margin-left: 15px;
+  width: 154px;
+  height: 99%;
+  background: #4235D3;
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 35px;
+  line-height: 40px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #FFFFFF;
+  cursor: pointer;
+
+}
+
+
+.otherbutton{
+  position:relative;
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-left: 300px;
+}
+
+.link_findPw{
+  position: relative;
+  
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  font-family: 'NeoDunggeunmo';
+font-style: normal;
+font-weight: 400;
+font-size: 25px;
+
+/* identical to box height */
+
+
+color: #FFFFFF;
+
+
+}
+
+.link_register {
+position: relative;
+margin-left: 30px;
+filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+font-family: 'NeoDunggeunmo';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 30px;
+/* identical to box height */
+cursor: pointer;
+
+color: #FFFFFF;
+
+}

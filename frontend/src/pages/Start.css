@@ -1,0 +1,68 @@
+
+.desktop1 {
+  position: absolute;
+  background-color: black;
+  width: 100%;
+  height: 1024px;
+}
+
+
+
+
+.title_box{
+  margin-top: 20%;
+  height: 128px;
+}
+.title1 {
+  position: absolute;
+  width: 100%;
+  height: 128px;
+
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 128px;
+  line-height: 128px;
+  /* identical to box height */
+  text-align: center;
+  letter-spacing: 0.12em;
+  mix-blend-mode: screen;
+  text-shadow: -3px 0 white, 0 3px white, 3px 0 white, 0 -3px white;
+  
+}
+.title2 {
+  position: absolute;
+  width: 100%;
+  height: 128px;
+  
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 128px;
+  line-height: 128px;
+  /* identical to box height */
+  
+  text-align: center;
+  letter-spacing: 0.12em;
+  
+  color: rgba(255, 167, 34, 0.8);
+  
+  text-shadow: -9px 4px 0px rgba(123, 213, 101, 0.4);
+}
+
+.start {
+  position: relative;
+  width: 100%;
+  height: 148px;
+
+  margin-top: 50px;
+  
+  font-family: 'NeoDunggeunmo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 32px;
+  text-align: center;
+  
+  color: #FFFFFF;
+}
