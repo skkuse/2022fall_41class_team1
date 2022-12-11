@@ -9,28 +9,29 @@ import Register from "./pages/Register";
 //import AddPage from "./pages/AddPage";
 import Start from "./pages/Start";
 import SubjectPage from "./pages/SubjectPage";
+import ResultPage from "./pages/ResultPage";
 
 function App() {
-    const dispatch = useDispatch();
-    const isLogin = useSelector((state) => state.changeStatus.isLogin);
-    const localstorageCheck = localStorage.getItem('access_token');
+  const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.changeStatus.isLogin);
+  const localstorageCheck = localStorage.getItem("access_token");
 
-    useEffect(() => {
-      if (localstorageCheck) {
-        dispatch(loginCheck());
-      }
-    }, []);
+  useEffect(() => {
+    if (localstorageCheck) {
+      dispatch(loginCheck());
+    }
+  }, []);
 
-    return (
+  return (
     <Routes>
       <Route exact path="/" element={<Start />} />
       <Route path="/main" element={<Main />} />
       <Route path="/login" element={<Login />} />
       <Route exact path="/subject" element={<SubjectPage />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/resultpage" element={<ResultPage />} />
     </Routes>
-    );
-    //<Route path="/add" element={<AddPage />} />
-
+  );
+  //<Route path="/add" element={<AddPage />} />
 }
 export default App;
