@@ -8,8 +8,8 @@ import Editor, { useMonaco, DiffEditor } from "@monaco-editor/react";
 import axios from "axios";
 // import { Dropdown, Dropdownlist } from "./Dropdown";
 import { NowContext } from "../context/NowContext";
-import Login from "./Login"
-
+import Login from "./Login";
+import Split from 'react-split';
 
 
 const weeklist = [
@@ -516,8 +516,8 @@ const Main = () => {
           <Dropdownlist />
         </Dropdown>
       </div>
-      <div className="main_section">
-        <div className="section_left">
+      <Split className="main_section" gutterSize={20} cursor="col-resize">
+        <Split className="section_left" gutterSize={20} direction="vertical">
           <div className="section1">
             <div className="question_title1">문제</div>
             <div className="question_line"/>
@@ -531,91 +531,93 @@ const Main = () => {
             <div className="testcase_line"/>
             <div className="testcase_content">{now.testcase}</div>
           </div>
-        </div>
-        <div className="editor">
-          <div className="editor_header">
-            <div classname="savebutton">
-              <button className="codeBtn1" onClick={() => {setEditorVisible(1);}}>1</button>
-              <button className="codeBtn2" onClick={() => {setEditorVisible(2);}}>2</button>
-              <button className="codeBtn3" onClick={() => {setEditorVisible(3);}}>3</button>
-            </div>
-            <div classname="functionbutton">
-              <button className="saveBtn" onClick={saveData}>저장</button>
-              <button className="runBtn" onClick={showValue}>실행</button>
-              <button className="evalBtn" onClick={submit_evaluate}>채점</button>
-              <button className="submitBtn" onClick={submit}>제출</button>
-            </div>
-          </div>
-          <div className="onlyEditors">
-            <div css={editorVisible==1?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
-              <Editor
-                id="Editor1"
-                value={code1}
-                height="64vh"
-                width="100%"
-                theme="myTheme"
-                defaultLanguage="python"
-                defaultValue="# some comment"
-                onMount={handleEditor1DidMount}
-              />
-              <div className="editor_footer">
-                <div css={css`display: flex; flex-direction: row`}>.
-                  <input className="uploadBtn" type="file" onChange={e => handleChangeFile1(e.target.files[0])} accept = ".py"/>
-                  <button className="resetBtn" onClick={onReset1}>초기화</button>
-                  <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>복사</button>
-                  <button className="downloadBtn" onClick ={()=>{saveFile(editorRef1.current.getValue(), "code1.py")}}>다운로드</button>
-                </div>
+        </Split>
+        <Split className="editor" gutterSize={20} direction="vertical">
+          <div className="editor_header_body">
+            <div className="editor_header">
+              <div classname="savebutton">
+                <button className="codeBtn1" onClick={() => {setEditorVisible(1);}}>1</button>
+                <button className="codeBtn2" onClick={() => {setEditorVisible(2);}}>2</button>
+                <button className="codeBtn3" onClick={() => {setEditorVisible(3);}}>3</button>
+              </div>
+              <div classname="functionbutton">
+                <button className="saveBtn" onClick={saveData}>저장</button>
+                <button className="runBtn" onClick={showValue}>실행</button>
+                <button className="evalBtn" onClick={submit_evaluate}>채점</button>
+                <button className="submitBtn" onClick={submit}>제출</button>
               </div>
             </div>
-            <div css={editorVisible==2?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
-              <Editor
-                value={code2}
-                height="64vh"
-                width="100%"
-                theme="myTheme"
-                defaultLanguage="python"
-                defaultValue="# some comment"
-                onMount={handleEditor2DidMount}
-              />
-              <div className="editor_footer">
-                <div css={css`display: flex; flex-direction: row-reverse`}>
-                  <input className="uploadBtn" type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
-                  <button className="resetBtn" onClick={onReset2}>초기화</button>
-                  <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>복사</button>
-                  <button className="downloadBtn" onClick ={()=>{saveFile(editorRef2.current.getValue(), "code2.py")}}>다운로드</button>
+            <div className="onlyEditors">
+              <div css={editorVisible==1?css`display:flex; flex-direction: column; width: 100%; height:100%`:css`display:none; width:100%; height:100%`}>
+                <Editor
+                  id="Editor1"
+                  value={code1}
+                  height="64vh"
+                  width="100%"
+                  theme="myTheme"
+                  defaultLanguage="python"
+                  defaultValue="# some comment"
+                  onMount={handleEditor1DidMount}
+                />
+                <div className="editor_footer">
+                  <div css={css`display: flex; flex-direction: row`}>.
+                    <input className="uploadBtn" type="file" onChange={e => handleChangeFile1(e.target.files[0])} accept = ".py"/>
+                    <button className="resetBtn" onClick={onReset1}>초기화</button>
+                    <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>복사</button>
+                    <button className="downloadBtn" onClick ={()=>{saveFile(editorRef1.current.getValue(), "code1.py")}}>다운로드</button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div css={editorVisible==3?css`display:flex; flex-direction: column; width: 100%`:css`display:none; width:100%`}>
-              <Editor
-                value={code3}
-                height="64vh"
-                width="100%"
-                theme="myTheme"
-                defaultLanguage="python"
-                defaultValue="# some comment"
-                onMount={handleEditor3DidMount}
-              />
-              <div className="editor_footer">
-                <div css={css`display: flex; flex-direction: row`}>
-                  <input className="uploadBtn" type="file" onChange={e => handleChangeFile3(e.target.files[0])} accept = ".py"/>
-                  <button className="resetBtn" onClick={onReset3}>초기화</button>
-                  <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef3.current.getValue())}>복사</button>
-                  <button className="downloadBtn" onClick ={()=>{saveFile(editorRef3.current.getValue(), "code3.py")}}>다운로드</button>
+              <div css={editorVisible==2?css`display:flex; flex-direction: column; width: 100%; height:100%`:css`display:none; width:100%; height:100%`}>
+                <Editor
+                  value={code2}
+                  height="64vh"
+                  width="100%"
+                  theme="myTheme"
+                  defaultLanguage="python"
+                  defaultValue="# some comment"
+                  onMount={handleEditor2DidMount}
+                />
+                <div className="editor_footer">
+                  <div css={css`display: flex; flex-direction: row-reverse`}>
+                    <input className="uploadBtn" type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
+                    <button className="resetBtn" onClick={onReset2}>초기화</button>
+                    <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>복사</button>
+                    <button className="downloadBtn" onClick ={()=>{saveFile(editorRef2.current.getValue(), "code2.py")}}>다운로드</button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div css={editorVisible==4?css`display:block`:css`display:none`}>
-              <DiffEditor
-                height="64vh"
-                width="130vh"
-                theme="myTheme"
-                defaultLanguage="python"
-                original={original_code}
-                modified={modified_code}
-                onMount={handleDiffEditorDidMount}
-                readOnly={true}
-              />
+              <div css={editorVisible==3?css`display:flex; flex-direction: column; width: 100%; height:100%`:css`display:none; width:100%; height:100%`}>
+                <Editor
+                  value={code3}
+                  height="64vh"
+                  width="100%"
+                  theme="myTheme"
+                  defaultLanguage="python"
+                  defaultValue="# some comment"
+                  onMount={handleEditor3DidMount}
+                />
+                <div className="editor_footer">
+                  <div css={css`display: flex; flex-direction: row`}>
+                    <input className="uploadBtn" type="file" onChange={e => handleChangeFile3(e.target.files[0])} accept = ".py"/>
+                    <button className="resetBtn" onClick={onReset3}>초기화</button>
+                    <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef3.current.getValue())}>복사</button>
+                    <button className="downloadBtn" onClick ={()=>{saveFile(editorRef3.current.getValue(), "code3.py")}}>다운로드</button>
+                  </div>
+                </div>
+              </div>
+              <div css={editorVisible==4?css`display:block; width: 100%; height:100%`:css`display:none; width: 100%; height:100%`}>
+                <DiffEditor
+                  height="64vh"
+                  width="130vh"
+                  theme="myTheme"
+                  defaultLanguage="python"
+                  original={original_code}
+                  modified={modified_code}
+                  onMount={handleDiffEditorDidMount}
+                  readOnly={true}
+                />
+              </div>
             </div>
           </div>
           <div className="terminal" css={css` background-color: blue;`}>
@@ -659,8 +661,8 @@ const Main = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </Split>
+      </Split>
     </div>
   );
 };
