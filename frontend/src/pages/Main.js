@@ -570,8 +570,8 @@ const Main = () => {
           <Dropdownlist />
         </Dropdown>
       </div>
-      <Split className="main_section" gutterSize={20} cursor="col-resize">
-        <Split className="section_left" gutterSize={20} direction="vertical">
+      <Split className="main_section" sizes={[40,60]} minSize={[300,600]} gutterSize={20} cursor="col-resize">
+        <Split className="section_left" sizes={[60,40]} minSize={[200,200]} gutterSize={20} direction="vertical">
           <div className="section1">
             <div className="question_title1">문제</div>
             <div className="question_line" />
@@ -590,7 +590,7 @@ const Main = () => {
             </div>
           </div>
         </Split>
-        <Split className="editor" gutterSize={20} direction="vertical">
+        <Split className="editor" sizes={[60,40]} minSize={[280,200]} gutterSize={20} direction="vertical">
           <div className="editor_header_body">
             <div className="editor_header">
               <div classname="savebutton">
