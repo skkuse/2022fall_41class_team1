@@ -98,7 +98,6 @@ const Main = () => {
     });
     monaco.editor.setTheme("myTheme");
     editorRef1.current.onDidChangeModelContent(() => {
-      console.log("debug");
       editor.deltaDecorations(
 	        [],
 	        [
