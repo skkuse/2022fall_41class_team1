@@ -1,3 +1,4 @@
+
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.core import serializers
@@ -5,6 +6,7 @@ from .models import *
 from mainapp.models import *
 from mainapp.serializers import *
 from .serializers import *
+import json
 from rest_framework import generics
 import os
 import subprocess
@@ -27,11 +29,11 @@ def execute(code):
     out = subprocess.run(['python3', 'solution.py'],capture_output=True)
     if(out.stderr):
         return_data = out.stderr.decode('utf-8').split('line')[-1]
-        line = return_data[1]
-        return_data = [return_data, line]
+        line = out.stderr.decode('utf-8').split('line')[-1][1]
+        return_data = "1&"+ line+ "& line" + return_data 
     else:
         return_data = out.stdout.decode('utf-8')
-        return_data = [return_data]
+        return_data = "0&" + return_data
     os.remove('solution.py') 
     data = {'code':return_data}
     return data
@@ -109,7 +111,17 @@ def testcase(answer, user, testcase):
     return {'score':f'{(sum(ots)+sum(hts))/(len(ots)+len(hts))*100}', 'msg':f'{msg}'}
     
 def evaluate(code):
-    return {'e_score1':'60','e_score2':'50'}
+    py = open('temp.txt','w')
+    py.write(code)
+    py.close()
+
+    os.rename('temp.txt','solution.py')
+    exit_code, console_result = subprocess.getstatusoutput("multimetric solution.py")
+    json_result = json.loads(console_result)
+    e_score1 = json_result['overall']['pylint']
+    e_score2 = json_result['overall']['halstead_timerequired']
+    os.remove('solution.py') 
+    return {'e_score1':e_score1,'e_score2':e_score2}
     
 class ExecuteCodeV1API(APIView):
     def get_object(self,user_id,question,save_type):
@@ -300,4 +312,3 @@ class CheckReadabilityAPI(APIView):
         data['comment']['radon'] = self.concatString(data['comment']['radon'])
         data['comment']['pycodestyle'] = self.concatString(data['comment']['pycodestyle'])
         return Response(data,status=status.HTTP_201_CREATED)
-

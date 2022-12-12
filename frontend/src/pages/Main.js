@@ -98,6 +98,16 @@ const Main = () => {
     });
     monaco.editor.setTheme("myTheme");
     editorRef1.current.onDidChangeModelContent(() => {
+      console.log("debug");
+      editor.deltaDecorations(
+	        [],
+	        [
+		        {
+                    range: new monaco.Range(1,100),
+			        options: { inlineClassName: 'myInlineDecoration' }
+		        }
+	        ]
+        );
       setCode1(editorRef1.current.getValue());
     });
   }
@@ -140,6 +150,7 @@ const Main = () => {
     });
     monaco.editor.setTheme("myTheme");
     editorRef3.current.onDidChangeModelContent(() => {
+      monaco.editor.
       setCode3(editorRef3.current.getValue());
     });
   }
@@ -222,7 +233,7 @@ const Main = () => {
 	        [],
 	        [
 		        {
-			        range: new monaco.Range(lines,1, lines+2,1),
+			        range: new monaco.Range(lines,1, lines+1,1),
 			        options: { inlineClassName: 'myInlineDecoration' }
 		        }
 	        ]
