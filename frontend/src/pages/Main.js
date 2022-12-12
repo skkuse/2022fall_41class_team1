@@ -56,7 +56,6 @@ const Main = () => {
   const [editorVisible, setEditorVisible] = useState(1);
   const [user_id, setUser_id] = useState(state.user_email);
   const [course, setCourse] = useState(state.user_course);
-  const [question_no, setQuestion_no] = useState("2");
   const [code1, setCode1] = useState("# code에 함수 이거 넣어서 테스트 ㄱㄱ\ndef solution(add1, add2, add3):\n\tsum = add1 + add2 + add3\n\treturn sum\nif __name__ == \"__main__\":\n\tprint(solution(1, 2, 3))");
   const [code2, setCode2] = useState("#some comment");
   const [code3, setCode3] = useState("#some comment");
@@ -298,7 +297,7 @@ const getAllProblem = async () => {
   if (editorVisible == 1) {
         newData = {
         "user_id": user_id,
-        "question": question_no,
+        "question": selectedproblem,
         "count": editorVisible,
         "code": editorRef1.current.getValue()
         }
@@ -306,14 +305,14 @@ const getAllProblem = async () => {
     } else if (editorVisible == 2) {
       newData = {
         "user_id": user_id,
-        "question": question_no,
+        "question": selectedproblem,
         "count": editorVisible,
         "code": editorRef2.current.getValue()
       };
     } else if (editorVisible == 3) {
       newData = {
         "user_id": user_id,
-        "question": question_no,
+        "question": selectedproblem,
         "count": editorVisible,
         "code": editorRef3.current.getValue()
       };
@@ -420,18 +419,18 @@ const getAllProblem = async () => {
   var newData={};
   if (editorVisible == 1) {
         newData = {
-        "question": question_no,
+        "question": selectedproblem,
         "code": editorRef1.current.getValue()
       };
       console.log(newData)
     } else if (editorVisible == 2) {
         newData = {
-        "question": question_no,
+        "question": selectedproblem,
         "code": editorRef2.current.getValue()
       };
     } else if (editorVisible == 3) {
         newData = {
-        "question": question_no,
+        "question": selectedproblem,
         "code": editorRef3.current.getValue()
       };
     }
@@ -712,7 +711,7 @@ const getAllProblem = async () => {
               <div className="flex_right">
                 <button
                   className="resultBtn4"
-                  onClick={submitted == 1? () => setResultShow(3): () => { alert("you should submit before");}}
+                  onClick={submitted == 1? () => onAnalyzeClick(): () => { alert("you should submit before");}}
                 >
                 코드분석
                 </button>

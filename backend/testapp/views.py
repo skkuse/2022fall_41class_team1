@@ -26,14 +26,18 @@ def execute(code):
     py.write(code)
     py.close()
 
+    
     os.rename('temp.txt','solution.py')
     out = subprocess.run(['python3', 'solution.py'],capture_output=True)
+    print(out.stdout)
+    print("debug")
     if(out.stderr):
         return_data = out.stderr.decode('utf-8').split('line')[-1]
         line = out.stderr.decode('utf-8').split('line')[-1][1]
         return_data = "1&"+ line+ "& line" + return_data 
     else:
         return_data = out.stdout.decode('utf-8')
+        print(return_data)
         return_data = "0&" + return_data
     os.remove('solution.py') 
     data = {'code':return_data}
@@ -42,7 +46,6 @@ def execute(code):
 def testcase(answer, user, testcase):
         
     def excute_testcase(code, type, testcase):
-            
         py = open('temp.txt','w')
         py.write(code)
         py.close()
