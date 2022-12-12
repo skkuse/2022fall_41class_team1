@@ -486,8 +486,6 @@
 
 .result_window {
   position: relative;
-  top: 120%;
-  position: relative;
   background: #ffffff;
   backdrop-filter: blur(2px);
 }
