@@ -28,7 +28,7 @@ const ResultPage = () => {
   const [selected3, setSelected3] = useState(false); //코드분석, 관련 링크
 
   const handle_button1 = () => {
-    setSelected1(!selected1);
+    setSelected1(true);
     setSelected2(false);
     setSelected3(false);
 
@@ -38,7 +38,7 @@ const ResultPage = () => {
   useEffect(() => {}, []);
 
   const handle_button2 = () => {
-    setSelected1(false);
+    setSelected1(true);
     setSelected2(false);
     setSelected3(false);
 
@@ -47,7 +47,7 @@ const ResultPage = () => {
   };
 
   const handle_button3 = () => {
-    setSelected1(false);
+    setSelected1(true);
     setSelected2(false);
     setSelected3(false);
 
@@ -59,7 +59,7 @@ const ResultPage = () => {
     setTitleName("효율 채점");
     setGraphBlock(true);
 
-    setSelected1(false);
+    setSelected1(true);
     setSelected2(false);
     setSelected3(false);
   };
@@ -68,7 +68,7 @@ const ResultPage = () => {
     setGraphBlock(true);
 
     setSelected1(false);
-    setSelected2(!selected2);
+    setSelected2(true);
     setSelected3(false);
   };
   const handle_button6 = () => {
@@ -77,7 +77,7 @@ const ResultPage = () => {
 
     setSelected1(false);
     setSelected2(false);
-    setSelected3(!selected3);
+    setSelected3(true);
   };
 
   return (
