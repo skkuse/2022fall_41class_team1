@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Start from "./pages/Start";
 import SubjectPage from "./pages/SubjectPage";
 import ResultPage from "./pages/ResultPage";
+import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
