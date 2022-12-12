@@ -26,8 +26,8 @@ def execute(code):
     os.rename('temp.txt','solution.py')
     out = subprocess.run(['python3', 'solution.py'],capture_output=True)
     if(out.stderr):
-        return_data = out.stderr.decode('utf-8').split(',')[-1]
-        line = return_data.split('\n')[0][-1]
+        return_data = out.stderr.decode('utf-8').split('line')[-1]
+        line = return_data[1]
         return_data = [return_data, line]
     else:
         return_data = out.stdout.decode('utf-8')
