@@ -377,7 +377,7 @@ const Main = () => {
       );
       console.log("response >>", response);
       console.log(response["data"]);
-      setTest_case_texts(response["data"]["msg"]);
+      setTest_case_texts(response['data']['msg']);
       setScore(response["data"]["score"]);
     } catch (err) {
       console.log("Error >>", err);
@@ -561,7 +561,7 @@ const Main = () => {
                 />
                 <div className="editor_footer">
                   <div css={css`display: flex; flex-direction: row`}>.
-                    <input className="uploadBtn" type="file" onChange={e => handleChangeFile1(e.target.files[0])} accept = ".py"/>
+                    <input className="uploadBtn" type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
                     <button className="resetBtn" onClick={onReset1}>초기화</button>
                     <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef1.current.getValue())}>복사</button>
                     <button className="downloadBtn" onClick ={()=>{saveFile(editorRef1.current.getValue(), "code1.py")}}>다운로드</button>
@@ -654,7 +654,8 @@ const Main = () => {
                 <textarea value={"Score: "+score+"\nMemory-efficiency: "+efficiencya+"\nTime-efficiency: "+efficiencyb} disabled="True" cols="140" rows="10" />
               </div>
               <div css={ resultShow == 2 ? css`display: flex;flex-direction: column;`: css`display: none;`}>
-                <textarea value={test_case_texts} disabled="True" cols="140" rows="10"/>
+                <textarea className = "tc_area" value={test_case_texts.split("&")[0]} disabled="True" cols="140" rows="5"/>
+                <textarea className = "htc_area" value={test_case_texts.split("&")[1]} disabled="True" cols="140" rows="5"/>
               </div>
               <div css={ resultShow == 3 ? css` display: flex; flex-direction: column;`: css`display: none;`}>
                 <textarea value={analyzed_texts} disabled="True" cols="145" rows="15"/>

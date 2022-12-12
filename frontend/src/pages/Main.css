@@ -492,6 +492,16 @@
   backdrop-filter: blur(2px);
 }
 
+.tc_area {
+  color:#f63939;
+  background-color: #fff9ed;
+}
+
+.htc_area {
+  color:#2525ff;
+  background-color: #edfff0;
+}
+
 .showvalueBtn {
   width: 82px;
   height: 34px;
