@@ -1,7 +1,7 @@
 
 import styles from "./Main.css";
-import React, { useState, useRef, useEffect, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useRef, useEffect, useContext,useCallback } from "react";
+import { useLocation,useNavigate } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
 import Editor, { useMonaco, DiffEditor } from "@monaco-editor/react";
@@ -48,7 +48,7 @@ const week6 = {problem: '문제 6번',constraint: '제약조건 6번',testcase: 
 const Main = () => {
 
   const {state} = useLocation();
-
+  const navigate = useNavigate();
   console.log(state);
   const [editorVisible, setEditorVisible] = useState(1);
   const [user_id, setUser_id] = useState(state.user_email);
@@ -562,6 +562,12 @@ const Main = () => {
     );
   }
 
+  const onAnalyzeClick = useCallback(() => {
+  console.log("debug");
+    navigate("/resultpage",{state: {efficiencya:efficiencya,efficiencyb:efficiencyb,copy:copy,score:score}});
+  }, [navigate]);
+
+
 
   return (
     <div className="desktop13">
@@ -605,11 +611,10 @@ const Main = () => {
               </div>
             </div>
             <div className="onlyEditors">
-              <div css={editorVisible==1?css`display:flex; flex-direction: column; width: 100%; height:100%`:css`display:none; width:100%; height:100%`}>
+              <div css={editorVisible==1?css`display:flex; flex-direction: column; width: 100%; height:100%`:css`display:none;`}>
                 <Editor
                   id="Editor1"
                   value={code1}
-                  height="100%"
                   width="100%"
                   theme="myTheme"
                   defaultLanguage="python"
@@ -710,8 +715,10 @@ const Main = () => {
               <div css={ resultShow == 1 ? css` display: block;height:100%;`: css`display: none;`}>
                 <textarea value={"Score: "+score+"\nMemory-efficiency: "+efficiencya+"\nTime-efficiency: "+efficiencyb} disabled="True" css={css`height:100%;width:100%;`} />
               </div>
-              <div css={ resultShow == 2 ? css`display: flex;flex-direction: column; height:100%;`: css`display: none;`}>
-                <textarea value={test_case_texts} disabled="True"  css={css`height:100%;width:100%;`}/>
+              <div className = "tc_div" css={ resultShow == 2 ? css`display: flex; flex-direction: column; height:100%;`: css`display: none;`}>
+                <textarea readonly className = "ttc_score" value={"Score: "+score} disabled="True" css={css`height:10%;width:100%;`}/>
+                <textarea readonly className = "otc_area" value={test_case_texts.split("&")[0]} disabled="True" css={css`height:45%;width:100%;`}/>
+                <textarea readonly className = "htc_area" value={test_case_texts.split("&")[1]} disabled="True" css={css`height:45%;width:100%;`}/>
               </div>
               <div css={ resultShow == 3 ? css` display: flex; flex-direction: column; height:100%;`: css`display: none;`}>
                 <textarea value={analyzed_texts} disabled="True" css={css`height:100%;width:100%;`}/>
