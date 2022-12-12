@@ -33,6 +33,7 @@ class AllInfo(models.Model):
     #question = models.ForeignKey(Question,on_delete=models.CASCADE,db_column='question')
     reference = models.TextField(null=True)
     testcase = models.TextField(null=True)
+    skeleton = models.TextField(null=True)
     save1 = models.TextField(null=True)
     save2 = models.TextField(null=True)
     save3 = models.TextField(null=True)

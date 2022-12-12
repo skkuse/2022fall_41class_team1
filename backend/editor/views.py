@@ -205,7 +205,9 @@ class AllInfoApi(APIView):
         try:
             return UserData.objects.get(user_id=user_id,question=question)
         except:
-            return Http404
+            new = UserData(user_id=User.objects.get(user_id=user_id),question=Question(question=question))
+            new.save()
+            return new
 
     def get(self,request):
         user_id = request.GET.get('user_id')
@@ -214,12 +216,22 @@ class AllInfoApi(APIView):
         userdata = self.get_userdata_object(user_id,question)
         question_obj = self.get_question_object(question)
 
+
         ret = {}
         ret['reference'] = question_obj.reference
         ret['testcase'] = question_obj.testcase
+        ret['skeleton'] = question_obj.skeleton
         ret['save1'] = userdata.save1
         ret['save2'] = userdata.save2
         ret['save3'] = userdata.save3
+
+        if ret['save1'] is None:
+            ret['save1'] = question_obj.skeleton
+        if ret['save2'] is None:
+            ret['save2'] = question_obj.skeleton
+        if ret['save3'] is None:
+            ret['save3'] = question_obj.skeleton
+        
 
         serializer = AllInfoSerializer(data=ret)
         if serializer.is_valid():

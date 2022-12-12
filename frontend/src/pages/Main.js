@@ -491,31 +491,17 @@ const Main = () => {
             user_id: user_id,
             question: selectedproblem,
           }});
-          console.log("response[data][0] >>", typeof response["data"]);
-          // setNow({problem: response["data"][0].question, constraint: null, testcase: response["data"][0].testcase, skeleton: response["data"][0].skeleton, save1: null, save2: null, save3: null});
-          // console.log('now: ', now);
+          console.log("response[data] >>", response["data"]);
+          setNow({problem: response["data"].question, reference: response["data"].reference, testcase: response["data"].testcase, skeleton: response["data"].skeleton, save1: response["data"].save1, save2: response["data"].save2, save3: response["data"].save3});
+          setCode1(response["data"].save1);
+          setCode2(response["data"].save2);
+          setCode3(response["data"].save3);
+          console.log('now: ', now);
         } catch (err) {
           console.log("Error >>", err);
         }
       };
       getQuestionInf();
-      // const getSaveInf = async() =>{
-      //   try {
-      //     const response = await axios.get("http://localhost:8000/editor/save/",{
-      //       params:{
-      //       question: selectedproblem,
-      //     }});
-      //     console.log("response[data][0] >>", typeof response["data"]);
-      //     setNow({constraint: null, testcase: response["data"][0].testcase, skeleton: response["data"][0].skeleton, save1: null, save2: null, save3: null});
-      //     console.log('now final : ', now);
-      //   } catch (err) {
-      //     console.log("Error >>", err);
-      //   }
-      // };
-      // getSaveInf();
-
-
-      
     }
 
     
@@ -548,7 +534,7 @@ const Main = () => {
             <div className="question_content1">{now.problem}</div>
             <div className="constraint_title">참조 / 제약사항</div>
             <div className="constraint_line"/>
-            <div className="constraint_content">{now.constraint}</div>
+            <div className="constraint_content">{now.reference}</div>
           </div>
           <div className="section2">
             <div className="testcase_title">테스트케이스</div>
