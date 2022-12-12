@@ -749,12 +749,18 @@ const Main = () => {
                       flex-direction: row;
                     `}
                   >
-                    .
+                    <label className="uploadLabel" for="fileBtn">
+                      업로드
+                    </label>
                     <input
+                      id="fileBtn"
                       className="uploadBtn"
                       type="file"
                       onChange={(e) => handleChangeFile1(e.target.files[0])}
                       accept=".py"
+                      css={css`
+                        display: none;
+                      `}
                     />
                     <button className="resetBtn" onClick={onReset1}>
                       초기화
@@ -810,11 +816,18 @@ const Main = () => {
                       flex-direction: row-reverse;
                     `}
                   >
+                    <label className="uploadLabel" for="fileBtn">
+                      업로드
+                    </label>
                     <input
+                      id="fileBtn"
                       className="uploadBtn"
                       type="file"
                       onChange={(e) => handleChangeFile2(e.target.files[0])}
                       accept=".py"
+                      css={css`
+                        display: none;
+                      `}
                     />
                     <button className="resetBtn" onClick={onReset2}>
                       초기화
@@ -870,11 +883,18 @@ const Main = () => {
                       flex-direction: row;
                     `}
                   >
+                    <label className="uploadLabel" for="fileBtn">
+                      업로드
+                    </label>
                     <input
+                      id="fileBtn"
                       className="uploadBtn"
                       type="file"
                       onChange={(e) => handleChangeFile3(e.target.files[0])}
                       accept=".py"
+                      css={css`
+                        display: none;
+                      `}
                     />
                     <button className="resetBtn" onClick={onReset3}>
                       초기화
