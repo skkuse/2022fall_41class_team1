@@ -69,7 +69,8 @@ const Main = () => {
   const [score,setScore]=useState(0);
   const [problemlist, setProblemlist] = useState([]);
   const [selectedproblem, setSelectedproblem] = useState();
-
+  const [opentestcase, setOpentestcase] = useState([]);
+  const [hiddentestcase, setHiddentestcase] = useState([]);
 
   const [copy,setCopy]=useState();
   const [functionality,setFunctionality]=useState(0);
@@ -212,7 +213,7 @@ const Main = () => {
     }
 
     getAllProblem();
-
+    getQuestionInfo();
 
   }, [monaco]);
 
@@ -471,7 +472,38 @@ const Main = () => {
     }
   };
 
-  
+  const getQuestionInfo = async() =>{
+    try {
+      const response = await axios.get("http://localhost:8000/editor/allinfo/",{
+        params:{
+        user_id: user_id,
+        question: selectedproblem,
+      }});
+      console.log("response[data] >>", response["data"]);
+      setNow({
+        problem: response["data"].question, 
+        reference: response["data"].reference, 
+        testcase: response["data"].testcase, 
+        skeleton: response["data"].skeleton, 
+        save1: response["data"].save1, 
+        save2: response["data"].save2, 
+        save3: response["data"].save3
+      });
+      setCode1(response["data"].save1);
+      setCode2(response["data"].save2);
+      setCode3(response["data"].save3);
+      setOpentestcase(response["data"].testcase.split('*').splice(0, response["data"].testcase.split('*').length - 1));
+      setHiddentestcase(response["data"].testcase.split('*').pop().split('&'));
+      console.log('tt ; ', response["data"].testcase);
+      console.log('optc  :', opentestcase);
+      console.log('hdtc  :', hiddentestcase);
+
+      console.log('now: ', now);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
+  };
+
   const Dropdown = (props) => {
     return(
       <article>
@@ -479,33 +511,11 @@ const Main = () => {
       </article>
     );
   }
-  
+
   function Dropdownlist (props) {
-    const {now, setNow} = useContext(NowContext);
-
     const handleclick = () => {
-      const getQuestionInf = async() =>{
-        try {
-          const response = await axios.get("http://localhost:8000/editor/allinfo/",{
-            params:{
-            user_id: user_id,
-            question: selectedproblem,
-          }});
-          console.log("response[data] >>", response["data"]);
-          setNow({problem: response["data"].question, reference: response["data"].reference, testcase: response["data"].testcase, skeleton: response["data"].skeleton, save1: response["data"].save1, save2: response["data"].save2, save3: response["data"].save3});
-          setCode1(response["data"].save1);
-          setCode2(response["data"].save2);
-          setCode3(response["data"].save3);
-          console.log('now: ', now);
-        } catch (err) {
-          console.log("Error >>", err);
-        }
-      };
-      getQuestionInf();
+      getQuestionInfo();
     }
-
-    
-
     return (
       <ul css={dropdownul}>
         {problemlist.map((item) => {
@@ -514,6 +524,7 @@ const Main = () => {
       </ul> 
     );
   }
+
   
 
   return (
@@ -539,7 +550,11 @@ const Main = () => {
           <div className="section2">
             <div className="testcase_title">테스트케이스</div>
             <div className="testcase_line"/>
-            <div className="testcase_content">{now.testcase}</div>
+            <div className="testcase_content">
+              {opentestcase.map((tc) => {
+                return <div>input : {tc}</div>
+              })}
+            </div>
           </div>
         </Split>
         <Split className="editor" gutterSize={20} direction="vertical">
