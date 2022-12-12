@@ -1,1 +1,1 @@
-10
+<built-in function sum>

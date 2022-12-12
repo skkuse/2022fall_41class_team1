@@ -23,8 +23,10 @@ const ResultPage = () => {
     readability: state.readability,
   }); // 사진 + 정보 결과
   const [detailInfo, setDetail] = useState(); // 정보만 결과
-
   const [selected, setSelected] = useState(1); //제출결과
+
+  const [opentestcase, setOpentestcase] = useState([]);
+  const [hiddentestcase, setHiddentestcase] = useState([]);
 
 
   const handle_button1 = () => {
@@ -36,6 +38,8 @@ const ResultPage = () => {
 
   useEffect(() => {
     console.log(overallInfo);
+    setOpentestcase(overallInfo.score.pf.split('&')[0].split('\n').splice(0, overallInfo.score.pf.split('&')[0].split('\n').length -1));
+    setHiddentestcase(overallInfo.score.pf.split('&')[1].split('\n').splice(0, overallInfo.score.pf.split('&')[1].split('\n').length -1));
   }, []);
 
   const handle_button2 = () => {
@@ -144,9 +148,12 @@ const ResultPage = () => {
                 </h1> 
                 : selected == 3 ?
                 <h1>
-                  Result Text Area Result Text Area<br></br> Result Text Area
-                  Result Text Area<br></br> Result Text Area Result Text Area
-                  <br></br>
+                  {opentestcase.map((tc) => {
+                    return <div>open input : {tc}</div>
+                  })}
+                  {hiddentestcase.map((tc) => {
+                    return <div>hidden input : {tc}</div>
+                  })}
                 </h1>
                 : selected == 4 ?
                 <h1>

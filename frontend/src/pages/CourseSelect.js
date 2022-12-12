@@ -13,11 +13,10 @@ const CourseSelect = () => {
         user_email: state.user_email,
         user_course: null,
       });
-    const [user_id, setUser_id] = useState();
+
     const navigate = useNavigate();
     const [courselist, setCourselist] = useState([]);
     const [dropdownVisibility, setDropdownVisibility] = useState(false);
-    const [course, setCourse] = useState();
 
     const getAllCourse = async () => {
         try {
@@ -29,6 +28,7 @@ const CourseSelect = () => {
           console.log("response >>", response.data);
           setCourselist(response.data);
           setLogAccount({user_email: state.user_email, user_course: response.data[0]})
+          console.log(logAccount);
         } catch (error) {
           console.log("Error >>", error);
         }

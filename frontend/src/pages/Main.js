@@ -1,6 +1,6 @@
 
 import styles from "./Main.css";
-import React, { useState, useRef, useEffect, useContext,useCallback } from "react";
+import React, { useState, useRef, useLayoutEffect, useContext, useEffect } from "react";
 import { useLocation,useNavigate } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react";
@@ -8,44 +8,9 @@ import Editor, { useMonaco, DiffEditor } from "@monaco-editor/react";
 import axios from "axios";
 // import { Dropdown, Dropdownlist } from "./Dropdown";
 import { NowContext } from "../context/NowContext";
-import Login from "./Login";
 import Split from 'react-split';
 import {Howl} from "howler";
 import stage_clear from "../audios/stage_clear.mp3";
-
-
-
-const weeklist = [
-  {
-    text: 'Week 1',
-  },
-  {
-    text: 'Week 2',
-  },
-  {
-    text: 'Week 3',
-  },
-  {
-    text: 'Week 4',
-  },
-  {
-    text: 'Week 5',
-  },
-  {
-    text: 'Week 6',
-  },
-];
-
-const week1 = {problem: '문제 1번',constraint: '제약조건 1번',testcase: '테스트케이스 1번',save1: '#save1-1',save2: '#save1-2',save3: '#save1-3'};
-const week2 = {problem: '문제 2번',constraint: '제약조건 2번',testcase: '테스트케이스 2번',save1: '#save2-1',save2: '#save2-2',save3: '#save2-3'};
-const week3 = {problem: '문제 3번',constraint: '제약조건 3번',testcase: '테스트케이스 3번',save1: '#save3-1',save2: '#save3-2',save3: '#save3-3'};
-const week4 = {problem: '문제 4번',constraint: '제약조건 4번',testcase: '테스트케이스 4번',save1: '#save4-1',save2: '#save4-2',save3: '#save4-3'};
-const week5 = {problem: '문제 5번',constraint: '제약조건 5번',testcase: '테스트케이스 5번',save1: '#save5-1',save2: '#save5-2',save3: '#save5-3'};
-const week6 = {problem: '문제 6번',constraint: '제약조건 6번',testcase: '테스트케이스 6번',save1: '#save6-1',save2: '#save6-2',save3: '#save6-3'};
-
-
-
-
 
 
 const Main = () => {
@@ -68,7 +33,7 @@ const Main = () => {
   const [analyzed_texts,setAnalyzed_texts]=useState("코드 분석");
   const [test_case_texts,setTest_case_texts]=useState("테스트 케이스");
   const [problemlist, setProblemlist] = useState([]);
-  const [selectedproblem, setSelectedproblem] = useState();
+  const [selectedproblem, setSelectedproblem] = useState(state["user_course"]+"_1");
   const [opentestcase, setOpentestcase] = useState([]);
   const [hiddentestcase, setHiddentestcase] = useState([]);
 
@@ -78,6 +43,7 @@ const Main = () => {
   const [efficiencyb,setEfficiencyb]=useState();
   const [copy,setCopy]=useState();
   const [readability, setReadability]=useState();
+  const [test_case_boolean, setTest_case_boolean] = useState();
 
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
@@ -265,7 +231,7 @@ const Main = () => {
   };
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // do conditional chaining
     monaco?.languages.typescript.javascriptDefaults.setEagerModelSync(true);
     // or make sure that it exists by other ways
@@ -448,6 +414,7 @@ const getAllProblem = async () => {
       console.log(response["data"]);
       setTest_case_texts(response["data"]["msg"]);
       setScore(response["data"]["score"]);
+      setTest_case_boolean(response["data"]["pf"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -545,8 +512,8 @@ const getAllProblem = async () => {
       setCode1(response["data"].save1);
       setCode2(response["data"].save2);
       setCode3(response["data"].save3);
-      setOpentestcase(response["data"].testcase.split('*').splice(0, response["data"].testcase.split('*').length - 1));
-      setHiddentestcase(response["data"].testcase.split('*').pop().split('&'));
+      setOpentestcase(response["data"].testcase.split('&')[0].split('*'));
+      setHiddentestcase(response["data"].testcase.split('&').splice(1, response["data"].testcase.split('&')[1].split('*').length));
       // console.log('tt ; ', response["data"].testcase);
       // console.log('optc  :', opentestcase);
       // console.log('hdtc  :', hiddentestcase);
@@ -580,7 +547,7 @@ const getAllProblem = async () => {
   }
 
   const onAnalyzeClick = () => {
-    navigate("/resultpage",{state: {efficiencya: efficiencya, efficiencyb: efficiencyb, copy: copy, score: score, readability: readability}});
+    navigate("/resultpage",{state: {efficiencya: efficiencya, efficiencyb: efficiencyb, copy: copy, score: {score: score, pf: test_case_boolean}, readability: readability}});
   };
 
 
@@ -661,7 +628,7 @@ const getAllProblem = async () => {
                   onMount={handleEditor2DidMount}
                 />
                 <div className="editor_footer">
-                  <div css={css`display: flex; flex-direction: row-reverse`}>
+                  <div css={css`display: flex; flex-direction: row`}>
                     <input className="uploadBtn" type="file" onChange={e => handleChangeFile2(e.target.files[0])} accept = ".py"/>
                     <button className="resetBtn" onClick={onReset2}>초기화</button>
                     <button className="copyBtn" onClick={() => handleCopyClipBoard(editorRef2.current.getValue())}>복사</button>
