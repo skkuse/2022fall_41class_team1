@@ -13,15 +13,24 @@ import Play from "../assets/play.svg";
 const ResultPage = () => {
   const [selected1, setSelected1] = useState(false);
   const [selected2, setSelected2] = useState(false);
+  const [selected3, setSelected3] = useState(false);
 
   const handle_button1 = () => {
     setSelected1(!selected1);
     setSelected2(false);
+    setSelected3(false);
   };
 
   const handle_button2 = () => {
     setSelected2(!selected2);
     setSelected1(false);
+    setSelected3(false);
+  };
+
+  const handle_button3 = () => {
+    setSelected3(!selected3);
+    setSelected1(false);
+    setSelected2(false);
   };
 
   return (
@@ -40,7 +49,7 @@ const ResultPage = () => {
               className="submitresult_innerbutton"
               onClick={handle_button1}
             >
-              ㄴ 표절 검사
+              ㄴ 가독성 채점
             </button>
             <button
               className="submitresult_innerbutton"
@@ -54,11 +63,9 @@ const ResultPage = () => {
             >
               ㄴ 효율 채점
             </button>
-            <button
-              className="submitresult_innerbutton"
-              onClick={handle_button1}
-            >
-              ㄴ 가독성 채점
+            <button className="submitresult_button" onClick={handle_button1}>
+              <img src={Play} className="play"></img>
+              표절 검사
             </button>
             <button className="submitresult_button" onClick={handle_button2}>
               <img src={Play} className="play"></img>
