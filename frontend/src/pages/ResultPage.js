@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styles from "./ResultPage.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -12,16 +12,18 @@ import Play from "../assets/play.svg";
 import Chart, { drawCopy, drawFER } from "./Chart";
 
 const ResultPage = () => {
+  const {state} = useLocation();
+
   let [titleName, setTitleName] = useState(["제출 결과 (Overall Score)"]);
   const [overallInfo, setOverall] = useState({
-    총점: null,
-    표절: null,
-    기능: null,
-    효율: null,
-    가독성: null,
+    score: state.score,
+    copy: state.copy,
+    efficiencya: state.efficiencya,
+    efficiencyb: state.efficiencyb,
+    readability: state.readability,
   }); // 사진 + 정보 결과
   const [detailInfo, setDetail] = useState(); // 정보만 결과
-  const [graphBlock, setGraphBlock] = useState(false);
+  //const [graphBlock, setGraphBlock] = useState(false);
 
   const [selected1, setSelected1] = useState(false); //제출결과
   const [selected2, setSelected2] = useState(false); //표절검사
@@ -35,15 +37,17 @@ const ResultPage = () => {
     setTitleName("제출 결과 (Overall Score)");
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(overallInfo);
+  }, []);
 
   const handle_button2 = () => {
     setSelected1(true);
     setSelected2(false);
     setSelected3(false);
-
+    
     setTitleName("가독성 채점");
-    setGraphBlock(false);
+    //setGraphBlock(false);
   };
 
   const handle_button3 = () => {
@@ -52,12 +56,12 @@ const ResultPage = () => {
     setSelected3(false);
 
     setTitleName("기능 채점");
-    setGraphBlock(true);
+    //setGraphBlock(true);
   };
 
   const handle_button4 = () => {
     setTitleName("효율 채점");
-    setGraphBlock(true);
+    //setGraphBlock(true);
 
     setSelected1(true);
     setSelected2(false);
@@ -65,7 +69,7 @@ const ResultPage = () => {
   };
   const handle_button5 = () => {
     setTitleName("표절 검사");
-    setGraphBlock(true);
+    //setGraphBlock(true);
 
     setSelected1(false);
     setSelected2(true);
@@ -73,7 +77,7 @@ const ResultPage = () => {
   };
   const handle_button6 = () => {
     setTitleName("코드 설명, 관련 자료 채점");
-    setGraphBlock(false);
+    //setGraphBlock(false);
 
     setSelected1(false);
     setSelected2(false);
@@ -140,6 +144,6 @@ const ResultPage = () => {
       </div>
     </div>
   );
-};
+}
 
 export default ResultPage;

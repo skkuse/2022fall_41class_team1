@@ -28,6 +28,7 @@ const CourseSelect = () => {
           }});
           console.log("response >>", response.data);
           setCourselist(response.data);
+          setLogAccount({user_email: state.user_email, user_course: response.data[0]})
         } catch (error) {
           console.log("Error >>", error);
         }
@@ -92,6 +93,7 @@ const dropdownul = css`
   background-color: white;
   z-index: 2;
   width: 300px;
+  margin-top: 5px;
 `;
 const dropdownli = css`
   color: black;

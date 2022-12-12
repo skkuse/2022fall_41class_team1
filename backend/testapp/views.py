@@ -120,9 +120,11 @@ def evaluate(code):
     py = open('temp.txt','w')
     py.write(code)
     py.close()
-
+    print(code)
     os.rename('temp.txt','solution.py')
     exit_code, console_result = subprocess.getstatusoutput("multimetric solution.py")
+    print(exit_code)
+    print(console_result)
     json_result = json.loads(console_result)
     e_score1 = json_result['overall']['pylint']
     e_score2 = json_result['overall']['halstead_timerequired']
@@ -216,6 +218,7 @@ class CheckPlagiarismAPI(APIView):
         code = request.data.get('code')
         detector = CopyDetector(ref_dirs=[ref_dir], boilerplate_dirs=[ref_dir], extensions=["py"], display_t=0.5)
         f=open("test.py", 'w')
+        code = str(code)
         f.write(code)
         f.close()
         detector.add_file("test.py")

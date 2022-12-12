@@ -52,7 +52,7 @@ const Main = () => {
 
   const {state} = useLocation();
   const navigate = useNavigate();
-  console.log(state);
+  
   const [editorVisible, setEditorVisible] = useState(1);
   const [user_id, setUser_id] = useState(state.user_email);
   const [course, setCourse] = useState(state.user_course);
@@ -62,18 +62,20 @@ const Main = () => {
   const [original_code, setOriginal_code] = useState("#some comment");
   const [modified_code, setModified_code] = useState("#some comment");
   const [result, setResult] = useState("result display");
-  const [efficiencya,setEfficiencya]=useState(0);
-  const [efficiencyb,setEfficiencyb]=useState(0);
-  const [resultShow, setResultShow] = useState(0);
-  const [submitted,setSubmitted]=useState(0);
+  
+  const [resultShow, setResultShow] = useState();
+  const [submitted,setSubmitted]=useState();
   const [analyzed_texts,setAnalyzed_texts]=useState("코드 분석");
   const [test_case_texts,setTest_case_texts]=useState("테스트 케이스");
-  const [score,setScore]=useState(0);
   const [problemlist, setProblemlist] = useState([]);
   const [selectedproblem, setSelectedproblem] = useState();
 
+
+  const [score,setScore]=useState();
+  const [efficiencya,setEfficiencya]=useState();
+  const [efficiencyb,setEfficiencyb]=useState();
   const [copy,setCopy]=useState();
-  const [functionality,setFunctionality]=useState(0);
+  const [readability, setReadability]=useState();
 
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
@@ -240,15 +242,15 @@ const Main = () => {
     }
 
 
-      console.log("실행결과 작성 완료");
+      //console.log("실행결과 작성 완료");
     } catch (err) {
       console.log("Error >>", err);
     }
   };
 
   const errorShow = (editorRef,lines)=>{
-  console.log("debug");
-  console.log(lines)
+  //console.log("debug");
+  //console.log(lines)
     editorRef.current.deltaDecorations(
 	        [],
 	        [
@@ -266,7 +268,7 @@ const Main = () => {
     monaco?.languages.typescript.javascriptDefaults.setEagerModelSync(true);
     // or make sure that it exists by other ways
     if (monaco) {
-      console.log("here is the monaco instance:", monaco);
+      // console.log("here is the monaco instance:", monaco);
     }
 
     getAllProblem();
@@ -275,12 +277,11 @@ const Main = () => {
 
 const getAllProblem = async () => {
     try {
-      console.log(user_id);
       const response = await axios.get("http://localhost:8000/main/question/", {
         params:{
         course: course,
       }});
-      console.log("question : response >>", response.data);
+      //console.log("response_getallproblem >>", response.data);
       setProblemlist(response.data);
       setSelectedproblem(response.data[0]);
     } catch (error) {
@@ -301,7 +302,6 @@ const getAllProblem = async () => {
         "count": editorVisible,
         "code": editorRef1.current.getValue()
         }
-      console.log(newData);
     } else if (editorVisible == 2) {
       newData = {
         "user_id": user_id,
@@ -330,7 +330,7 @@ const getAllProblem = async () => {
 
   const onReset1 = () => {
     setCode1("#some comment");
-    console.log(editorRef1.current.getValue());
+    //console.log(editorRef1.current.getValue());
   };
   const onReset2 = () => {
     setCode2("#some comment");
@@ -386,7 +386,7 @@ const getAllProblem = async () => {
 
   const handleCopyClipBoard = async (text) => {
     try {
-      console.log(text);
+      //console.log(text);
       await navigator.clipboard.writeText(text);
     } catch (error) {
       alert("복사 실패!");
@@ -437,7 +437,7 @@ const getAllProblem = async () => {
     try {
       const response = await axios.get(
         "http://localhost:8000/test/testcase/",{
-        params:newData
+        params: newData
         }
       );
       console.log("response >>", response);
@@ -495,33 +495,34 @@ const getAllProblem = async () => {
     }
 
     try {
-    console.log(newData)
-      const response2 = await axios.post("http://localhost:8000/test/readability/",
+      const response1 = await axios.post("http://localhost:8000/test/readability/",
         newData,
       );
-      const response3 = await axios.post("http://localhost:8000/test/copydetect/",
+      //console.log("response_readability >>", response1["data"]);
+      setReadability(response1["data"]["score"]);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
+
+    try {
+      const response2 = await axios.post("http://localhost:8000/test/copydetect/",
        newData,
       );
-      const response1 = await axios.get("http://localhost:8000/test/evaluate/", {
+      // console.log("response_copy >>", response2["data"]);
+      setCopy(response2["data"]);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
+
+    try {
+      const response3 = await axios.get("http://localhost:8000/test/evaluate/", {
         params: newData,
       });
-
-
-
-      console.log("response >>", response1);
-      console.log(response1["data"]);
-
-      setEfficiencya(response1["data"]["e_score1"]);
-      setEfficiencyb(response1["data"]["e_score2"]);
+      console.log("response_efficiency >>", response3["data"]);
+      setEfficiencya(response3["data"]["e_score1"]);
+      setEfficiencyb(response3["data"]["e_score2"]);
       console.log(efficiencya);
       console.log(efficiencyb);
-      console.log("response >>", response2);
-      console.log(response2["data"]);
-      setCopy(response2["data"]);
-      console.log(copy);
-      console.log("response >>", response3);
-      console.log(response3["data"]);
-      setFunctionality(response3["data"]["score"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -572,8 +573,7 @@ const getAllProblem = async () => {
   }
 
   const onAnalyzeClick = useCallback(() => {
-  console.log("debug");
-    navigate("/resultpage",{state: {efficiencya:efficiencya,efficiencyb:efficiencyb,copy:copy,score:score}});
+    navigate("/resultpage",{state: {efficiencya: efficiencya, efficiencyb: efficiencyb, copy: copy, score: score, readability: readability}});
   }, [navigate]);
 
 

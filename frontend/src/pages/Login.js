@@ -49,7 +49,7 @@ const Login = () => {
   }, [navigate]);
 
   const getLoginInf = async() =>{
-       const newData = {
+      const newData = {
         user_id: logAccount.user_email,
         user_pwd: logAccount.user_password,
      };
