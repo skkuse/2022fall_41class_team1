@@ -1,4 +1,5 @@
 
+
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.core import serializers
@@ -72,7 +73,7 @@ def testcase(answer, user, testcase):
     
     ots = []
     hts = []
-    msg = []
+    msg = ""
     
     for idx, ot in enumerate(o_testcase):
         excute_testcase(answer, 'answer', ot)
@@ -89,9 +90,11 @@ def testcase(answer, user, testcase):
                 ots.append(0)
                 line1 = return_data.split('\n')[1][-1]
                 line2 = return_data.split('\n')[-2][-1]
-                return_data = f'In the {idx} line, correct answer is {line1} but user answer is {line2}. (open case)'
-                msg.append(return_data)
-        
+                return_data = f'The open testcase {idx+1}, correct answer is {line1} but user answer is {line2}.\n'
+                msg += return_data
+    
+    msg += "&"
+    
     for idx, ht in enumerate(h_testcase):
         excute_testcase(answer, 'answer', ht)
         excute_testcase(user, 'my', ht)
@@ -104,8 +107,8 @@ def testcase(answer, user, testcase):
             if return_data == "":
                 hts.append(1)
             else:
-                return_data = f'The {idx} line is not identical. (hidden case)'
-                msg.append(return_data)
+                return_data = f'The hidden testcase {idx+1} is not identical.\n'
+                msg += return_data
                 hts.append(0)
 
     return {'score':f'{(sum(ots)+sum(hts))/(len(ots)+len(hts))*100}', 'msg':f'{msg}'}

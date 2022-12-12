@@ -1,3 +1,602 @@
+.desktop13 {
+  position: relative;
+  justify-content: center;
+  background-color: black;
+  width: 100%;
+  height: 1024px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: white;
+  font-family: "NeoDunggeunmo";
+}
+.header {
+  flex: 1;
+  position: relative;
+  height: 66px;
+  margin: 15px;
+  background: #dfdfdf;
+  border-radius: 0px 0px 20px 20px;
+}
+
+.problemname {
+  position: relative;
+  width: 414px;
+  height: 30px;
+  top: 20px;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  /* identical to box height */
+
+  letter-spacing: 0.03em;
+
+  color: #ffb800;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+
+.main_section {
+  display: flex;
+  position: relative;
+  margin: 15px;
+}
+/*----------------- section_left -----------------*/
+.section_left {
+  flex: 1;
+  position: relative;
+  height: 760px;
+  width: 30%;
+  justify-content: center;
+  margin-right: 15px;
+}
+.gutter-horizontal {
+  cursor: col-resize;
+}
+.gutter-vertical {
+  cursor: row-resize;
+}
+
+/*
+.dropdownul {
+  position: relative;
+  top: 55px;
+  color: white;
+  background: #000080;
+  z-index: 2;
+  width: 300px;
+}
+
+.dropdownli {
+  position: relative;
+  color: white;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+} */
+
+.section1 {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  align-content: center;
+  position: relative;
+  height: 60%;
+  background: #eeeeee;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}
+
+.question_title {
+  padding: 6.6px;
+  margin-left: 23px;
+  position: relative;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  margin-block: 5px;
+  /* identical to box height */
+  text-align: center;
+  letter-spacing: 1.635em;
+  color: #ffe600;
+  text-shadow: -0.5px 0 #315528, 0 0.5px #315528, 0.5px 0 #315528,
+    0 -0.5px #315528;
+}
+.question_line {
+  position: relative;
+  margin-inline: 10px;
+  border: 1px dashed #a5a49c;
+}
+.question_content {
+  position: relative;
+  height: 40%;
+  font-family: "NeoDunggeunmo Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  padding-inline: 20px;
+  padding-block: 15px;
+  color: #0066ff;
+}
+
+.constraint_title {
+  position: relative;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  margin-block: 5px;
+  text-align: center;
+  letter-spacing: 0.425em;
+  color: #f5e44a;
+  text-shadow: -0.5px 0 #315528, 0 0.5px #315528, 0.5px 0 #315528,
+    0 -0.5px #315528;
+  padding: 6.6px;
+  margin-left: 23px;
+}
+.constraint_line {
+  position: relative;
+  margin-inline: 10px;
+  border: 1px dashed #a5a49c;
+}
+.constraint_content {
+  position: relative;
+  height: 40%;
+  font-family: "NeoDunggeunmo Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  padding-inline: 20px;
+  padding-block: 15px;
+  color: #0066ff;
+}
+
+.section2 {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  align-content: center;
+  position: relative;
+  margin-top: 10px;
+  height: 40%;
+  background: #eeeeee;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}
+
+.testcase_title {
+  position: relative;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  margin-block: 5px;
+  text-align: center;
+  letter-spacing: 0.775em;
+  color: #f5e44a;
+  text-shadow: -0.5px 0 #315528, 0 0.5px #315528, 0.5px 0 #315528,
+    0 -0.5px #315528;
+  padding: 6.6px;
+  margin-left: 23px;
+}
+.testcase_line {
+  position: relative;
+  margin-inline: 10px;
+  border: 1px dashed #a5a49c;
+}
+.testcase_content {
+  position: relative;
+  height: 80%;
+  font-family: "NeoDunggeunmo Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  color: #0066ff;
+  padding-inline: 20px;
+  padding-block: 15px;
+}
+
+/*----------------------- Editor -----------------------*/
+
+.editor {
+  position: relative;
+  justify-content: center;
+  height: 100%;
+  width: 70%;
+}
+/*------------- Editor header --------------*/
+.editor_header {
+  position: relative;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0px;
+}
+
+.savebutton {
+  position: relative;
+}
+
+.functionbutton {
+  position: relative;
+}
+
+.codeBtn1 {
+  width: 55px;
+  height: 34px;
+  position: relative;
+  background: #ff6838;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 22px;
+  border: none;
+  font-family: NeoDunggeunmo Pro;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  color: #ffffff;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+.codeBtn1:hover,
+.codeBtn2:hover,
+.codeBtn3:hover {
+  box-shadow: 0px 15px 20px rgba(27, 39, 63, 0.4);
+  transform: translateY(-5px);
+}
+
+.codeBtn1:active, .codeBtn2:active, .codeBtn3:active {
+  background: #f8c5b5;
+}
+
+.codeBtn2 {
+  width: 55px;
+  height: 34px;
+  position: relative;
+  background: #ff6838;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 22px;
+  border: none;
+  font-family: NeoDunggeunmo Pro;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  color: #ffffff;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.codeBtn3 {
+  width: 55px;
+  height: 34px;
+  position: relative;
+  background: #ff6838;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 22px;
+  border: none;
+  font-family: NeoDunggeunmo Pro;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  color: #ffffff;
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.saveBtn:hover, .runBtn:hover, .evalBtn:hover, .submitBtn:hover {
+  box-shadow: 0px 15px 20px rgba(27, 39, 63, 0.4);
+  transform: translateY(-5px);
+}
+
+.saveBtn {
+  width: 82px;
+  height: 37px;
+  margin: 5px;
+  position: relative;
+  background: #4235d3;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.runBtn {
+  width: 82px;
+  height: 37px;
+  margin: 5px;
+  position: relative;
+  background: #4235d3;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.evalBtn {
+  width: 82px;
+  height: 37px;
+  margin: 5px;
+  position: relative;
+  background: #4235d3;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+.submitBtn {
+  width: 82px;
+  height: 37px;
+  margin: 5px;
+  position: relative;
+  background: #4235d3;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.showvalueBtn {
+  position: relative;
+}
+.uploadBtn {
+  position: relative;
+}
+.resetBtn {
+  position: relative;
+}
+.copyBtn {
+  position: relative;
+}
+.downloadBtn {
+  position: relative;
+}
+
+/*------------- Editor main --------------*/
+.editor_header_body {
+  width: 100%;
+  height: 100%;
+}
+
+.onlyEditors {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.terminal {
+  position: relative;
+}
+
+.terminal_header {
+  position: relative;
+  background: #ffffff;
+  backdrop-filter: blur(2px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.resultBtn1 {
+  position: relative;
+  width: 123px;
+  height: 52px;
+  background: #4235d3;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #ffffff;
+  cursor: pointer;
+}
+.resultBtn2 {
+  position: relative;
+  width: 123px;
+  height: 52px;
+  background: #9c95f0;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #ffffff;
+  cursor: pointer;
+}
+.resultBtn3 {
+  position: relative;
+  width: 180px;
+  height: 52px;
+  background: #b1aed2;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.resultBtn4 {
+  position: relative;
+  width: 123px;
+  height: 52px;
+  background: #cac9d4;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #ffffff;
+  margin-right: 0px;
+  padding-right: 0px;
+  flex: right;
+  cursor: pointer;
+}
+
+.result_window {
+  position: relative;
+  background: #ffffff;
+  backdrop-filter: blur(2px);
+}
+
+.otc_area {
+  color:#ffc3c3;
+  background-color:#040404;
+}
+
+.htc_area {
+  color:#bbbbfd;
+  background-color: #040404;
+}
+
+.ttc_score {
+  color:#ffffff;
+  background-color: #040404;
+}
+
+.showvalueBtn {
+  width: 82px;
+  height: 34px;
+  margin: 5px;
+  position: relative;
+  background: #4235d3;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.uploadBtn {
+  font-family: "NeoDunggeunmo";
+}
+.resetBtn {
+  margin-right: 0;
+  position: relative;
+  width: 100px;
+  height: 37px;
+  margin: 5px;
+  background: #b1aed2;
+  border: none;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.copyBtn {
+  margin-right: 0;
+  position: relative;
+  width: 100px;
+  height: 37px;
+  margin: 5px;
+  background: #b1aed2;
+  border: none;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.downloadBtn {
+  margin-right: 0;
+  position: relative;
+  width: 100px;
+  height: 37px;
+  margin: 5px;
+  background: #b1aed2;
+  border: none;
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.07em;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.editor_footer {
+  position: relative;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px;
+  flex-direction: row-reverse;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.uploadBtn {
+  margin: 5px;
+  width: 100px;
+  height: 37px;
+}
 
 .desktop13 {
   position: relative;
@@ -607,4 +1206,8 @@
 	cursor: pointer;
 	font-weight: bold;
 	font-style: oblique;
+}
+
+.tc_div{
+  height: 100%;
 }
