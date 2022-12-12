@@ -14,7 +14,7 @@ export const data_FER = [
   ["가독성", readability_score],
   ["기능", function_score],
   ["효율", efficiency_score],
-  ["감점", minus_FER],
+  ["", minus_FER],
 ];
 
 export const options_FER = {

@@ -23,9 +23,14 @@ const ResultPage = () => {
   const [detailInfo, setDetail] = useState(); // 정보만 결과
   const [graphBlock, setGraphBlock] = useState(false);
 
-  const [selected1, setSelected1] = useState(false); //제출결과
+  const [selected1, setSelected1] = useState(true); //제출결과
   const [selected2, setSelected2] = useState(false); //표절검사
   const [selected3, setSelected3] = useState(false); //코드분석, 관련 링크
+
+  const navigate = useNavigate();
+  const navigateToMain = () => {
+    navigate(-1);
+  };
 
   const handle_button1 = () => {
     setSelected1(true);
@@ -84,7 +89,12 @@ const ResultPage = () => {
       <div className="resultpage-wrapper">
         <div className="resultpage-left-container">
           <div className="resultpage-lhdr">
-            <img src={Logo} alt="codingtest" className="logo"></img>
+            <img
+              src={Logo}
+              alt="codingtest"
+              className="logo"
+              onClick={navigateToMain}
+            ></img>
           </div>
           <div className="submitresult_container">
             <button className="submitresult_button" onClick={handle_button1}>
