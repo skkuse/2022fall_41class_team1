@@ -27,8 +27,11 @@ def execute(code):
     out = subprocess.run(['python3', 'solution.py'],capture_output=True)
     if(out.stderr):
         return_data = out.stderr.decode('utf-8').split(',')[-1]
+        line = return_data.split('\n')[0][-1]
+        return_data = [return_data, line]
     else:
         return_data = out.stdout.decode('utf-8')
+        return_data = [return_data]
     os.remove('solution.py') 
     data = {'code':return_data}
     return data
