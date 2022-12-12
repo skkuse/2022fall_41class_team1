@@ -490,14 +490,19 @@
   backdrop-filter: blur(2px);
 }
 
-.tc_area {
-  color:#f63939;
-  background-color: #fff9ed;
+.otc_area {
+  color:#ffc3c3;
+  background-color:#040404;
 }
 
 .htc_area {
-  color:#2525ff;
-  background-color: #edfff0;
+  color:#bbbbfd;
+  background-color: #040404;
+}
+
+.ttc_score {
+  color:#ffffff;
+  background-color: #040404;
 }
 
 .showvalueBtn {

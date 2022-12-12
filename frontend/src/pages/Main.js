@@ -654,7 +654,8 @@ const Main = () => {
                 <textarea value={"Score: "+score+"\nMemory-efficiency: "+efficiencya+"\nTime-efficiency: "+efficiencyb} disabled="True" cols="140" rows="10" />
               </div>
               <div css={ resultShow == 2 ? css`display: flex;flex-direction: column;`: css`display: none;`}>
-                <textarea className = "tc_area" value={test_case_texts.split("&")[0]} disabled="True" cols="140" rows="5"/>
+                <textarea className = "ttc_score" value={"Score: "+score} cols="140" rows="1"/>
+                <textarea className = "otc_area" value={test_case_texts.split("&")[0]} disabled="True" cols="140" rows="5"/>
                 <textarea className = "htc_area" value={test_case_texts.split("&")[1]} disabled="True" cols="140" rows="5"/>
               </div>
               <div css={ resultShow == 3 ? css` display: flex; flex-direction: column;`: css`display: none;`}>
