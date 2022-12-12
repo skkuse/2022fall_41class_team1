@@ -195,7 +195,66 @@ const Main = () => {
     markers.forEach((marker) => console.log("onValidate:", marker.message));
   }
 
+  const showValue = async () => {
+    var newData = {};
+    if (editorVisible == 1) {
+        newData = {
+        "code": editorRef1.current.getValue(),
+      };
+    } else if (editorVisible == 2) {
+      newData = {
+        "code": editorRef2.current.getValue(),
+      };
+    } else if (editorVisible == 3) {
+      newData = {
+        "code": editorRef3.current.getValue(),
+      };
+    }
 
+    try {
+        saveData();
+      const response = await axios.get(
+        "http://localhost:8000/test/execute2/",
+        {params: newData}
+      );
+      get_testcase();
+      console.log("response >>", response);
+      console.log(response["data"]["code"]);
+      var responseList=response["data"]["code"].split('&');
+      if (responseList[0]=='0'){
+        setResult(responseList[1]);
+      }
+      else{
+      if (editorVisible == 1) {
+        errorShow(editorRef1,parseInt(responseList[1]));
+        } else if (editorVisible == 2) {
+
+        } else if (editorVisible == 3) {
+
+        }
+       setResult(responseList[2]);
+    }
+
+
+      console.log("실행결과 작성 완료");
+    } catch (err) {
+      console.log("Error >>", err);
+    }
+  };
+
+  const errorShow = (editorRef,lines)=>{
+  console.log("debug");
+  console.log(lines)
+    editorRef.current.deltaDecorations(
+	        [],
+	        [
+		        {
+			        range: new monaco.Range(lines,1, lines+1,1),
+			        options: { inlineClassName: 'myInlineDecoration' }
+		        }
+	        ]
+        );
+  };
 
 
   useEffect(() => {
