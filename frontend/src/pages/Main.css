@@ -258,7 +258,9 @@
   transform: translateY(-5px);
 }
 
-.codeBtn1:active, .codeBtn2:active, .codeBtn3:active {
+.codeBtn1:active,
+.codeBtn2:active,
+.codeBtn3:active {
   background: #f8c5b5;
 }
 
@@ -304,7 +306,10 @@
   transition: all 0.3s ease 0s;
 }
 
-.saveBtn:hover, .runBtn:hover, .evalBtn:hover, .submitBtn:hover {
+.saveBtn:hover,
+.runBtn:hover,
+.evalBtn:hover,
+.submitBtn:hover {
   box-shadow: 0px 15px 20px rgba(27, 39, 63, 0.4);
   transform: translateY(-5px);
 }
@@ -492,17 +497,17 @@
 }
 
 .otc_area {
-  color:#ffc3c3;
-  background-color:#040404;
+  color: #ffc3c3;
+  background-color: #040404;
 }
 
 .htc_area {
-  color:#bbbbfd;
+  color: #bbbbfd;
   background-color: #040404;
 }
 
 .ttc_score {
-  color:#ffffff;
+  color: #ffffff;
   background-color: #040404;
 }
 
@@ -864,7 +869,9 @@
   transform: translateY(-5px);
 }
 
-.codeBtn1:active, .codeBtn2:active, .codeBtn3:active {
+.codeBtn1:active,
+.codeBtn2:active,
+.codeBtn3:active {
   background: #f8c5b5;
 }
 
@@ -910,7 +917,10 @@
   transition: all 0.3s ease 0s;
 }
 
-.saveBtn:hover, .runBtn:hover, .evalBtn:hover, .submitBtn:hover {
+.saveBtn:hover,
+.runBtn:hover,
+.evalBtn:hover,
+.submitBtn:hover {
   box-shadow: 0px 15px 20px rgba(27, 39, 63, 0.4);
   transform: translateY(-5px);
 }
@@ -1006,8 +1016,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-    width: 100%;
-    height: 85%;
+  width: 100%;
+  height: 85%;
 }
 
 .terminal {
@@ -1196,19 +1206,19 @@
   height: 37px;
 }
 .myInlineDecoration {
-	background: #ffc7c7;
-	cursor: pointer;
-	font-weight: bold;
-	font-style: oblique;
+  background: #ffc7c7;
+  cursor: pointer;
+  font-weight: bold;
+  font-style: oblique;
 }
 
 .myLineDecoration {
-	background: light-blue;
-	cursor: pointer;
-	font-weight: bold;
-	font-style: oblique;
+  background: light-blue;
+  cursor: pointer;
+  font-weight: bold;
+  font-style: oblique;
 }
 
-.tc_div{
+.tc_div {
   height: 100%;
 }

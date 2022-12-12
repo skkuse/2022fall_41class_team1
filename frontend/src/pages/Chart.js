@@ -14,7 +14,7 @@ export const data_FER = [
   ["가독성", readability_score],
   ["기능", function_score],
   ["효율", efficiency_score],
-  ["감점", minus_FER],
+  ["", minus_FER],
 ];
 
 export const options_FER = {
@@ -68,7 +68,8 @@ export function drawFER() {
       data={data_FER}
       options={options_FER}
       width={"100%"}
-      height={"400px"}
+      height={"315px"}
+      display={"block"}
     />
   );
 }
@@ -80,7 +81,7 @@ export function drawCopy() {
       data={data_copy}
       options={options_copy}
       width={"100%"}
-      height={"400px"}
+      height={"315px"}
     />
   );
 }
