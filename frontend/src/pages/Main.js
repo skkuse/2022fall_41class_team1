@@ -193,12 +193,42 @@ const Main = () => {
       get_testcase();
       console.log("response >>", response);
       console.log(response["data"]["code"]);
-      setResult(response["data"]["code"]);
+      var responseList=response["data"]["code"].split('&');
+      if (responseList[0]=='0'){
+        setResult(responseList[1]);
+      }
+      else{
+      if (editorVisible == 1) {
+        errorShow(editorRef1,parseInt(responseList[1]));
+        } else if (editorVisible == 2) {
+
+        } else if (editorVisible == 3) {
+
+        }
+       setResult(responseList[2]);
+    }
+
+
       console.log("실행결과 작성 완료");
     } catch (err) {
       console.log("Error >>", err);
     }
   };
+
+  const errorShow = (editorRef,lines)=>{
+  console.log("debug");
+  console.log(lines)
+    editorRef.current.deltaDecorations(
+	        [],
+	        [
+		        {
+			        range: new monaco.Range(lines,1, lines+2,1),
+			        options: { inlineClassName: 'myInlineDecoration' }
+		        }
+	        ]
+        );
+  };
+
 
   useEffect(() => {
     // do conditional chaining
