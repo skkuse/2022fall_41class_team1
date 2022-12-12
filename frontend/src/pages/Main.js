@@ -440,7 +440,7 @@ const getAllProblem = async () => {
         params: newData
         }
       );
-      console.log("response >>", response);
+      console.log("response_testcase >>", response);
       console.log(response["data"]);
       setTest_case_texts(response["data"]["msg"]);
       setScore(response["data"]["score"]);
@@ -498,8 +498,8 @@ const getAllProblem = async () => {
       const response1 = await axios.post("http://localhost:8000/test/readability/",
         newData,
       );
-      //console.log("response_readability >>", response1["data"]);
-      setReadability(response1["data"]["score"]);
+      console.log("response_readability >>", response1["data"]);
+      setReadability(response1["data"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -508,8 +508,8 @@ const getAllProblem = async () => {
       const response2 = await axios.post("http://localhost:8000/test/copydetect/",
        newData,
       );
-      // console.log("response_copy >>", response2["data"]);
-      setCopy(response2["data"]);
+      console.log("response_copy >>", response2["data"]);
+      setCopy(response2["data"]["score"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -521,8 +521,8 @@ const getAllProblem = async () => {
       console.log("response_efficiency >>", response3["data"]);
       setEfficiencya(response3["data"]["e_score1"]);
       setEfficiencyb(response3["data"]["e_score2"]);
-      console.log(efficiencya);
-      console.log(efficiencyb);
+      // console.log(efficiencya);
+      // console.log(efficiencyb);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -561,8 +561,6 @@ const getAllProblem = async () => {
       getQuestionInf();
     }
 
-
-
     return (
       <ul css={dropdownul}>
         {problemlist.map((item) => {
@@ -572,9 +570,9 @@ const getAllProblem = async () => {
     );
   }
 
-  const onAnalyzeClick = useCallback(() => {
+  const onAnalyzeClick = () => {
     navigate("/resultpage",{state: {efficiencya: efficiencya, efficiencyb: efficiencyb, copy: copy, score: score, readability: readability}});
-  }, [navigate]);
+  };
 
 
 

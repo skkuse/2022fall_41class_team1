@@ -23,16 +23,13 @@ const ResultPage = () => {
     readability: state.readability,
   }); // 사진 + 정보 결과
   const [detailInfo, setDetail] = useState(); // 정보만 결과
-  //const [graphBlock, setGraphBlock] = useState(false);
 
-  const [selected1, setSelected1] = useState(false); //제출결과
-  const [selected2, setSelected2] = useState(false); //표절검사
-  const [selected3, setSelected3] = useState(false); //코드분석, 관련 링크
+  const [selected, setSelected] = useState(1); //제출결과
+
 
   const handle_button1 = () => {
-    setSelected1(true);
-    setSelected2(false);
-    setSelected3(false);
+    setSelected(1);
+
 
     setTitleName("제출 결과 (Overall Score)");
   };
@@ -42,18 +39,15 @@ const ResultPage = () => {
   }, []);
 
   const handle_button2 = () => {
-    setSelected1(true);
-    setSelected2(false);
-    setSelected3(false);
+    setSelected(2);
+
     
     setTitleName("가독성 채점");
-    //setGraphBlock(false);
   };
 
   const handle_button3 = () => {
-    setSelected1(true);
-    setSelected2(false);
-    setSelected3(false);
+    setSelected(3);
+
 
     setTitleName("기능 채점");
     //setGraphBlock(true);
@@ -63,25 +57,22 @@ const ResultPage = () => {
     setTitleName("효율 채점");
     //setGraphBlock(true);
 
-    setSelected1(true);
-    setSelected2(false);
-    setSelected3(false);
+    setSelected(4);
+
   };
   const handle_button5 = () => {
     setTitleName("표절 검사");
     //setGraphBlock(true);
 
-    setSelected1(false);
-    setSelected2(true);
-    setSelected3(false);
+    setSelected(5);
+
   };
   const handle_button6 = () => {
     setTitleName("코드 설명, 관련 자료 채점");
     //setGraphBlock(false);
 
-    setSelected1(false);
-    setSelected2(false);
-    setSelected3(true);
+    setSelected(6);
+
   };
 
   return (
@@ -128,16 +119,53 @@ const ResultPage = () => {
           <div className="resultpage-rhdr ">{titleName}</div>
           <div className="resultpage-component1">
             <div className="text_section">
-              {selected1 ? drawFER() : selected2 ? drawCopy() : <div></div>}
+              {selected < 5 ? drawFER() : selected < 6 ? drawCopy() : <div></div>}
             </div>
           </div>
           <div className="resultpage-component2">
             <div className="text_section">
-              <h1>
-                Result Text Area Result Text Area<br></br> Result Text Area
-                Result Text Area<br></br> Result Text Area Result Text Area
-                <br></br>{" "}
-              </h1>
+              {selected == 1 ? 
+                <h1>
+                  text None
+                </h1> 
+                : selected == 2 ?
+                <h1>
+                  - mypy : {overallInfo.readability.score.mypy}<br></br>
+                  - pylint : {overallInfo.readability.score.pylint}<br></br> 
+                  - eradicate : {overallInfo.readability.score.eradicate}<br></br>
+                  - radon : {overallInfo.readability.score.radon}<br></br>
+                  - pycodestyle : {overallInfo.readability.score.pycodestyle}<br></br> 
+                  comment <br></br> 
+                  - mypy : {overallInfo.readability.comment.mypy}<br></br>
+                  - pylint : {overallInfo.readability.comment.pylint}<br></br> 
+                  - eradicate : {overallInfo.readability.comment.eradicate}<br></br>
+                  - radon : {overallInfo.readability.comment.radon}<br></br>
+                  - pycodestyle : {overallInfo.readability.comment.pycodestyle}<br></br>
+                </h1> 
+                : selected == 3 ?
+                <h1>
+                  Result Text Area Result Text Area<br></br> Result Text Area
+                  Result Text Area<br></br> Result Text Area Result Text Area
+                  <br></br>
+                </h1>
+                : selected == 4 ?
+                <h1>
+                  - memory efficiency : {overallInfo.efficiencya}<br></br>
+                  - time efficiency : {overallInfo.efficiencyb}<br></br> 
+                </h1>
+                : selected == 5 ?
+                <h1>
+                  Result Text Area Result Text Area<br></br> Result Text Area
+                  Result Text Area<br></br> Result Text Area Result Text Area
+                  <br></br>
+                </h1>
+                : // if selected == 6
+                <h1>
+                  Result Text Area Result Text Area<br></br> Result Text Area
+                  Result Text Area<br></br> Result Text Area Result Text Area
+                  <br></br>
+                </h1>
+              }
             </div>
           </div>
         </div>

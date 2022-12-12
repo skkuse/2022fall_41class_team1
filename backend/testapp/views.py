@@ -77,6 +77,7 @@ def testcase(answer, user, testcase):
     ots = []
     hts = []
     msg = ""
+    pf = ""
     
     for idx, ot in enumerate(o_testcase):
         excute_testcase(answer, 'answer', ot)
