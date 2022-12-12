@@ -1,3 +1,4 @@
+
 from django.urls import path
 from django.urls import re_path
 from .views import *
@@ -7,7 +8,6 @@ from .views import *
 urlpatterns = [
     path('user/',UserApi.as_view()),    # 사용자liste 조회가능
     path('userdata/',UserDataApi.as_view()),
-    path('question/',QuestionApi.as_view()),
     # path('chat/',ChatApi.as_view()),
     path('submission/',SubmissionApi.as_view()),
 
@@ -20,4 +20,5 @@ urlpatterns = [
     path('question/info/', RequestQuestionAPI.as_view()) # 문제 정보 다 불러오기
 
     # path('add_course/,')
+
 ]

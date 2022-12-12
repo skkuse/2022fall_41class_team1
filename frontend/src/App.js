@@ -12,6 +12,7 @@ import Start from "./pages/Start";
 import SubjectPage from "./pages/SubjectPage";
 import ResultPage from "./pages/ResultPage";
 import "./App.css";
+import CourseSelect from "./pages/CourseSelect";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
       <Route path="/main" element={<Main />} />
       <Route path="/login" element={<Login />} />
       <Route exact path="/subject" element={<SubjectPage />} />
+      <Route path="/courseselect" element={<CourseSelect />} />
       <Route path="/register" element={<Register />} />
       <Route path="/resultpage" element={<ResultPage />} />
     </Routes>
@@ -37,3 +39,4 @@ function App() {
   //<Route path="/add" element={<AddPage />} />
 }
 export default App;
+

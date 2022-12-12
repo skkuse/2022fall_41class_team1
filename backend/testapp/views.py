@@ -1,4 +1,5 @@
 
+
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.core import serializers
@@ -25,14 +26,18 @@ def execute(code):
     py.write(code)
     py.close()
 
+    
     os.rename('temp.txt','solution.py')
     out = subprocess.run(['python3', 'solution.py'],capture_output=True)
+    print(out.stdout)
+    print("debug")
     if(out.stderr):
         return_data = out.stderr.decode('utf-8').split('line')[-1]
         line = out.stderr.decode('utf-8').split('line')[-1][1]
         return_data = "1&"+ line+ "& line" + return_data 
     else:
         return_data = out.stdout.decode('utf-8')
+        print(return_data)
         return_data = "0&" + return_data
     os.remove('solution.py') 
     data = {'code':return_data}
@@ -41,7 +46,6 @@ def execute(code):
 def testcase(answer, user, testcase):
         
     def excute_testcase(code, type, testcase):
-            
         py = open('temp.txt','w')
         py.write(code)
         py.close()
@@ -72,7 +76,7 @@ def testcase(answer, user, testcase):
     
     ots = []
     hts = []
-    msg = []
+    msg = ""
     
     for idx, ot in enumerate(o_testcase):
         excute_testcase(answer, 'answer', ot)
@@ -89,9 +93,11 @@ def testcase(answer, user, testcase):
                 ots.append(0)
                 line1 = return_data.split('\n')[1][-1]
                 line2 = return_data.split('\n')[-2][-1]
-                return_data = f'In the {idx} line, correct answer is {line1} but user answer is {line2}. (open case)'
-                msg.append(return_data)
-        
+                return_data = f'The open testcase {idx+1}, correct answer is {line1} but user answer is {line2}.\n'
+                msg += return_data
+    
+    msg += "&"
+    
     for idx, ht in enumerate(h_testcase):
         excute_testcase(answer, 'answer', ht)
         excute_testcase(user, 'my', ht)
@@ -104,8 +110,8 @@ def testcase(answer, user, testcase):
             if return_data == "":
                 hts.append(1)
             else:
-                return_data = f'The {idx} line is not identical. (hidden case)'
-                msg.append(return_data)
+                return_data = f'The hidden testcase {idx+1} is not identical.\n'
+                msg += return_data
                 hts.append(0)
 
     return {'score':f'{(sum(ots)+sum(hts))/(len(ots)+len(hts))*100}', 'msg':f'{msg}'}
@@ -210,6 +216,7 @@ class CheckPlagiarismAPI(APIView):
         code = request.data.get('code')
         detector = CopyDetector(ref_dirs=[ref_dir], boilerplate_dirs=[ref_dir], extensions=["py"], display_t=0.5)
         f=open("test.py", 'w')
+        code = str(code)
         f.write(code)
         f.close()
         detector.add_file("test.py")
