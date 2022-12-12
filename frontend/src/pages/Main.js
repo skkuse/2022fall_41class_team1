@@ -704,17 +704,17 @@ const Main = () => {
               </div>
             </div>
             <div className="result_window">
-              <div css={ resultShow == 0 ? css`display: block;`: css`display: none;`}>
-                <textarea value={result} disabled="True" cols="140" rows="10" />
+              <div css={ resultShow == 0 ? css`display: block;height:100%;`: css`display: none;`}>
+                <textarea value={result} disabled="True" css={css`height:100%; width:100%;`} />
               </div>
-              <div css={ resultShow == 1 ? css` display: block;`: css`display: none;`}>
-                <textarea value={"Score: "+score+"\nMemory-efficiency: "+efficiencya+"\nTime-efficiency: "+efficiencyb} disabled="True" cols="140" rows="10" />
+              <div css={ resultShow == 1 ? css` display: block;height:100%;`: css`display: none;`}>
+                <textarea value={"Score: "+score+"\nMemory-efficiency: "+efficiencya+"\nTime-efficiency: "+efficiencyb} disabled="True" css={css`height:100%;width:100%;`} />
               </div>
-              <div css={ resultShow == 2 ? css`display: flex;flex-direction: column;`: css`display: none;`}>
-                <textarea value={test_case_texts} disabled="True" cols="140" rows="10"/>
+              <div css={ resultShow == 2 ? css`display: flex;flex-direction: column; height:100%;`: css`display: none;`}>
+                <textarea value={test_case_texts} disabled="True"  css={css`height:100%;width:100%;`}/>
               </div>
-              <div css={ resultShow == 3 ? css` display: flex; flex-direction: column;`: css`display: none;`}>
-                <textarea value={analyzed_texts} disabled="True" cols="145" rows="15"/>
+              <div css={ resultShow == 3 ? css` display: flex; flex-direction: column; height:100%;`: css`display: none;`}>
+                <textarea value={analyzed_texts} disabled="True" css={css`height:100%;width:100%;`}/>
               </div>
             </div>
           </div>
