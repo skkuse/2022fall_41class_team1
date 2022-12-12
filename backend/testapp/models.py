@@ -17,7 +17,8 @@ class ExecuteCodeV2(models.Model):
 class CheckTestcase(models.Model):
     score = models.CharField(max_length=10)
     msg = models.TextField() # test case 정보 제공.
-    
+    pf = models.TextField(null=True)
+
 class EvaluateCode(models.Model):
     e_score1 = models.CharField(max_length=10)
     e_score2 = models.CharField(max_length=10)

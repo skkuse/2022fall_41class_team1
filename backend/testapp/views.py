@@ -83,22 +83,28 @@ def testcase(answer, user, testcase):
         excute_testcase(answer, 'answer', ot)
         excute_testcase(user, 'my', ot)
         out = subprocess.run(['diff','result_answer.txt','result_my.txt'], capture_output=True)
-        
+        print(out)
         if (out.stderr):
             return_data = out.stderr.decode('utf-8')
         else:
             return_data = out.stdout.decode('utf-8')
+            print(return_data)
             if(return_data==""):
                 ots.append(1)
             else:
                 ots.append(0)
-                line1 = return_data.split('\n')[1][-1]
-                line2 = return_data.split('\n')[-2][-1]
+                line1 = return_data.split('\n')[1][2:]
+                line2 = return_data.split('\n')[-2][2:]
                 return_data = f'The open testcase {idx+1}, correct answer is {line1} but user answer is {line2}.\n'
+                if line1 == line2:
+                    pf += "통과\n"
+                else:
+                    pf += "실패\n"
                 msg += return_data
     
     msg += "&"
-    
+    pf += "&"
+
     for idx, ht in enumerate(h_testcase):
         excute_testcase(answer, 'answer', ht)
         excute_testcase(user, 'my', ht)
@@ -110,12 +116,16 @@ def testcase(answer, user, testcase):
             return_data = out.stdout.decode('utf-8')
             if return_data == "":
                 hts.append(1)
+                pf += "통과\n"
             else:
                 return_data = f'The hidden testcase {idx+1} is not identical.\n'
                 msg += return_data
                 hts.append(0)
+                pf += "실패\n"
 
-    return {'score':f'{(sum(ots)+sum(hts))/(len(ots)+len(hts))*100}', 'msg':f'{msg}'}
+        
+
+    return {'score':f'{(sum(ots)+sum(hts))/(len(ots)+len(hts))*100}', 'msg':f'{msg}', 'pf':f'{pf}'}
     
 def evaluate(code):
     py = open('temp.txt','w')

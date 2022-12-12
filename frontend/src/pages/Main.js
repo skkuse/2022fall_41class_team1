@@ -56,9 +56,9 @@ const Main = () => {
   const [editorVisible, setEditorVisible] = useState(1);
   const [user_id, setUser_id] = useState(state.user_email);
   const [course, setCourse] = useState(state.user_course);
-  const [code1, setCode1] = useState("# code에 함수 이거 넣어서 테스트 ㄱㄱ\ndef solution(add1, add2, add3):\n\tsum = add1 + add2 + add3\n\treturn sum\nif __name__ == \"__main__\":\n\tprint(solution(1, 2, 3))");
-  const [code2, setCode2] = useState("#some comment");
-  const [code3, setCode3] = useState("#some comment");
+  const [code1, setCode1] = useState();
+  const [code2, setCode2] = useState();
+  const [code3, setCode3] = useState();
   const [original_code, setOriginal_code] = useState("#some comment");
   const [modified_code, setModified_code] = useState("#some comment");
   const [result, setResult] = useState("result display");
@@ -69,6 +69,8 @@ const Main = () => {
   const [test_case_texts,setTest_case_texts]=useState("테스트 케이스");
   const [problemlist, setProblemlist] = useState([]);
   const [selectedproblem, setSelectedproblem] = useState();
+  const [opentestcase, setOpentestcase] = useState([]);
+  const [hiddentestcase, setHiddentestcase] = useState([]);
 
 
   const [score,setScore]=useState();
@@ -272,6 +274,7 @@ const Main = () => {
     }
 
     getAllProblem();
+    getQuestionInfo();
 
   }, [monaco]);
 
@@ -288,6 +291,7 @@ const getAllProblem = async () => {
       console.log("Error >>", error);
     }
   }
+
 
   const sound = new Howl({
     src: stage_clear
@@ -529,6 +533,29 @@ const getAllProblem = async () => {
   };
 
 
+  const getQuestionInfo = async() =>{
+    try {
+      const response = await axios.get("http://localhost:8000/editor/allinfo/",{
+        params:{
+        user_id: user_id,
+        question: selectedproblem,
+      }});
+      console.log("response[data] >>", response["data"]);
+      setNow({problem: response["data"].question, reference: response["data"].reference, testcase: response["data"].testcase, skeleton: response["data"].skeleton, save1: response["data"].save1, save2: response["data"].save2, save3: response["data"].save3});
+      setCode1(response["data"].save1);
+      setCode2(response["data"].save2);
+      setCode3(response["data"].save3);
+      setOpentestcase(response["data"].testcase.split('*').splice(0, response["data"].testcase.split('*').length - 1));
+      setHiddentestcase(response["data"].testcase.split('*').pop().split('&'));
+      // console.log('tt ; ', response["data"].testcase);
+      // console.log('optc  :', opentestcase);
+      // console.log('hdtc  :', hiddentestcase);
+      console.log('now: ', now);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
+  };
+
   const Dropdown = (props) => {
     return(
       <article>
@@ -538,27 +565,9 @@ const getAllProblem = async () => {
   }
 
   function Dropdownlist (props) {
-    const {now, setNow} = useContext(NowContext);
 
     const handleclick = () => {
-      const getQuestionInf = async() =>{
-        try {
-          const response = await axios.get("http://localhost:8000/editor/allinfo/",{
-            params:{
-            user_id: user_id,
-            question: selectedproblem,
-          }});
-          console.log("response[data] >>", response["data"]);
-          setNow({problem: response["data"].question, reference: response["data"].reference, testcase: response["data"].testcase, skeleton: response["data"].skeleton, save1: response["data"].save1, save2: response["data"].save2, save3: response["data"].save3});
-          setCode1(response["data"].save1);
-          setCode2(response["data"].save2);
-          setCode3(response["data"].save3);
-          console.log('now: ', now);
-        } catch (err) {
-          console.log("Error >>", err);
-        }
-      };
-      getQuestionInf();
+      getQuestionInfo();
     }
 
     return (
@@ -599,7 +608,11 @@ const getAllProblem = async () => {
           <div className="section2">
             <div className="testcase_title">테스트케이스</div>
             <div className="testcase_line"/>
-            <div className="testcase_content">{now.testcase}</div>
+            <div className="testcase_content">
+              {opentestcase.map((tc) => {
+                return <div>input : {tc}</div>
+              })}
+            </div>
           </div>
         </Split>
         <Split className="editor" gutterSize={20} direction="vertical">
