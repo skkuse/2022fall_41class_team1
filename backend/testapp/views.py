@@ -1,3 +1,4 @@
+
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.core import serializers
@@ -313,4 +314,3 @@ class CheckReadabilityAPI(APIView):
         data['comment']['radon'] = self.concatString(data['comment']['radon'])
         data['comment']['pycodestyle'] = self.concatString(data['comment']['pycodestyle'])
         return Response(data,status=status.HTTP_201_CREATED)
-
