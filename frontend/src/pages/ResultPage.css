@@ -1,0 +1,122 @@
+.page_container {
+  margin: 0px;
+  padding: 0px;
+}
+
+.resultpage-wrapper {
+  position: absolute;
+  min-height: 100%;
+  width: 100%;
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 30px;
+  margin: 0;
+}
+
+.logo {
+  position: relative;
+  cursor: pointer;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin: 0;
+}
+
+.resultpage-left-container {
+  flex-direction: row;
+  position: relative;
+  flex-grow: 1;
+  font-family: NeoDunggeunmo;
+}
+.resultpage-right-container {
+  margin-left: 30px;
+  flex-direction: row;
+  position: relative;
+  flex-grow: 4;
+  height: 100%;
+}
+
+.resultpage-lhdr {
+  border-top: solid #f5f5dc;
+  border-bottom: solid #f5f5dc;
+  justify-content: center;
+  display: flex;
+  position: relative;
+  flex-grow: 0;
+}
+
+.submitresult_container {
+  margin-top: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  border: thick solid #3b338c;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-grow: 1;
+}
+
+.submitresult_button {
+  width: 100%;
+  height: 100px;
+  background-color: #3b338c;
+  color: rgb(251, 255, 0);
+  font-size: 40px;
+  border: none;
+  font-family: NeoDunggeunmo;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.submitresult_innerbutton {
+  height: 100px;
+  background-color: #3b338c;
+  color: white;
+  border: none;
+  border-top: 1px solid #6ec059;
+  border-bottom: 1px solid #6ec059;
+  display: flex;
+  flex-direction: column;
+  font-size: 35px;
+  font-family: NeoDunggeunmo;
+  padding-top: 30px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  text-align: left;
+  padding-left: 10%;
+}
+
+.play {
+  width: 20px;
+  margin-right: 20px;
+}
+
+.resultpage-rhdr {
+  background-color: white;
+  height: 50px;
+  color: black;
+  font-family: NeoDunggeunmo;
+}
+
+.resultpage-component {
+  margin-top: 30px;
+  border: thick solid #3b338c;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-grow: 1;
+  text-align: center;
+  font-family: NeoDunggeunmo;
+  border: thick solid #3b338c;
+  padding: 20px;
+}
+
+.text_section {
+  background-color: #3b338c;
+  height: 755px;
+}
