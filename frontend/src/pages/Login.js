@@ -1,4 +1,4 @@
-import React, { useCallback,useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.css";
 import { Link } from "react-router-dom";
@@ -19,7 +19,7 @@ const Login = () => {
       ...logAccount,
       [e.target.name]: e.target.value,
     });
-    console.log(logAccount);
+// console.log(logAccount);
   };
 
   const validateEmail = email => {
@@ -44,7 +44,7 @@ const Login = () => {
 
   const onLogin1Click = useCallback((logAccount) => {
   console.log(logAccount);
-    navigate("/main",{state: logAccount});
+    navigate("/courseselect",{state: logAccount});
   }, [navigate]);
 
   const getLoginInf = async() =>{

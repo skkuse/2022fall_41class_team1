@@ -7,7 +7,6 @@ from .views import *
 urlpatterns = [
     path('user/',UserApi.as_view()),    # 사용자liste 조회가능
     path('userdata/',UserDataApi.as_view()),
-    path('question/',QuestionApi.as_view()),
     # path('chat/',ChatApi.as_view()),
     path('submission/',SubmissionApi.as_view()),
 

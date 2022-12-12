@@ -1,4 +1,3 @@
-
 import styles from "./Main.css";
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
@@ -10,7 +9,8 @@ import axios from "axios";
 import { NowContext } from "../context/NowContext";
 import Login from "./Login";
 import Split from 'react-split';
-
+import { Howl } from 'howler';
+import stage_clear from "../audios/stage_clear.mp3";
 
 const weeklist = [
   {
@@ -52,9 +52,9 @@ const Main = () => {
   console.log(state);
   const [editorVisible, setEditorVisible] = useState(1);
   const [user_id, setUser_id] = useState(state.user_email);
+  const [course, setCourse] = useState(state.user_course);
   const [question_no, setQuestion_no] = useState("2");
   const [code1, setCode1] = useState("# code에 함수 이거 넣어서 테스트 ㄱㄱ\ndef solution(add1, add2, add3):\n\tsum = add1 + add2 + add3\n\treturn sum\nif __name__ == \"__main__\":\n\tprint(solution(1, 2, 3))");
-
   const [code2, setCode2] = useState("#some comment");
   const [code3, setCode3] = useState("#some comment");
   const [original_code, setOriginal_code] = useState("#some comment");
@@ -208,23 +208,28 @@ const Main = () => {
       console.log("here is the monaco instance:", monaco);
     }
 
-    getAllCourse();
+    getAllProblem();
+
 
   }, [monaco]);
 
-  const getAllCourse = async()=>{
-      try {
-        console.log(user_id);
-        const response = await axios.get("http://localhost:8000/main/testtest/", {
-          params:{
-          user_id: user_id,
-        }});
-        console.log("response >>", response);
-        //setResult(response["data"]);
-      } catch (error) {
-        console.log("Error >>", error);
-      }
+  const getAllProblem = async() => {
+    try {
+      console.log(user_id);
+      const response = await axios.get("http://localhost:8000/main/question/", {
+        params:{
+        course: course,
+      }});
+      console.log("question : response >>", response.data);
+      //setResult(response["data"]);
+    } catch (error) {
+      console.log("Error >>", error);
     }
+  }
+
+  var sound = new Howl({
+    src: stage_clear
+  });
 
 
   const saveData = async () => {

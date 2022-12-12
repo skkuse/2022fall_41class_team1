@@ -9,6 +9,8 @@ import Register from "./pages/Register";
 //import AddPage from "./pages/AddPage";
 import Start from "./pages/Start";
 import SubjectPage from "./pages/SubjectPage";
+import CourseSelect from "./pages/CourseSelect";
+
 
 function App() {
     const dispatch = useDispatch();
@@ -27,6 +29,7 @@ function App() {
       <Route path="/main" element={<Main />} />
       <Route path="/login" element={<Login />} />
       <Route exact path="/subject" element={<SubjectPage />} />
+      <Route path="/courseselect" element={<CourseSelect />} />
       <Route path="/register" element={<Register />} />
     </Routes>
     );

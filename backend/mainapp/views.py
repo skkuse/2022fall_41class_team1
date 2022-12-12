@@ -114,9 +114,9 @@ class CourseFindAPI(APIView):
 
 class QuestionFindAPI(APIView):
     def get(self, request):
-        serializer = QuestionIdSerializer(data=request.data)
+        serializer = QuestionIdSerializer(data=request.GET)
         if serializer.is_valid():
-            course = serializer.data['course']
+            course = serializer.data.get('course')
             question_info = Question.objects.filter(course=course)
             question_info = list(question_info.values())
             print(question_info)
@@ -130,9 +130,9 @@ class QuestionFindAPI(APIView):
 # request: 소프트공학개론_week2
 class RequestQuestionAPI(APIView):
     def get(self, request):
-        serializers = QuestionNameSerializer(data=request.data)
+        serializers = QuestionNameSerializer(data=request.GET)
         if serializers.is_valid():
-            question = serializers.data['question']
+            question = serializers.data.get('question')
             question_info = Question.objects.filter(question=question)
             question_info = list(question_info.values())
             return Response(question_info, status=status.HTTP_200_OK)
