@@ -10,6 +10,9 @@ import axios from "axios";
 import { NowContext } from "../context/NowContext";
 import Login from "./Login";
 import Split from 'react-split';
+import {Howl} from "howler";
+import stage_clear from "../audios/stage_clear.mp3";
+
 
 
 const weeklist = [
@@ -52,9 +55,9 @@ const Main = () => {
   console.log(state);
   const [editorVisible, setEditorVisible] = useState(1);
   const [user_id, setUser_id] = useState(state.user_email);
+  const [course, setCourse] = useState(state.user_course);
   const [question_no, setQuestion_no] = useState("2");
   const [code1, setCode1] = useState("# code에 함수 이거 넣어서 테스트 ㄱㄱ\ndef solution(add1, add2, add3):\n\tsum = add1 + add2 + add3\n\treturn sum\nif __name__ == \"__main__\":\n\tprint(solution(1, 2, 3))");
-
   const [code2, setCode2] = useState("#some comment");
   const [code3, setCode3] = useState("#some comment");
   const [original_code, setOriginal_code] = useState("#some comment");
@@ -67,6 +70,8 @@ const Main = () => {
   const [analyzed_texts,setAnalyzed_texts]=useState("코드 분석");
   const [test_case_texts,setTest_case_texts]=useState("테스트 케이스");
   const [score,setScore]=useState(0);
+  const [problemlist, setProblemlist] = useState([]);
+  const [selectedproblem, setSelectedproblem] = useState();
 
   const [copy,setCopy]=useState();
   const [functionality,setFunctionality]=useState(0);
@@ -265,24 +270,28 @@ const Main = () => {
       console.log("here is the monaco instance:", monaco);
     }
 
-    getAllCourse();
+    getAllProblem();
 
   }, [monaco]);
 
-  const getAllCourse = async()=>{
-      try {
-        console.log(user_id);
-        const response = await axios.get("http://localhost:8000/main/testtest/", {
-          params:{
-          user_id: user_id,
-        }});
-        console.log("response >>", response);
-        //setResult(response["data"]);
-      } catch (error) {
-        console.log("Error >>", error);
-      }
+const getAllProblem = async () => {
+    try {
+      console.log(user_id);
+      const response = await axios.get("http://localhost:8000/main/question/", {
+        params:{
+        course: course,
+      }});
+      console.log("question : response >>", response.data);
+      setProblemlist(response.data);
+      setSelectedproblem(response.data[0]);
+    } catch (error) {
+      console.log("Error >>", error);
     }
+  }
 
+  const sound = new Howl({
+    src: stage_clear
+  });
 
   const saveData = async () => {
   var newData={};
@@ -530,33 +539,34 @@ const Main = () => {
 
   function Dropdownlist (props) {
     const {now, setNow} = useContext(NowContext);
-    const [question, setQuestion]=useState("1");
 
-    const handleclick = (week) => {
+    const handleclick = () => {
+      const getQuestionInf = async() =>{
+        try {
+          const response = await axios.get("http://localhost:8000/editor/allinfo/",{
+            params:{
+            user_id: user_id,
+            question: selectedproblem,
+          }});
+          console.log("response[data] >>", response["data"]);
+          setNow({problem: response["data"].question, reference: response["data"].reference, testcase: response["data"].testcase, skeleton: response["data"].skeleton, save1: response["data"].save1, save2: response["data"].save2, save3: response["data"].save3});
+          setCode1(response["data"].save1);
+          setCode2(response["data"].save2);
+          setCode3(response["data"].save3);
+          console.log('now: ', now);
+        } catch (err) {
+          console.log("Error >>", err);
+        }
+      };
       getQuestionInf();
-      setNow(week);
     }
 
-    const getQuestionInf = async() =>{
-      const newData = {
-          course: "1"
-      };
-      try {
-          const response = await axios.get("http://localhost:8000/main/question/",{
-            params:newData
-          }
-      );
-      console.log("response >>", response);
-      setQuestion(response["data"]);
-      } catch (err) {
-        console.log("Error >>", err);
-      }
-    };
+
 
     return (
       <ul css={dropdownul}>
-        {weeklist.map((item) => {
-          return <li css={dropdownli} onClick={()=>handleclick(week2)}> {item.text} </li>
+        {problemlist.map((item) => {
+          return <li css={dropdownli} onClick={()=>handleclick()}> {item} </li>
         })}
       </ul>
     );
@@ -573,7 +583,7 @@ const Main = () => {
     <div className="desktop13">
       <div className="header">
         <ul className="problemname" onClick={(e) => setDropdownVisibility(!dropdownVisibility)}>
-          week1 : 피보나치 수{dropdownVisibility ? " △" : " ▽"}
+          {selectedproblem}{dropdownVisibility ? " △" : " ▽"}
         </ul>
         <Dropdown visibility={dropdownVisibility}>
           <Dropdownlist />
@@ -587,7 +597,7 @@ const Main = () => {
             <div className="question_content1">{now.problem}</div>
             <div className="constraint_title">참조 / 제약사항</div>
             <div className="constraint_line"/>
-            <div className="constraint_content">{now.constraint}</div>
+            <div className="constraint_content">{now.reference}</div>
           </div>
           <div className="section2">
             <div className="testcase_title">테스트케이스</div>

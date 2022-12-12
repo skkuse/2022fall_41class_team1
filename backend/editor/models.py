@@ -1,3 +1,4 @@
+
 from django.db import models
 from mainapp.models import *
 
@@ -27,3 +28,13 @@ class Reference(models.Model):
     youtube = models.TextField()
     beakjun = models.TextField()
     wiki = models.TextField()
+
+class AllInfo(models.Model):
+    #user_id = models.ForeignKey(User,on_delete=models.CASCADE,db_column='user_id')
+    #question = models.ForeignKey(Question,on_delete=models.CASCADE,db_column='question')
+    reference = models.TextField(null=True)
+    testcase = models.TextField(null=True)
+    skeleton = models.TextField(null=True)
+    save1 = models.TextField(null=True)
+    save2 = models.TextField(null=True)
+    save3 = models.TextField(null=True)

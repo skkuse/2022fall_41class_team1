@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from mainapp.serializers import *
 from mainapp.models import *
@@ -192,4 +193,50 @@ class ReferenceApi(APIView):
         serializer = ReferenceSerializer(data=links)
         if serializer.is_valid():
             return Response(serializer.data)
+
+class AllInfoApi(APIView):
+
+    def get_question_object(self,question):
+        try:
+            return Question.objects.get(pk=question)
+        except:
+            return Http404
+    
+    def get_userdata_object(self,user_id,question):
+        try:
+            return UserData.objects.get(user_id=user_id,question=question)
+        except:
+            new = UserData(user_id=User.objects.get(user_id=user_id),question=Question(question=question))
+            new.save()
+            return new
+
+    def get(self,request):
+        user_id = request.GET.get('user_id')
+        question = request.GET.get('question')
+        
+        userdata = self.get_userdata_object(user_id,question)
+        question_obj = self.get_question_object(question)
+
+
+        ret = {}
+        ret['reference'] = question_obj.reference
+        ret['testcase'] = question_obj.testcase
+        ret['skeleton'] = question_obj.skeleton
+        ret['save1'] = userdata.save1
+        ret['save2'] = userdata.save2
+        ret['save3'] = userdata.save3
+
+        if ret['save1'] is None:
+            ret['save1'] = question_obj.skeleton
+        if ret['save2'] is None:
+            ret['save2'] = question_obj.skeleton
+        if ret['save3'] is None:
+            ret['save3'] = question_obj.skeleton
+        
+
+        serializer = AllInfoSerializer(data=ret)
+        if serializer.is_valid():
+            return Response(serializer.data)
+
+        return Response(serializer.data)
         
