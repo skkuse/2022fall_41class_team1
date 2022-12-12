@@ -44,6 +44,7 @@
   display: flex;
   position: relative;
   margin: 15px;
+  height: 70%;
 }
 /*----------------- section_left -----------------*/
 .section_left {
@@ -208,8 +209,10 @@
 .editor {
   position: relative;
   justify-content: center;
+  display: flex;
   height: 100%;
   width: 70%;
+  flex-direction: column;
 }
 /*------------- Editor header --------------*/
 .editor_header {
@@ -221,14 +224,18 @@
   padding-left: 10px;
   padding-right: 10px;
   margin: 0px;
+  width: 100%;
+  height: 8vh;
 }
 
 .savebutton {
   position: relative;
+  display: flex;
 }
 
 .functionbutton {
   position: relative;
+  display: flex;
 }
 
 .codeBtn1 {
@@ -390,13 +397,17 @@
 /*------------- Editor main --------------*/
 .editor_header_body {
   width: 100%;
-  height: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
 }
 
 .onlyEditors {
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+    width: 100%;
+    height: 85%;
 }
 
 .terminal {
@@ -487,10 +498,9 @@
 
 .result_window {
   position: relative;
-  top: 120%;
-  position: relative;
   background: #ffffff;
   backdrop-filter: blur(2px);
+  height: 90%;
 }
 
 .showvalueBtn {

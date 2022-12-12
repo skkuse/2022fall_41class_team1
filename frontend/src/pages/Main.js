@@ -128,6 +128,15 @@ const Main = () => {
     });
     monaco.editor.setTheme("myTheme");
     editorRef2.current.onDidChangeModelContent(() => {
+    editor.deltaDecorations(
+	        [],
+	        [
+		        {
+                    range: new monaco.Range(1,100),
+			        options: { inlineClassName: 'myInlineDecoration' }
+		        }
+	        ]
+        );
       setCode2(editorRef2.current.getValue());
     });
   }
@@ -149,7 +158,15 @@ const Main = () => {
     });
     monaco.editor.setTheme("myTheme");
     editorRef3.current.onDidChangeModelContent(() => {
-      monaco.editor.
+      editor.deltaDecorations(
+	        [],
+	        [
+		        {
+                    range: new monaco.Range(1,100),
+			        options: { inlineClassName: 'myInlineDecoration' }
+		        }
+	        ]
+        );
       setCode3(editorRef3.current.getValue());
     });
   }
@@ -592,7 +609,7 @@ const Main = () => {
                 <Editor
                   id="Editor1"
                   value={code1}
-                  height="64vh"
+                  height="100%"
                   width="100%"
                   theme="myTheme"
                   defaultLanguage="python"
@@ -611,7 +628,7 @@ const Main = () => {
               <div css={editorVisible==2?css`display:flex; flex-direction: column; width: 100%; height:100%`:css`display:none; width:100%; height:100%`}>
                 <Editor
                   value={code2}
-                  height="64vh"
+                  height="100%"
                   width="100%"
                   theme="myTheme"
                   defaultLanguage="python"
@@ -630,7 +647,7 @@ const Main = () => {
               <div css={editorVisible==3?css`display:flex; flex-direction: column; width: 100%; height:100%`:css`display:none; width:100%; height:100%`}>
                 <Editor
                   value={code3}
-                  height="64vh"
+                  height="100%"
                   width="100%"
                   theme="myTheme"
                   defaultLanguage="python"
@@ -648,8 +665,8 @@ const Main = () => {
               </div>
               <div css={editorVisible==4?css`display:block; width: 100%; height:100%`:css`display:none; width: 100%; height:100%`}>
                 <DiffEditor
-                  height="64vh"
-                  width="130vh"
+                  height="100%"
+                  width="100%"
                   theme="myTheme"
                   defaultLanguage="python"
                   original={original_code}
@@ -660,7 +677,7 @@ const Main = () => {
               </div>
             </div>
           </div>
-          <div className="terminal" css={css` background-color: blue;`}>
+          <div className="terminal" css={css` background-color: blue; display:flex; flex-direction: column;`}>
             <div className="terminal_header">
               <div className="flex_left">
                 <button className="resultBtn1" onClick={() => setResultShow(0)}>실행결과 </button>
