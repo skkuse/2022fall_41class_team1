@@ -9,6 +9,7 @@ import { css, jsx } from "@emotion/react";
 import { render } from "react-dom";
 import Logo from "../assets/Logo.png";
 import Play from "../assets/play.svg";
+import Chart, { drawCopy, drawFER } from "./Chart";
 
 const ResultPage = () => {
   const [selected1, setSelected1] = useState(false);
@@ -63,11 +64,11 @@ const ResultPage = () => {
             >
               ㄴ 효율 채점
             </button>
-            <button className="submitresult_button" onClick={handle_button1}>
+            <button className="submitresult_button" onClick={handle_button2}>
               <img src={Play} className="play"></img>
               표절 검사
             </button>
-            <button className="submitresult_button" onClick={handle_button2}>
+            <button className="submitresult_button" onClick={handle_button3}>
               <img src={Play} className="play"></img>
               코드 설명, 관련 자료
             </button>
@@ -77,11 +78,7 @@ const ResultPage = () => {
           <div className="resultpage-rhdr "></div>
           <div className="resultpage-component">
             <div className="text_section">
-              <h1>
-                Result Text Area Result Text Area<br></br> Result Text Area
-                Result Text Area<br></br> Result Text Area Result Text Area
-                <br></br>{" "}
-              </h1>
+              {selected1 ? drawFER() : selected2 ? drawCopy() : <div></div>}
             </div>
           </div>
         </div>

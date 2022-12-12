@@ -43,7 +43,7 @@ export const options_FER = {
 export const data_copy = [
   ["Copy Rate", "Score"],
   ["copy rate", copy_score],
-  ["", minus_score],
+  ["", minus_copy],
 ];
 
 export const options_copy = {
