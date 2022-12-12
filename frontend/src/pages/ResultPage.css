@@ -1,6 +1,7 @@
 .page_container {
   margin: 0px;
   padding: 0px;
+  width: 100%;
 }
 
 .resultpage-wrapper {
@@ -27,13 +28,12 @@
 .resultpage-left-container {
   flex-direction: row;
   position: relative;
-  flex-grow: 1;
-  font-family: NeoDunggeunmo;
+  width: 550px;
 }
 .resultpage-right-container {
   margin-left: 30px;
   position: relative;
-  flex-grow: 4;
+  width: 1100px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -73,6 +73,7 @@
   border-radius: 20px;
   text-align: left;
   padding-left: 20px;
+  min-width: 330px;
 }
 
 .submitresult_button:active {
@@ -121,15 +122,13 @@
   flex-grow: 0;
 }
 
-.resultpage-component1,
-.resultpage-component2 {
+.resultpage-component {
   height: 315px;
   margin-top: 30px;
   border: thick solid #3b338c;
   display: flex;
   flex-direction: column;
   position: relative;
-  flex-grow: 1;
   text-align: center;
   border: thick solid #3b338c;
   padding: 20px;
@@ -141,6 +140,8 @@
   overflow: scroll;
 }
 
-.hide-container {
-  display: none;
+.text_section Chart {
+  display: block;
+  width: 100%;
+  height: 315px;
 }
