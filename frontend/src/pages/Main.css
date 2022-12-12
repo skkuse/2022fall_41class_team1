@@ -258,6 +258,10 @@
   transform: translateY(-5px);
 }
 
+.codeBtn1:active, .codeBtn2:active, .codeBtn3:active {
+  background: #f8c5b5;
+}
+
 .codeBtn2 {
   width: 55px;
   height: 34px;
@@ -299,6 +303,12 @@
   cursor: pointer;
   transition: all 0.3s ease 0s;
 }
+
+.saveBtn:hover, .runBtn:hover, .evalBtn:hover, .submitBtn:hover {
+  box-shadow: 0px 15px 20px rgba(27, 39, 63, 0.4);
+  transform: translateY(-5px);
+}
+
 
 .saveBtn{
   width: 82px;
