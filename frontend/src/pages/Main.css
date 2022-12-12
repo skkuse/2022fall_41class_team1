@@ -1207,3 +1207,7 @@
 	font-weight: bold;
 	font-style: oblique;
 }
+
+.tc_div{
+  height: 100%;
+}

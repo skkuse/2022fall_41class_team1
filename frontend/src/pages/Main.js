@@ -653,10 +653,10 @@ const Main = () => {
               <div css={ resultShow == 1 ? css` display: block;`: css`display: none;`}>
                 <textarea value={"Score: "+score+"\nMemory-efficiency: "+efficiencya+"\nTime-efficiency: "+efficiencyb} disabled="True" cols="140" rows="10" />
               </div>
-              <div css={ resultShow == 2 ? css`display: flex;flex-direction: column;`: css`display: none;`}>
-                <textarea className = "ttc_score" value={"Score: "+score} cols="140" rows="1"/>
-                <textarea className = "otc_area" value={test_case_texts.split("&")[0]} disabled="True" cols="140" rows="5"/>
-                <textarea className = "htc_area" value={test_case_texts.split("&")[1]} disabled="True" cols="140" rows="5"/>
+              <div className = "tc_div" css={ resultShow == 2 ? css`display: flex; flex-direction: column;`: css`display: none;`}>
+                <textarea readonly className = "ttc_score" value={"Score: "+score} disabled="True" rows="1"/>
+                <textarea readonly className = "otc_area" value={test_case_texts.split("&")[0]} disabled="True" rows="5"/>
+                <textarea readonly className = "htc_area" value={test_case_texts.split("&")[1]} disabled="True" rows="5"/>
               </div>
               <div css={ resultShow == 3 ? css` display: flex; flex-direction: column;`: css`display: none;`}>
                 <textarea value={analyzed_texts} disabled="True" cols="145" rows="15"/>
