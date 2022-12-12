@@ -192,4 +192,38 @@ class ReferenceApi(APIView):
         serializer = ReferenceSerializer(data=links)
         if serializer.is_valid():
             return Response(serializer.data)
+
+class AllInfoApi(APIView):
+
+    def get_question_object(self,question):
+        try:
+            return Question.objects.get(pk=question)
+        except:
+            return Http404
+    
+    def get_userdata_object(self,user_id,question):
+        try:
+            return UserData.objects.get(user_id=user_id,question=question)
+        except:
+            return Http404
+
+    def get(self,request):
+        user_id = request.GET.get('user_id')
+        question = request.GET.get('question')
+        
+        userdata = self.get_userdata_object(user_id,question)
+        question_obj = self.get_question_object(question)
+
+        ret = {}
+        ret['reference'] = question_obj.reference
+        ret['testcase'] = question_obj.testcase
+        ret['save1'] = userdata.save1
+        ret['save2'] = userdata.save2
+        ret['save3'] = userdata.save3
+
+        serializer = AllInfoSerializer(data=ret)
+        if serializer.is_valid():
+            return Response(serializer.data)
+
+        return Response(serializer.data)
         

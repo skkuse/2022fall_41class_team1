@@ -31,3 +31,8 @@ class QuestionReceiverSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = QuestionReceiver
+
+class AllInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = AllInfo

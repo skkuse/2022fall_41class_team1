@@ -49,7 +49,7 @@ const Main = () => {
 
   const {state} = useLocation();
 
-  console.log(state);
+
   const [editorVisible, setEditorVisible] = useState(1);
   const [user_id, setUser_id] = useState(state.user_email);
   const [course, setCourse] = useState(state.user_course);
@@ -67,6 +67,9 @@ const Main = () => {
   const [analyzed_texts,setAnalyzed_texts]=useState("코드 분석");
   const [test_case_texts,setTest_case_texts]=useState("테스트 케이스");
   const [score,setScore]=useState(0);
+  const [problemlist, setProblemlist] = useState([]);
+  const [selectedproblem, setSelectedproblem] = useState();
+
 
   const [copy,setCopy]=useState();
   const [functionality,setFunctionality]=useState(0);
@@ -213,7 +216,7 @@ const Main = () => {
 
   }, [monaco]);
 
-  const getAllProblem = async() => {
+  const getAllProblem = async () => {
     try {
       console.log(user_id);
       const response = await axios.get("http://localhost:8000/main/question/", {
@@ -221,13 +224,14 @@ const Main = () => {
         course: course,
       }});
       console.log("question : response >>", response.data);
-      //setResult(response["data"]);
+      setProblemlist(response.data);
+      setSelectedproblem(response.data[0]);
     } catch (error) {
       console.log("Error >>", error);
     }
   }
 
-  var sound = new Howl({
+  const sound = new Howl({
     src: stage_clear
   });
 
@@ -478,33 +482,48 @@ const Main = () => {
   
   function Dropdownlist (props) {
     const {now, setNow} = useContext(NowContext);
-    const [question, setQuestion]=useState("1");
 
-    const handleclick = (week) => {
+    const handleclick = () => {
+      const getQuestionInf = async() =>{
+        try {
+          const response = await axios.get("http://localhost:8000/editor/allinfo/",{
+            params:{
+            user_id: user_id,
+            question: selectedproblem,
+          }});
+          console.log("response[data][0] >>", typeof response["data"]);
+          // setNow({problem: response["data"][0].question, constraint: null, testcase: response["data"][0].testcase, skeleton: response["data"][0].skeleton, save1: null, save2: null, save3: null});
+          // console.log('now: ', now);
+        } catch (err) {
+          console.log("Error >>", err);
+        }
+      };
       getQuestionInf();
-      setNow(week);
+      // const getSaveInf = async() =>{
+      //   try {
+      //     const response = await axios.get("http://localhost:8000/editor/save/",{
+      //       params:{
+      //       question: selectedproblem,
+      //     }});
+      //     console.log("response[data][0] >>", typeof response["data"]);
+      //     setNow({constraint: null, testcase: response["data"][0].testcase, skeleton: response["data"][0].skeleton, save1: null, save2: null, save3: null});
+      //     console.log('now final : ', now);
+      //   } catch (err) {
+      //     console.log("Error >>", err);
+      //   }
+      // };
+      // getSaveInf();
+
+
+      
     }
 
-    const getQuestionInf = async() =>{
-      const newData = {
-          course: "1"
-      };
-      try {
-          const response = await axios.get("http://localhost:8000/main/question/",{
-            params:newData
-          }
-      );
-      console.log("response >>", response);
-      setQuestion(response["data"]);
-      } catch (err) {
-        console.log("Error >>", err);
-      }
-    };
+    
 
     return (
       <ul css={dropdownul}>
-        {weeklist.map((item) => {
-          return <li css={dropdownli} onClick={()=>handleclick(week2)}> {item.text} </li>
+        {problemlist.map((item) => {
+          return <li css={dropdownli} onClick={()=>handleclick()}> {item} </li>
         })}
       </ul> 
     );
@@ -515,7 +534,7 @@ const Main = () => {
     <div className="desktop13">
       <div className="header">
         <ul className="problemname" onClick={(e) => setDropdownVisibility(!dropdownVisibility)}>
-          week1 : 피보나치 수{dropdownVisibility ? " △" : " ▽"}
+          {selectedproblem}{dropdownVisibility ? " △" : " ▽"}
         </ul>
         <Dropdown visibility={dropdownVisibility}>
           <Dropdownlist />
