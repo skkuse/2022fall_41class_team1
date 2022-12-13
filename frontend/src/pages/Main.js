@@ -566,7 +566,7 @@ const Main = () => {
   }
 
   const onAnalyzeClick = () => {
-    navigate("/resultpage",{state: {efficiencya: efficiencya, efficiencyb: efficiencyb, copy: copy, score: {score: score, pf: test_case_boolean}, readability: readability,reference:reference}});
+    navigate("/resultpage",{state: {efficiencya: efficiencya, efficiencyb: efficiencyb, copy: copy, score: {score: score, pf: test_case_boolean}, readability: readability,reference:reference, analyzed_texts:analyzed_texts}});
   };
 
   return (

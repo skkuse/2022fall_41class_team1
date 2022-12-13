@@ -26,6 +26,7 @@ const ResultPage = () => {
     efficiencya: state.efficiencya,
     efficiencyb: state.efficiencyb,
     readability: state.readability,
+    analyzed_text: state.analyzed_text,
   }); // 사진 + 정보 결과
   const [detailInfo, setDetail] = useState(); // 정보만 결과
 
@@ -38,7 +39,6 @@ const ResultPage = () => {
   const [youtube,setYoutube]=useState(state.reference["youtube"]);
   const [baekjun,setBaekjun]=useState(state.reference["baekjun"]);
   const [wiki,setWiki]=useState(state.reference["wiki"]);
-  console.log(state);
 
 
 
