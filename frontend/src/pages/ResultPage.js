@@ -26,10 +26,20 @@ const ResultPage = () => {
     efficiencya: state.efficiencya,
     efficiencyb: state.efficiencyb,
     readability: state.readability,
+    analyzed_text: state.analyzed_text,
   }); // 사진 + 정보 결과
-  const [detailInfo, setDetail] = useState(); // 정보만 결과
-
+  
   const [selected, setSelected] = useState(1); //제출결과
+
+  const [opentestcase, setOpentestcase] = useState([]);
+  const [hiddentestcase, setHiddentestcase] = useState([]);
+
+  const [keyword,setKeyword]=useState(state.reference["keyword"]);
+  const [youtube,setYoutube]=useState(state.reference["youtube"]);
+  const [baekjun,setBaekjun]=useState(state.reference["baekjun"]);
+  const [wiki,setWiki]=useState(state.reference["wiki"]);
+
+
 
   const handle_button1 = () => {
     setSelected(1);
@@ -39,6 +49,8 @@ const ResultPage = () => {
 
   useEffect(() => {
     console.log(overallInfo);
+    setOpentestcase(overallInfo.score.pf.split('&')[0].split('\n').splice(0, overallInfo.score.pf.split('&')[0].split('\n').length -1));
+    setHiddentestcase(overallInfo.score.pf.split('&')[1].split('\n').splice(0, overallInfo.score.pf.split('&')[1].split('\n').length -1));
   }, []);
 
   const handle_button2 = () => {
@@ -157,9 +169,12 @@ const ResultPage = () => {
                 </h1>
               ) : selected == 3 ? (
                 <h1>
-                  Result Text Area Result Text Area<br></br> Result Text Area
-                  Result Text Area<br></br> Result Text Area Result Text Area
-                  <br></br>
+                  {opentestcase.map((tc) => {
+                    return <div>open input : {tc}</div>
+                  })}
+                  {hiddentestcase.map((tc) => {
+                    return <div>hidden input : {tc}</div>
+                  })}
                 </h1>
               ) : selected == 4 ? (
                 <h1>
@@ -176,8 +191,10 @@ const ResultPage = () => {
               ) : (
                 // if selected == 6
                 <h1>
-                  Result Text Area Result Text Area<br></br> Result Text Area
-                  Result Text Area<br></br> Result Text Area Result Text Area
+                {youtube}
+                {baekjun}
+                  {wiki}
+
                   <br></br>
                 </h1>
               )}
