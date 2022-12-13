@@ -26,9 +26,10 @@ const ResultPage = () => {
     efficiencya: state.efficiencya,
     efficiencyb: state.efficiencyb,
     readability: state.readability,
+    simple_explain: state.simple_explain,
+    detail_explain: state.detail_explain,
   }); // 사진 + 정보 결과
-  const [detailInfo, setDetail] = useState(); // 정보만 결과
-
+  
   const [selected, setSelected] = useState(1); //제출결과
 
   const [opentestcase, setOpentestcase] = useState([]);
