@@ -59,6 +59,7 @@
   .startBtn {
     position: relative;
     margin: 0;
+    margin-top: 50px;
     width: 94%;
     height: 70px;
     background: #4235D3;
@@ -76,7 +77,6 @@
   .select {
     align-items: center;
     display: flex;
-    flex-direction: column;
     margin:0;
     padding:0;
     gap: 15px;
@@ -91,7 +91,6 @@
     font-weight: 400;
     font-size: 30px;
     line-height: 30px;
-    
     color: #FFFFFF;
   }
   

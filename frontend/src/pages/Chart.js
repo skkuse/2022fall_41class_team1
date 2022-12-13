@@ -33,9 +33,9 @@ export const options_FER = {
   pieSliceBorderColor: "white", //파이조각 구분하는 색상 (경계선)
   tooltip: { trigger: "none" },
   slices: {
-    0: { color: "#3399ff" }, //첫번째 파이 색
-    1: { color: "#00cc66" }, //두번째 파이 색
-    2: { color: "#ff9933" },
+    0: { color: "#9C95F0" }, //첫번째 파이 색
+    1: { color: "#6ec059" }, //두번째 파이 색
+    2: { color: "#FFE500" },
     3: { color: "transparent" },
   },
 };

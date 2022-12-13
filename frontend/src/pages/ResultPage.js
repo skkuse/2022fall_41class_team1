@@ -87,7 +87,7 @@ const ResultPage = () => {
   };
 
   return (
-    <div className="page_container">
+    <div className="desktop13">
       <div className="resultpage-wrapper">
         <div className="resultpage-left-container">
           <div className="resultpage-lhdr">
