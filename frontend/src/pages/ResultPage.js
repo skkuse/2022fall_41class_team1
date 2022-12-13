@@ -49,6 +49,7 @@ const ResultPage = () => {
 
   useEffect(() => {
     console.log(overallInfo);
+    console.log('yt : ',  state.reference);
     setOpentestcase(overallInfo.score.pf.split('&')[0].split('\n').splice(0, overallInfo.score.pf.split('&')[0].split('\n').length -1));
     setHiddentestcase(overallInfo.score.pf.split('&')[1].split('\n').splice(0, overallInfo.score.pf.split('&')[1].split('\n').length -1));
   }, []);
@@ -190,13 +191,13 @@ const ResultPage = () => {
                 </h1>
               ) : (
                 // if selected == 6
-                <h1>
+                <div>
                 {youtube}
                 {baekjun}
                   {wiki}
 
                   <br></br>
-                </h1>
+                </div>
               )}
             </div>
           </div>

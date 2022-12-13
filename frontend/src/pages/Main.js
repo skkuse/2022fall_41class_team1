@@ -28,8 +28,8 @@ const Main = () => {
   const [reference, setReference] = useState({});
   const [resultShow, setResultShow] = useState();
   const [submitted, setSubmitted] = useState();
-  const [analyzed_texts, setAnalyzed_texts] = useState("코드 분석");
-  const [analyzed_texts_co, setAnalyzed_texts_co] = useState("코드 분석 한국어");
+  const [simpleanalyzed_texts, setSimpleAnalyzed_texts] = useState("코드 분석");
+  const [detailanalyzed_texts, setDetailanalyzed_texts] = useState();
   const [test_case_texts, setTest_case_texts] = useState("테스트 케이스");
   const [problemlist, setProblemlist] = useState([]);
   const [selectedproblem, setSelectedproblem] = useState(state.initial_problem);
@@ -515,20 +515,7 @@ const Main = () => {
         }
       );
       console.log("response reference>>", response4);
-      setReference(response4);
-      // console.log(efficiencyb);
-    } catch (err) {
-      console.log("Error >>", err);
-    }
-    try {
-      const response5 = await axios.get(
-        "http://localhost:8000/editor/translate/",
-        {
-          params: {language: analyzed_texts},
-        }
-      );
-      console.log("response reference>>", response5);
-      setAnalyzed_texts_co(response5["code"]);
+      setReference(response4["data"]);
       // console.log(efficiencyb);
     } catch (err) {
       console.log("Error >>", err);
@@ -592,7 +579,7 @@ const Main = () => {
   }
 
   const onAnalyzeClick = () => {
-    navigate("/resultpage",{state: {efficiencya: efficiencya, efficiencyb: efficiencyb, copy: copy, score: {score: score, pf: test_case_boolean}, readability: readability,reference:reference, analyzed_texts:analyzed_texts,analyzed_texts_co:analyzed_texts_co}});
+    navigate("/resultpage",{state: {efficiencya: efficiencya, efficiencyb: efficiencyb, copy: copy, score: {score: score, pf: test_case_boolean}, readability: readability, reference: reference}});
   };
 
   return (

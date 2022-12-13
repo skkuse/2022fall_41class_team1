@@ -101,12 +101,11 @@ export default CourseSelect;
 
 
 const dropdownul = css`
-  position: absolute;
+  position: relative;
   color: black;
   background-color: white;
   z-index: 2;
   width: 300px;
-  margin-top: 5px;
 `;
 const dropdownli = css`
   color: black;
