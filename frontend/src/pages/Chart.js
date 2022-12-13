@@ -11,13 +11,18 @@ const minus_copy = 100 - copy_score;
 
 export const options_FER = {
   title: "Overall Score",
+  sliceVisibilityThreshold: 0, // This is equivalent to 0.625 or 62.5% of the chart.
   legend: {
     position: "right", //범례 위치
-    textStyle: { color: "black", fontSize: 11 /*fontName: "Arial"*/ }, //범례의 색상 및 글씨체 사이즈, 글씨체 변경
+    textStyle: { color: "black", fontSize: 15 /*fontName: "Arial"*/ }, //범례의 색상 및 글씨체 사이즈, 글씨체 변경
     alignment: "center",
+    series: {
+      // Gives each series an axis name that matches the Y-axis below.
+      0: { axis: "Test Name" },
+    },
   },
   pieSliceText: "value",
-  pieSliceTextStyle: { color: "white", fontName: "Arial", fontSize: 16 }, //파이 조각 안의 텍스트 설정
+  pieSliceTextStyle: { color: "white", fontName: "Arial", fontSize: 14 }, //파이 조각 안의 텍스트 설정
   pieHole: 0.4,
   //is3D:true, 3D 파이로 바뀜
   fontName: "Arial", //title의 글씨체
@@ -34,16 +39,21 @@ export const options_FER = {
 
 export const options_copy = {
   title: "Copy Rate",
-  legend: { fontSize: 10 },
+  legend: {
+    position: "right", //범례 위치
+    textStyle: { color: "black", fontSize: 14 /*fontName: "Arial"*/ }, //범례의 색상 및 글씨체 사이즈, 글씨체 변경
+    alignment: "center",
+  },
+  sliceVisibilityThreshold: 0,
   pieSliceText: "value",
   pieHole: 0.4,
   fontName: "Arial", //타이틀 글씨
   fontSize: 30, //타이틀 글씨 크기
-  pieSliceTextStyle: { color: "white", fontSize: 20 }, //파이 내의 글씨
+  pieSliceTextStyle: { color: "#3399ff", fontSize: 15 }, //파이 내의 글씨
   tooltip: { trigger: "none" },
   slices: {
     0: { color: "#3399ff" },
-    1: { color: "#4493f3" },
+    1: { color: "black" },
   },
 };
 

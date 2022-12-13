@@ -175,8 +175,8 @@ const ResultPage = () => {
               ) : selected < 6 ? (
                 drawCopy([
                   ["Copy Rate", "Score"],
+                  ["비표절률", 100 - overallInfo.copy],
                   ["표절률", overallInfo.copy],
-                  ["not copy(예시)", 100 - overallInfo.copy],
                 ])
               ) : (
                 <div></div>
