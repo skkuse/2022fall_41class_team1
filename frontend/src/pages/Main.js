@@ -25,7 +25,7 @@ const Main = () => {
   const [original_code, setOriginal_code] = useState("#some comment");
   const [modified_code, setModified_code] = useState("#some comment");
   const [result, setResult] = useState("result display");
-
+  const [reference, setReference] = useState({});
   const [resultShow, setResultShow] = useState();
   const [submitted, setSubmitted] = useState();
   const [analyzed_texts, setAnalyzed_texts] = useState("코드 분석");
@@ -492,6 +492,19 @@ const Main = () => {
     } catch (err) {
       console.log("Error >>", err);
     }
+    try {
+      const response4 = await axios.get(
+        "http://localhost:8000/editor/reference/",
+        {
+          params: {question: selectedproblem},
+        }
+      );
+      console.log("response reference>>", response4);
+      setReference(response4["data"]);
+      // console.log(efficiencyb);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
   };
 
   const getQuestionInfo = async () => {
@@ -553,7 +566,7 @@ const Main = () => {
   }
 
   const onAnalyzeClick = () => {
-    navigate("/resultpage",{state: {efficiencya: efficiencya, efficiencyb: efficiencyb, copy: copy, score: {score: score, pf: test_case_boolean}, readability: readability}});
+    navigate("/resultpage",{state: {efficiencya: efficiencya, efficiencyb: efficiencyb, copy: copy, score: {score: score, pf: test_case_boolean}, readability: readability,reference:reference}});
   };
 
   return (
