@@ -10,6 +10,8 @@ import { NowContext } from "../context/NowContext";
 import Split from 'react-split';
 import {Howl} from "howler";
 import stage_clear from "../audios/stage_clear.mp3";
+import Loading from "./Loading"
+
 
 
 const Main = () => {
@@ -35,6 +37,7 @@ const Main = () => {
   const [selectedproblem, setSelectedproblem] = useState(state["user_course"]+"_1");
   const [opentestcase, setOpentestcase] = useState([]);
   const [hiddentestcase, setHiddentestcase] = useState([]);
+  const [loading, setLoading] = useState(false);
 
 
   const [score,setScore]=useState();
@@ -361,6 +364,7 @@ const Main = () => {
 
   const submit = async () => {
     setSubmitted(1);
+    setLoading(true);
     await showValue();
 
     await get_testcase();
@@ -371,7 +375,7 @@ const Main = () => {
 
     setOriginal();
     setModified();
-
+    setLoading(false);
     setEditorVisible(4);
   };
 
@@ -585,6 +589,7 @@ const Main = () => {
 
   return (
     <div className="desktop13">
+      {loading==true && <Loading className="loading"/>}
       <div className="header">
         <ul
           className="problemname"
@@ -618,6 +623,7 @@ const Main = () => {
           </div>
         </Split>
         <Split className="editor" sizes={[60,40]} minSize={[280,200]} gutterSize={20} direction="vertical">
+
           <div className="editor_header_body">
             <div className="editor_header">
               <div classname="savebutton">
@@ -656,7 +662,10 @@ const Main = () => {
                 <button className="evalBtn" onClick={submit_evaluate}>
                   채점
                 </button>
-                <button className="submitBtn" onClick={submit}>
+                <button className="submitBtn" onClick={submitted == 0
+                      ? submit
+                      : () => {
+                          alert("you already submitted!");}}>
                   제출
                 </button>
               </div>
@@ -863,7 +872,7 @@ const Main = () => {
               display: flex;
               flex-direction: column;
             `}
-          >
+            >
             <div className="terminal_header">
               <div className="flex_left">
                 <button className="resultBtn1" onClick={() => setResultShow(0)}>
@@ -1021,6 +1030,7 @@ const Main = () => {
           </div>
         </Split>
       </Split>
+
     </div>
   );
 };
