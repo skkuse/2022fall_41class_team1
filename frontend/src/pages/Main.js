@@ -2,9 +2,9 @@ import styles from "./Main.css";
 import React, {
   useState,
   useRef,
-  useEffect,
+  useLayoutEffect,
   useContext,
-  useCallback,
+  useEffect,
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
@@ -13,109 +13,42 @@ import Editor, { useMonaco, DiffEditor } from "@monaco-editor/react";
 import axios from "axios";
 // import { Dropdown, Dropdownlist } from "./Dropdown";
 import { NowContext } from "../context/NowContext";
-import Login from "./Login";
 import Split from "react-split";
 import { Howl } from "howler";
 import stage_clear from "../audios/stage_clear.mp3";
-
-const weeklist = [
-  {
-    text: "Week 1",
-  },
-  {
-    text: "Week 2",
-  },
-  {
-    text: "Week 3",
-  },
-  {
-    text: "Week 4",
-  },
-  {
-    text: "Week 5",
-  },
-  {
-    text: "Week 6",
-  },
-];
-
-const week1 = {
-  problem: "문제 1번",
-  constraint: "제약조건 1번",
-  testcase: "테스트케이스 1번",
-  save1: "#save1-1",
-  save2: "#save1-2",
-  save3: "#save1-3",
-};
-const week2 = {
-  problem: "문제 2번",
-  constraint: "제약조건 2번",
-  testcase: "테스트케이스 2번",
-  save1: "#save2-1",
-  save2: "#save2-2",
-  save3: "#save2-3",
-};
-const week3 = {
-  problem: "문제 3번",
-  constraint: "제약조건 3번",
-  testcase: "테스트케이스 3번",
-  save1: "#save3-1",
-  save2: "#save3-2",
-  save3: "#save3-3",
-};
-const week4 = {
-  problem: "문제 4번",
-  constraint: "제약조건 4번",
-  testcase: "테스트케이스 4번",
-  save1: "#save4-1",
-  save2: "#save4-2",
-  save3: "#save4-3",
-};
-const week5 = {
-  problem: "문제 5번",
-  constraint: "제약조건 5번",
-  testcase: "테스트케이스 5번",
-  save1: "#save5-1",
-  save2: "#save5-2",
-  save3: "#save5-3",
-};
-const week6 = {
-  problem: "문제 6번",
-  constraint: "제약조건 6번",
-  testcase: "테스트케이스 6번",
-  save1: "#save6-1",
-  save2: "#save6-2",
-  save3: "#save6-3",
-};
+import Loading from "./Loading";
 
 const Main = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
   const [editorVisible, setEditorVisible] = useState(1);
-  const [user_id, setUser_id] = useState(state.user_email);
-  const [course, setCourse] = useState(state.user_course);
+  const [user_id, setUser_id] = useState(state.logAccount.user_email);
+  const [course, setCourse] = useState(state.logAccount.user_course);
   const [code1, setCode1] = useState();
   const [code2, setCode2] = useState();
   const [code3, setCode3] = useState();
   const [original_code, setOriginal_code] = useState("#some comment");
   const [modified_code, setModified_code] = useState("#some comment");
   const [result, setResult] = useState("result display");
-
+  const [reference, setReference] = useState({});
   const [resultShow, setResultShow] = useState();
-  const [submitted, setSubmitted] = useState();
-  const [analyzed_texts, setAnalyzed_texts] = useState("코드 분석");
+  const [submitted, setSubmitted] = useState(0);
+  const [simpleanalyzed_texts, setSimpleAnalyzed_texts] = useState("코드 분석");
+  const [detailanalyzed_texts, setDetailanalyzed_texts] = useState();
   const [test_case_texts, setTest_case_texts] = useState("테스트 케이스");
   const [problemlist, setProblemlist] = useState([]);
-  const [selectedproblem, setSelectedproblem] = useState();
+  const [selectedproblem, setSelectedproblem] = useState(state.initial_problem);
   const [opentestcase, setOpentestcase] = useState([]);
   const [hiddentestcase, setHiddentestcase] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [score, setScore] = useState();
   const [efficiencya, setEfficiencya] = useState();
   const [efficiencyb, setEfficiencyb] = useState();
   const [copy, setCopy] = useState();
   const [readability, setReadability] = useState();
+  const [test_case_boolean, setTest_case_boolean] = useState();
 
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
@@ -297,7 +230,7 @@ const Main = () => {
     );
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // do conditional chaining
     monaco?.languages.typescript.javascriptDefaults.setEagerModelSync(true);
     // or make sure that it exists by other ways
@@ -317,8 +250,7 @@ const Main = () => {
         },
       });
       //console.log("response_getallproblem >>", response.data);
-      setProblemlist(response.data);
-      setSelectedproblem(response.data[0]);
+      setProblemlist(response.data.sort());
     } catch (error) {
       console.log("Error >>", error);
     }
@@ -433,6 +365,7 @@ const Main = () => {
 
   const submit = async () => {
     setSubmitted(1);
+    setLoading(true);
     await showValue();
 
     await get_testcase();
@@ -443,7 +376,7 @@ const Main = () => {
 
     setOriginal();
     setModified();
-
+    setLoading(false);
     setEditorVisible(4);
   };
 
@@ -474,6 +407,7 @@ const Main = () => {
       console.log(response["data"]);
       setTest_case_texts(response["data"]["msg"]);
       setScore(response["data"]["score"]);
+      setTest_case_boolean(response["data"]["pf"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -504,8 +438,23 @@ const Main = () => {
         }
       );
 
-      console.log("response >>", response);
-      setAnalyzed_texts(response["data"]["code"]);
+      console.log("response_simple_explain>>", response);
+      setSimpleAnalyzed_texts(response["data"]["code"]);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
+
+    try {
+      console.log(newData);
+      const response = await axios.get(
+        "http://localhost:8000/editor/detail_explain/",
+        {
+          params: newData,
+        }
+      );
+
+      console.log("response_detailed_explain>>", response);
+      setDetailanalyzed_texts(response["data"]["code"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -564,6 +513,19 @@ const Main = () => {
     } catch (err) {
       console.log("Error >>", err);
     }
+    try {
+      const response4 = await axios.get(
+        "http://localhost:8000/editor/reference/",
+        {
+          params: { question: selectedproblem },
+        }
+      );
+      console.log("response reference>>", response4);
+      setReference(response4["data"]);
+      // console.log(efficiencyb);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
   };
 
   const getQuestionInfo = async () => {
@@ -590,12 +552,12 @@ const Main = () => {
       setCode1(response["data"].save1);
       setCode2(response["data"].save2);
       setCode3(response["data"].save3);
-      setOpentestcase(
+      setOpentestcase(response["data"].testcase.split("&")[0].split("*"));
+      setHiddentestcase(
         response["data"].testcase
-          .split("*")
-          .splice(0, response["data"].testcase.split("*").length - 1)
+          .split("&")
+          .splice(1, response["data"].testcase.split("&")[1].split("*").length)
       );
-      setHiddentestcase(response["data"].testcase.split("*").pop().split("&"));
       // console.log('tt ; ', response["data"].testcase);
       // console.log('optc  :', opentestcase);
       // console.log('hdtc  :', hiddentestcase);
@@ -610,7 +572,8 @@ const Main = () => {
   };
 
   function Dropdownlist(props) {
-    const handleclick = () => {
+    const handleclick = (item) => {
+      setSelectedproblem(item);
       getQuestionInfo();
     };
 
@@ -618,9 +581,8 @@ const Main = () => {
       <ul css={dropdownul}>
         {problemlist.map((item) => {
           return (
-            <li css={dropdownli} onClick={() => handleclick()}>
-              {" "}
-              {item}{" "}
+            <li css={dropdownli} onClick={() => handleclick(item)}>
+              {item}
             </li>
           );
         })}
@@ -634,14 +596,16 @@ const Main = () => {
         efficiencya: efficiencya,
         efficiencyb: efficiencyb,
         copy: copy,
-        score: score,
+        score: { score: score, pf: test_case_boolean },
         readability: readability,
+        reference: reference,
       },
     });
   };
 
   return (
     <div className="desktop13">
+      {loading == true && <Loading className="loading" />}
       <div className="header">
         <ul
           className="problemname"
@@ -654,15 +618,31 @@ const Main = () => {
           <Dropdownlist />
         </Dropdown>
       </div>
-      <Split className="main_section" gutterSize={20} cursor="col-resize">
-        <Split className="section_left" gutterSize={20} direction="vertical">
+      {/* <Split className="main_section" sizes={[40,60]} minSize={[300,600]} gutterSize={20} cursor="col-resize">
+        <Split className="section_left" sizes={[60,40]} minSize={[200,200]} gutterSize={20} direction="vertical">
           <div className="section1">
             <div className="question_title1">문제</div>
             <div className="question_line" />
             <div className="question_content1">{now.problem}</div>
             <div className="constraint_title">참조 / 제약사항</div>
             <div className="constraint_line" />
-            <div className="constraint_content">{now.reference}</div>
+            <div className="constraint_content">{now.reference}</div> */}
+      <Split
+        className="main_section"
+        sizes={[40, 60]}
+        gutterSize={20}
+        cursor="col-resize"
+      >
+        <Split
+          className="section_left"
+          sizes={[70, 30]}
+          gutterSize={20}
+          direction="vertical"
+        >
+          <div className="section1">
+            <div className="question_title1">문제</div>
+            <div className="question_line" />
+            <div className="question_content1">{now.reference}</div>
           </div>
           <div className="section2">
             <div className="testcase_title">테스트케이스</div>
@@ -674,7 +654,12 @@ const Main = () => {
             </div>
           </div>
         </Split>
-        <Split className="editor" gutterSize={20} direction="vertical">
+        <Split
+          className="editor"
+          gutterSize={20}
+          sizes={[60, 40]}
+          direction="vertical"
+        >
           <div className="editor_header_body">
             <div className="editor_header">
               <div classname="savebutton">
@@ -713,7 +698,16 @@ const Main = () => {
                 <button className="evalBtn" onClick={submit_evaluate}>
                   채점
                 </button>
-                <button className="submitBtn" onClick={submit}>
+                <button
+                  className="submitBtn"
+                  onClick={
+                    submitted == 0
+                      ? submit
+                      : () => {
+                          alert("you already submitted!");
+                        }
+                  }
+                >
                   제출
                 </button>
               </div>
@@ -813,7 +807,7 @@ const Main = () => {
                   <div
                     css={css`
                       display: flex;
-                      flex-direction: row-reverse;
+                      flex-direction: row;
                     `}
                   >
                     <label className="uploadLabel" for="fileBtn">
@@ -996,7 +990,6 @@ const Main = () => {
                   resultShow == 0
                     ? css`
                         display: block;
-                        height: 100%;
                       `
                     : css`
                         display: none;
@@ -1007,7 +1000,6 @@ const Main = () => {
                   value={result}
                   disabled="True"
                   css={css`
-                    height: 100%;
                     width: 100%;
                   `}
                 />
@@ -1017,7 +1009,6 @@ const Main = () => {
                   resultShow == 1
                     ? css`
                         display: block;
-                        height: 100%;
                       `
                     : css`
                         display: none;
@@ -1035,7 +1026,6 @@ const Main = () => {
                   }
                   disabled="True"
                   css={css`
-                    height: 100%;
                     width: 100%;
                   `}
                 />
@@ -1047,7 +1037,6 @@ const Main = () => {
                     ? css`
                         display: flex;
                         flex-direction: column;
-                        height: 100%;
                       `
                     : css`
                         display: none;
@@ -1091,7 +1080,6 @@ const Main = () => {
                     ? css`
                         display: flex;
                         flex-direction: column;
-                        height: 100%;
                       `
                     : css`
                         display: none;
@@ -1099,10 +1087,9 @@ const Main = () => {
                 }
               >
                 <textarea
-                  value={analyzed_texts}
+                  value={simpleanalyzed_texts}
                   disabled="True"
                   css={css`
-                    height: 100%;
                     width: 100%;
                   `}
                 />
@@ -1119,17 +1106,23 @@ export default Main;
 
 const dropdownul = css`
   position: absolute;
-  top: 65px;
-  color: white;
-  background-color: #000080;
+  color: black;
+  background-color: white;
   z-index: 2;
   width: 300px;
+  margin-top: 5px;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
 `;
 const dropdownli = css`
-  color: white;
+  color: black;
   margin-left: 0.75rem;
   margin-right: 0.75rem;
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
   cursor: pointer;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
 `;

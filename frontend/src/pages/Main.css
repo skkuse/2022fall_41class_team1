@@ -3,55 +3,63 @@
   justify-content: center;
   background-color: black;
   width: 100%;
-  height: 1024px;
   margin: 0;
-  padding: 0;
+  padding-bottom: 20px;
   overflow: hidden;
   text-align: left;
   font-size: var(--font-size-sm);
   color: white;
   font-family: "NeoDunggeunmo";
+  z-index:0;
 }
+
 .header {
   flex: 1;
   position: relative;
-  height: 66px;
-  margin: 15px;
-  background: #dfdfdf;
-  border-radius: 0px 0px 20px 20px;
+  height: 60px;
+  margin-left :20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  border-top: solid #f5f5dc;
+  border-bottom: solid #f5f5dc;
+  display: flex;
+  position: relative;
+  flex-grow: 0;
+
 }
 
 .problemname {
   position: relative;
   width: 414px;
   height: 30px;
-  top: 20px;
   font-family: "NeoDunggeunmo";
   font-style: normal;
   font-weight: 400;
   font-size: 30px;
-  line-height: 30px;
-  /* identical to box height */
-
   letter-spacing: 0.03em;
-
   color: #ffb800;
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+  margin-top: 15px;
 }
 
 .main_section {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
   display: flex;
   position: relative;
-  margin: 15px;
+  height: 100%;
 }
 /*----------------- section_left -----------------*/
 .section_left {
   flex: 1;
   position: relative;
-  height: 760px;
-  width: 30%;
+  height: 755px;
+  width: calc(35.4101% - 10px);
   justify-content: center;
-  margin-right: 15px;
+  border: thick solid #3b338c;
+  padding: 20px;
+  margin-right:10px
 }
 .gutter-horizontal {
   cursor: col-resize;
@@ -87,15 +95,16 @@
   align-content: center;
   position: relative;
   height: 60%;
-  background: #eeeeee;
+  background-color: #3b338c;
+  border: none;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
   overflow: scroll;
 }
 
-.question_title {
-  padding: 6.6px;
-  margin-left: 23px;
+.question_title1 {
+  padding: 7px;
+  margin-left: 10px;
   position: relative;
   font-family: "NeoDunggeunmo";
   font-style: normal;
@@ -103,8 +112,8 @@
   font-size: 25px;
   margin-block: 5px;
   /* identical to box height */
-  text-align: center;
-  letter-spacing: 1.635em;
+  text-align: left;
+  letter-spacing: 0.5em;
   color: #ffe600;
   text-shadow: -0.5px 0 #315528, 0 0.5px #315528, 0.5px 0 #315528,
     0 -0.5px #315528;
@@ -112,9 +121,9 @@
 .question_line {
   position: relative;
   margin-inline: 10px;
-  border: 1px dashed #a5a49c;
+  border: 1px dashed #6ec059;
 }
-.question_content {
+.question_content1 {
   position: relative;
   height: 40%;
   font-family: "NeoDunggeunmo Pro";
@@ -123,40 +132,12 @@
   font-size: 18px;
   padding-inline: 20px;
   padding-block: 15px;
-  color: #0066ff;
+  color: white;
+  line-height: 160%;
 }
 
-.constraint_title {
-  position: relative;
-  font-family: "NeoDunggeunmo";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 25px;
-  margin-block: 5px;
-  text-align: center;
-  letter-spacing: 0.425em;
-  color: #f5e44a;
-  text-shadow: -0.5px 0 #315528, 0 0.5px #315528, 0.5px 0 #315528,
-    0 -0.5px #315528;
-  padding: 6.6px;
-  margin-left: 23px;
-}
-.constraint_line {
-  position: relative;
-  margin-inline: 10px;
-  border: 1px dashed #a5a49c;
-}
-.constraint_content {
-  position: relative;
-  height: 40%;
-  font-family: "NeoDunggeunmo Pro";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  padding-inline: 20px;
-  padding-block: 15px;
-  color: #0066ff;
-}
+
+
 
 .section2 {
   display: flex;
@@ -164,33 +145,33 @@
   box-sizing: border-box;
   align-content: center;
   position: relative;
-  margin-top: 10px;
-  height: 40%;
-  background: #eeeeee;
+  background-color: #3b338c;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
   overflow: scroll;
 }
 
 .testcase_title {
+  padding: 7px;
+  margin-left: 10px;
   position: relative;
   font-family: "NeoDunggeunmo";
   font-style: normal;
   font-weight: 400;
   font-size: 25px;
   margin-block: 5px;
-  text-align: center;
-  letter-spacing: 0.775em;
+  text-align: left;
+  letter-spacing: 0.5em;
   color: #f5e44a;
   text-shadow: -0.5px 0 #315528, 0 0.5px #315528, 0.5px 0 #315528,
     0 -0.5px #315528;
-  padding: 6.6px;
-  margin-left: 23px;
 }
+
+
 .testcase_line {
   position: relative;
   margin-inline: 10px;
-  border: 1px dashed #a5a49c;
+  border: 1px dashed #6ec059;
 }
 .testcase_content {
   position: relative;
@@ -199,9 +180,10 @@
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  color: #0066ff;
   padding-inline: 20px;
   padding-block: 15px;
+  color: white;
+  line-height: 160%;
 }
 
 /*----------------------- Editor -----------------------*/
@@ -209,20 +191,13 @@
 .editor {
   position: relative;
   justify-content: center;
-  height: 100%;
   width: 70%;
+  height: 754px;
+  border: thick solid #3b338c;
+  padding:20px;
 }
-/*------------- Editor header --------------*/
-.editor_header {
-  position: relative;
-  background: white;
-  display: flex;
-  justify-content: space-between;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding-left: 10px;
-  padding-right: 10px;
-  margin: 0px;
-}
+
+
 
 .savebutton {
   position: relative;
@@ -394,9 +369,7 @@
 }
 
 /*------------- Editor main --------------*/
-.editor_header_body {
-  width: 100%;
-}
+
 
 .onlyEditors {
   position: relative;
@@ -404,18 +377,7 @@
   flex-direction: row;
 }
 
-.terminal {
-  position: relative;
-}
 
-.terminal_header {
-  position: relative;
-  background: #ffffff;
-  backdrop-filter: blur(2px);
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
 
 .resultBtn1 {
   position: relative;
@@ -490,11 +452,7 @@
   cursor: pointer;
 }
 
-.result_window {
-  position: relative;
-  background: #ffffff;
-  backdrop-filter: blur(2px);
-}
+
 
 .otc_area {
   color: #ffc3c3;
@@ -604,62 +562,10 @@
   height: 37px;
 }
 
-.desktop13 {
-  position: relative;
-  justify-content: center;
-  background-color: black;
-  width: 100%;
-  height: 1024px;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  text-align: left;
-  font-size: var(--font-size-sm);
-  color: white;
-  font-family: "NeoDunggeunmo";
-}
-.header {
-  flex: 1;
-  position: relative;
-  height: 66px;
-  margin: 15px;
-  background: #dfdfdf;
-  border-radius: 0px 0px 20px 20px;
-}
 
-.problemname {
-  position: relative;
-  width: 414px;
-  height: 30px;
-  top: 20px;
-  font-family: "NeoDunggeunmo";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 30px;
-  /* identical to box height */
 
-  letter-spacing: 0.03em;
-
-  color: #ffb800;
-  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-}
-
-.main_section {
-  display: flex;
-  position: relative;
-  margin: 15px;
-  height: 70%;
-}
 /*----------------- section_left -----------------*/
-.section_left {
-  flex: 1;
-  position: relative;
-  height: 760px;
-  width: 30%;
-  justify-content: center;
-  margin-right: 15px;
-}
+
 .gutter-horizontal {
   cursor: col-resize;
 }
@@ -687,139 +593,8 @@
   cursor: pointer;
 } */
 
-.section1 {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  align-content: center;
-  position: relative;
-  height: 60%;
-  background: #eeeeee;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-}
 
-.question_title {
-  padding: 6.6px;
-  margin-left: 23px;
-  position: relative;
-  font-family: "NeoDunggeunmo";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 25px;
-  margin-block: 5px;
-  /* identical to box height */
-  text-align: center;
-  letter-spacing: 1.635em;
-  color: #ffe600;
-  text-shadow: -0.5px 0 #315528, 0 0.5px #315528, 0.5px 0 #315528,
-    0 -0.5px #315528;
-}
-.question_line {
-  position: relative;
-  margin-inline: 10px;
-  border: 1px dashed #a5a49c;
-}
-.question_content {
-  position: relative;
-  height: 40%;
-  font-family: "NeoDunggeunmo Pro";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  padding-inline: 20px;
-  padding-block: 15px;
-  color: #0066ff;
-}
 
-.constraint_title {
-  position: relative;
-  font-family: "NeoDunggeunmo";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 25px;
-  margin-block: 5px;
-  text-align: center;
-  letter-spacing: 0.425em;
-  color: #f5e44a;
-  text-shadow: -0.5px 0 #315528, 0 0.5px #315528, 0.5px 0 #315528,
-    0 -0.5px #315528;
-  padding: 6.6px;
-  margin-left: 23px;
-}
-.constraint_line {
-  position: relative;
-  margin-inline: 10px;
-  border: 1px dashed #a5a49c;
-}
-.constraint_content {
-  position: relative;
-  height: 40%;
-  font-family: "NeoDunggeunmo Pro";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  padding-inline: 20px;
-  padding-block: 15px;
-  color: #0066ff;
-}
-
-.section2 {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  align-content: center;
-  position: relative;
-  margin-top: 10px;
-  height: 40%;
-  background: #eeeeee;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-}
-
-.testcase_title {
-  position: relative;
-  font-family: "NeoDunggeunmo";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 25px;
-  margin-block: 5px;
-  text-align: center;
-  letter-spacing: 0.775em;
-  color: #f5e44a;
-  text-shadow: -0.5px 0 #315528, 0 0.5px #315528, 0.5px 0 #315528,
-    0 -0.5px #315528;
-  padding: 6.6px;
-  margin-left: 23px;
-}
-.testcase_line {
-  position: relative;
-  margin-inline: 10px;
-  border: 1px dashed #a5a49c;
-}
-.testcase_content {
-  position: relative;
-  height: 80%;
-  font-family: "NeoDunggeunmo Pro";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  color: #0066ff;
-  padding-inline: 20px;
-  padding-block: 15px;
-}
-
-/*----------------------- Editor -----------------------*/
-
-.editor {
-  position: relative;
-  justify-content: center;
-  display: flex;
-  height: 100%;
-  width: 70%;
-  flex-direction: column;
-}
-/*------------- Editor header --------------*/
 .editor_header {
   position: relative;
   background: white;
@@ -829,8 +604,11 @@
   padding-left: 10px;
   padding-right: 10px;
   margin: 0px;
-  width: 100%;
-  height: 8vh;
+  height: 48px;
+}
+
+.editor_header_body {
+  border-bottom: thick solid #3b338c;
 }
 
 .savebutton {
@@ -1005,12 +783,7 @@
 }
 
 /*------------- Editor main --------------*/
-.editor_header_body {
-  width: 100%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-}
+
 
 .onlyEditors {
   position: relative;
@@ -1022,6 +795,7 @@
 
 .terminal {
   position: relative;
+
 }
 
 .terminal_header {
@@ -1241,3 +1015,4 @@
   color: #ffffff;
   cursor: pointer;
 }
+
