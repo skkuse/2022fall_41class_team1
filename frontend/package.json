@@ -27,6 +27,7 @@
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.4.2",
     "routes": "^2.1.0",
+    "start": "^5.1.0",
     "styled-components": "^5.3.6",
     "styled-reset": "^4.4.2",
     "styles": "^0.2.1",

@@ -1,18 +1,22 @@
-.page_container {
-  margin: 0px;
-  padding: 0px;
+.desktop13 {
+  position: relative;
+  background-color: black;
+  width: 100%;
+  margin: 0;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: white;
+  font-family: "NeoDunggeunmo";
 }
 
 .resultpage-wrapper {
-  position: absolute;
-  min-height: 100%;
-  width: 100%;
-  background-color: black;
-  color: white;
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: 30px;
   margin: 0;
 }
 
@@ -27,13 +31,12 @@
 .resultpage-left-container {
   flex-direction: row;
   position: relative;
-  flex-grow: 1;
-  font-family: NeoDunggeunmo;
+  width: 550px;
 }
 .resultpage-right-container {
   margin-left: 30px;
   position: relative;
-  flex-grow: 4;
+  width: 1100px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -50,7 +53,7 @@
 }
 
 .submitresult_container {
-  margin-top: 30px;
+  margin-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 20px;
@@ -66,13 +69,14 @@
   height: 100px;
   background-color: #3b338c;
   color: rgb(251, 255, 0);
-  font-size: 40px;
+  font-size: 30px;
   border: none;
   font-family: NeoDunggeunmo;
   margin-bottom: 20px;
   border-radius: 20px;
   text-align: left;
   padding-left: 20px;
+  min-width: 330px;
 }
 
 .submitresult_button:active {
@@ -95,7 +99,7 @@
   border-bottom: 1px solid #6ec059;
   display: flex;
   flex-direction: column;
-  font-size: 35px;
+  font-size: 25px;
   font-family: NeoDunggeunmo;
   padding-top: 30px;
   margin-bottom: 20px;
@@ -111,36 +115,53 @@
 
 .resultpage-rhdr {
   background-color: white;
-  height: 50px;
+  height: 28px;
   color: black;
   font-family: NeoDunggeunmo;
-  padding: 10px;
-  font-size: 35px;
-  padding-top: 20px;
-  padding-left: 20px;
+  font-size: 25px;
+  vertical-align: middle;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 5px;
   flex-grow: 0;
 }
 
-.resultpage-component1,
-.resultpage-component2 {
-  height: 315px;
-  margin-top: 30px;
+.resultpage-component1 {
+  height: 400px;
+  margin-top: 20px;
   border: thick solid #3b338c;
   display: flex;
   flex-direction: column;
   position: relative;
-  flex-grow: 1;
   text-align: center;
   border: thick solid #3b338c;
   padding: 20px;
 }
-
+.resultpage-component2 {
+  height: 260px;
+  margin-top: 20px;
+  border: thick solid #3b338c;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  text-align: center;
+  border: thick solid #3b338c;
+  padding: 20px;
+}
 .text_section {
   background-color: #3b338c;
-  height: 755px;
   overflow: scroll;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  color: white;
+  line-height: 200%;
+  height: 100%;
 }
 
-.hide-container {
-  display: none;
+.text_section Chart {
+  display: block;
+  width: 100%;
+  height: 100%;
+
 }

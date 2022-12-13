@@ -67,10 +67,11 @@ const CourseSelect = () => {
             <div className="container">
                 <div className="select">
                     <ul
-                        css={css`position: relative; color: black; background-color: white; z-index: 2; width: 300px; height: 50px;`} 
+                        // css={css`position: relative; color: black; background-color: white; z-index: 2; width: 300px; height: 50px;`}
+                        css={select} 
                         onClick={(e) => setDropdownVisibility(!dropdownVisibility)}
                     >
-                    {logAccount.user_course}{dropdownVisibility ? " △" : " ▽"}
+                    {logAccount.user_course}{dropdownVisibility ? "△" : "▽"}
                     </ul>
                     <Dropdown visibility={dropdownVisibility}>
                         <Dropdownlist />
@@ -86,6 +87,20 @@ const CourseSelect = () => {
 export default CourseSelect;
 
 
+const select = css`
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  position: relative;
+  color: black; 
+  background-color: white; 
+  z-index: 2; 
+  width: 300px;
+  height: 50px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+`
 
 const dropdownul = css`
   position: absolute;
@@ -94,6 +109,10 @@ const dropdownul = css`
   z-index: 2;
   width: 300px;
   margin-top: 5px;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+
 `;
 const dropdownli = css`
   color: black;
@@ -102,4 +121,7 @@ const dropdownli = css`
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
   cursor: pointer;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
 `;

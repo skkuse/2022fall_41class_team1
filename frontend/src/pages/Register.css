@@ -55,7 +55,7 @@
   position: relative;
   display: flex;
   flex-direction: row;
-  margin-right: 15px;
+  margin-right: 5px;
   gap: 15px;
 
 }
@@ -72,6 +72,7 @@
   position: relative;
   padding-top: 10px;
   letter-spacing: 10px;
+  text-align: left;
 }
 
 .pwText {
@@ -86,6 +87,7 @@
   position: relative;
   padding-top: 10px;
   letter-spacing: 10px;
+  text-align: left;
 }
 .checkText {
   width: 200px;
@@ -99,6 +101,7 @@
   position: relative;
   padding-top: 10px;
   letter-spacing: 10px;
+  text-align: left;
 }
 .findText {
   width: 200px;
@@ -110,6 +113,7 @@
   line-height: 30px;
   color: #E9D738;
   position: relative;
+  text-align: left;
 }
 
 
@@ -123,6 +127,7 @@
   line-height: 30px;
   color: #E9D738;
   position: relative;
+  text-align: left;
 }
 
 .nameText {
@@ -137,6 +142,7 @@
   position: relative;
   margin-top: 10px;
   letter-spacing: 9px;
+  text-align: left;
 }
 
 
@@ -246,11 +252,12 @@
   color: #E9D738;
   position: relative;
   margin-top: 10px;
-  letter-spacing: 9px;
+  letter-spacing: 10px;
+  text-align: left;
 }
 
 .classInput{
-    width: 440px;
+  width: 435px;
   height: 50px;
   font-family: 'NeoDunggeunmo';
   font-style: normal;

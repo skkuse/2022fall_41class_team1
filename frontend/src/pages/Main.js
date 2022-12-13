@@ -595,15 +595,12 @@ const getAllProblem = async () => {
           <Dropdownlist />
         </Dropdown>
       </div>
-      <Split className="main_section" gutterSize={20} cursor="col-resize">
-        <Split className="section_left" gutterSize={20} direction="vertical">
+      <Split className="main_section" sizes={[40, 60]} gutterSize={20} cursor="col-resize">
+        <Split className="section_left" sizes={[70, 30]}gutterSize={20} direction="vertical">
           <div className="section1">
             <div className="question_title1">문제</div>
             <div className="question_line"/>
-            <div className="question_content1">{now.problem}</div>
-            <div className="constraint_title">참조 / 제약사항</div>
-            <div className="constraint_line"/>
-            <div className="constraint_content">{now.reference}</div>
+            <div className="question_content1">{now.reference}</div>
           </div>
           <div className="section2">
             <div className="testcase_title">테스트케이스</div>
@@ -615,7 +612,7 @@ const getAllProblem = async () => {
             </div>
           </div>
         </Split>
-        <Split className="editor" gutterSize={20} direction="vertical">
+        <Split className="editor" gutterSize={20} sizes={[60, 40]} direction="vertical">
           <div className="editor_header_body">
             <div className="editor_header">
               <div classname="savebutton">
@@ -729,19 +726,19 @@ const getAllProblem = async () => {
               </div>
             </div>
             <div className="result_window">
-              <div css={ resultShow == 0 ? css`display: block;height:100%;`: css`display: none;`}>
-                <textarea value={result} disabled="True" css={css`height:100%; width:100%;`} />
+              <div css={ resultShow == 0 ? css`display: block;`: css`display: none;`}>
+                <textarea value={result} disabled="True" css={css` width:100%;`} />
               </div>
-              <div css={ resultShow == 1 ? css` display: block;height:100%;`: css`display: none;`}>
-                <textarea value={"Score: "+score+"\nMemory-efficiency: "+efficiencya+"\nTime-efficiency: "+efficiencyb} disabled="True" css={css`height:100%;width:100%;`} />
+              <div css={ resultShow == 1 ? css` display: block;`: css`display: none;`}>
+                <textarea value={"Score: "+score+"\nMemory-efficiency: "+efficiencya+"\nTime-efficiency: "+efficiencyb} disabled="True" css={css`width:100%;`} />
               </div>
-              <div className = "tc_div" css={ resultShow == 2 ? css`display: flex; flex-direction: column; height:100%;`: css`display: none;`}>
+              <div className = "tc_div" css={ resultShow == 2 ? css`display: flex; flex-direction: column;`: css`display: none;`}>
                 <textarea readonly className = "ttc_score" value={"Score: "+score} disabled="True" css={css`height:10%;width:100%;`}/>
                 <textarea readonly className = "otc_area" value={test_case_texts.split("&")[0]} disabled="True" css={css`height:45%;width:100%;`}/>
                 <textarea readonly className = "htc_area" value={test_case_texts.split("&")[1]} disabled="True" css={css`height:45%;width:100%;`}/>
               </div>
-              <div css={ resultShow == 3 ? css` display: flex; flex-direction: column; height:100%;`: css`display: none;`}>
-                <textarea value={analyzed_texts} disabled="True" css={css`height:100%;width:100%;`}/>
+              <div css={ resultShow == 3 ? css` display: flex; flex-direction: column;`: css`display: none;`}>
+                <textarea value={analyzed_texts} disabled="True" css={css`width:100%;`}/>
               </div>
             </div>
           </div>
@@ -756,17 +753,24 @@ export default Main;
 
 const dropdownul = css`
   position: absolute;
-  top: 65px;
-  color: white;
-  background-color: #000080;
+  color: black;
+  background-color: white;
   z-index: 2;
   width: 300px;
+  margin-top: 5px;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+
 `;
 const dropdownli = css`
-  color: white;
+  color: black;
   margin-left: 0.75rem;
   margin-right: 0.75rem;
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
   cursor: pointer;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
 `;
