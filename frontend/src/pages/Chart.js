@@ -9,14 +9,6 @@ const minus_FER = 60 - (function_score + efficiency_score + readability_score);
 const copy_score = 40;
 const minus_copy = 100 - copy_score;
 
-export const data_FER = [
-  ["Test Name", "Score"],
-  ["가독성", readability_score],
-  ["기능", function_score],
-  ["효율", efficiency_score],
-  ["", minus_FER],
-];
-
 export const options_FER = {
   title: "Overall Score",
   legend: {
@@ -40,15 +32,9 @@ export const options_FER = {
   },
 };
 
-export const data_copy = [
-  ["Copy Rate", "Score"],
-  ["copy rate", copy_score],
-  ["", minus_copy],
-];
-
 export const options_copy = {
   title: "Copy Rate",
-  legend: "none",
+  legend: { fontSize: 10 },
   pieSliceText: "value",
   pieHole: 0.4,
   fontName: "Arial", //타이틀 글씨
@@ -57,11 +43,12 @@ export const options_copy = {
   tooltip: { trigger: "none" },
   slices: {
     0: { color: "#3399ff" },
-    1: { color: "transparent" },
+    1: { color: "#4493f3" },
   },
 };
 
-export function drawFER() {
+export function drawFER(data_FER) {
+  console.log(data_FER);
   return (
     <Chart
       chartType="PieChart"
@@ -74,7 +61,7 @@ export function drawFER() {
   );
 }
 
-export function drawCopy() {
+export function drawCopy(data_copy) {
   return (
     <Chart
       chartType="PieChart"

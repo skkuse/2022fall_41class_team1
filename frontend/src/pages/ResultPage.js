@@ -145,9 +145,39 @@ const ResultPage = () => {
           <div className="resultpage-component">
             <div className="text_section">
               {selected < 5 ? (
-                drawFER()
+                drawFER([
+                  ["Test Name", "Score"],
+                  ["기능성", parseInt(overallInfo.score["score"]) / 5],
+                  [
+                    "효율성",
+                    (parseInt(overallInfo.efficiencya) +
+                      overallInfo.efficiencyb) /
+                      10,
+                  ],
+                  [
+                    "가독성",
+                    parseInt(
+                      (overallInfo.readability["score"]["mypy"] * 4) / 5
+                    ),
+                  ],
+                  [
+                    "",
+                    60 -
+                      (parseInt(overallInfo.score["score"]) / 5 +
+                        (parseInt(overallInfo.efficiencya) +
+                          overallInfo.efficiencyb) /
+                          10 +
+                        (parseInt(overallInfo.readability["score"]["mypy"]) *
+                          4) /
+                          5),
+                  ],
+                ])
               ) : selected < 6 ? (
-                drawCopy()
+                drawCopy([
+                  ["Copy Rate", "Score"],
+                  ["표절률", overallInfo.copy],
+                  ["not copy(예시)", 100 - overallInfo.copy],
+                ])
               ) : (
                 <div></div>
               )}

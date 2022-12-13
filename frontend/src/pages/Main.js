@@ -507,7 +507,7 @@ const Main = () => {
       );
       console.log("response_efficiency >>", response3["data"]);
       setEfficiencya(response3["data"]["e_score1"]);
-      setEfficiencyb(response3["data"]["e_score2"]);
+      setEfficiencyb(1 / parseInt(response3["data"]["e_score2"]));
       // console.log(efficiencya);
       // console.log(efficiencyb);
     } catch (err) {
