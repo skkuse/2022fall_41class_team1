@@ -11,6 +11,7 @@
   font-size: var(--font-size-sm);
   color: white;
   font-family: "NeoDunggeunmo";
+  z-index:0;
 }
 .header {
   flex: 1;
@@ -1241,3 +1242,4 @@
   color: #ffffff;
   cursor: pointer;
 }
+
