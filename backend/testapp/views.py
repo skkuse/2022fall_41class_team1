@@ -134,8 +134,8 @@ def evaluate(code):
     print(code)
     os.rename('temp.txt','solution.py')
     exit_code, console_result = subprocess.getstatusoutput("multimetric solution.py")
-    print(exit_code)
-    print(console_result)
+    print("exit: ",exit_code)
+    print("console: ",console_result)
     json_result = json.loads(console_result)
     e_score1 = json_result['overall']['pylint']
     e_score2 = json_result['overall']['halstead_timerequired']

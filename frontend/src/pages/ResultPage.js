@@ -28,18 +28,17 @@ const ResultPage = () => {
     readability: state.readability,
     analyzed_text: state.analyzed_text,
   }); // 사진 + 정보 결과
-  
+
   const [selected, setSelected] = useState(1); //제출결과
 
   const [opentestcase, setOpentestcase] = useState([]);
   const [hiddentestcase, setHiddentestcase] = useState([]);
 
-  const [keyword,setKeyword]=useState(state.reference["keyword"]);
-  const [youtube,setYoutube]=useState(state.reference["youtube"]);
-  const [baekjun,setBaekjun]=useState(state.reference["baekjun"]);
-  const [wiki,setWiki]=useState(state.reference["wiki"]);
-
-
+  const [keyword, setKeyword] = useState(state.reference["keyword"]);
+  const [youtube, setYoutube] = useState(state.reference["youtube"]);
+  const [baekjun, setBaekjun] = useState(state.reference["beakjun"]);
+  const [wiki, setWiki] = useState(state.reference["wiki"]);
+  console.log(state);
 
   const handle_button1 = () => {
     setSelected(1);
@@ -49,9 +48,19 @@ const ResultPage = () => {
 
   useEffect(() => {
     console.log(overallInfo);
-    console.log('yt : ',  state.reference);
-    setOpentestcase(overallInfo.score.pf.split('&')[0].split('\n').splice(0, overallInfo.score.pf.split('&')[0].split('\n').length -1));
-    setHiddentestcase(overallInfo.score.pf.split('&')[1].split('\n').splice(0, overallInfo.score.pf.split('&')[1].split('\n').length -1));
+    console.log("yt : ", state.reference);
+    setOpentestcase(
+      overallInfo.score.pf
+        .split("&")[0]
+        .split("\n")
+        .splice(0, overallInfo.score.pf.split("&")[0].split("\n").length - 1)
+    );
+    setHiddentestcase(
+      overallInfo.score.pf
+        .split("&")[1]
+        .split("\n")
+        .splice(0, overallInfo.score.pf.split("&")[1].split("\n").length - 1)
+    );
   }, []);
 
   const handle_button2 = () => {
@@ -146,9 +155,7 @@ const ResultPage = () => {
           </div>
           <div className="resultpage-component">
             <div className="text_section">
-              {selected == 1 ? (
-                <h1>text None</h1>
-              ) : selected == 2 ? (
+              {selected == 2 ? (
                 <h1>
                   - mypy : {overallInfo.readability.score.mypy}
                   <br></br>- pylint : {overallInfo.readability.score.pylint}
@@ -171,10 +178,10 @@ const ResultPage = () => {
               ) : selected == 3 ? (
                 <h1>
                   {opentestcase.map((tc) => {
-                    return <div>open input : {tc}</div>
+                    return <div>open input : {tc}</div>;
                   })}
                   {hiddentestcase.map((tc) => {
-                    return <div>hidden input : {tc}</div>
+                    return <div>hidden input : {tc}</div>;
                   })}
                 </h1>
               ) : selected == 4 ? (
@@ -185,19 +192,62 @@ const ResultPage = () => {
                 </h1>
               ) : selected == 5 ? (
                 <h1>
-                  Result Text Area Result Text Area<br></br> Result Text Area
-                  Result Text Area<br></br> Result Text Area Result Text Area
+                  당신의 표절 점수는 {overallInfo.copy}점입니다!
                   <br></br>
                 </h1>
-              ) : (
+              ) : selected == 6 ? (
                 // if selected == 6
-                <div>
-                {youtube}
-                {baekjun}
-                  {wiki}
+                <div className="text_section">
+                  <ul>
+                    <h1>
+                      <br />- 영상 자료
+                      <br />
+                      &nbsp; &nbsp;
+                      <a
+                        href={youtube}
+                        css={css`
+                          color: white;
+                        `}
+                      >
+                        {youtube}
+                      </a>
+                    </h1>
 
+                    <br />
+                    <br />
+                    <h1>
+                      - 관련 문제
+                      <br />
+                      &nbsp; &nbsp;
+                      <a
+                        href={baekjun}
+                        css={css`
+                          color: white;
+                        `}
+                      >
+                        {baekjun}
+                      </a>
+                    </h1>
+                    <br />
+                    <br />
+                    <h1>
+                      - 참고 자료
+                      <br />
+                      &nbsp; &nbsp;
+                      <a
+                        href={wiki}
+                        css={css`
+                          color: white;
+                        `}
+                      >
+                        {wiki}
+                      </a>
+                    </h1>
+                  </ul>
                   <br></br>
                 </div>
+              ) : (
+                <div />
               )}
             </div>
           </div>
