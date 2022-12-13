@@ -35,6 +35,13 @@ const ResultPage = () => {
   const [opentestcase, setOpentestcase] = useState([]);
   const [hiddentestcase, setHiddentestcase] = useState([]);
 
+  const [keyword,setKeyword]=useState(state.reference["keyword"]);
+  const [youtube,setYoutube]=useState(state.reference["youtube"]);
+  const [baekjun,setBaekjun]=useState(state.reference["baekjun"]);
+  const [wiki,setWiki]=useState(state.reference["wiki"]);
+  console.log(state);
+
+
 
   const handle_button1 = () => {
     setSelected(1);
@@ -186,8 +193,10 @@ const ResultPage = () => {
               ) : (
                 // if selected == 6
                 <h1>
-                  Result Text Area Result Text Area<br></br> Result Text Area
-                  Result Text Area<br></br> Result Text Area Result Text Area
+                {youtube}
+                {baekjun}
+                  {wiki}
+
                   <br></br>
                 </h1>
               )}

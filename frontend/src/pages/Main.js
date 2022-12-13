@@ -25,7 +25,7 @@ const Main = () => {
   const [original_code, setOriginal_code] = useState("#some comment");
   const [modified_code, setModified_code] = useState("#some comment");
   const [result, setResult] = useState("result display");
-
+  const [reference, setReference] = useState({});
   const [resultShow, setResultShow] = useState();
   const [submitted, setSubmitted] = useState();
   const [simpleanalyzed_texts, setSimpleAnalyzed_texts] = useState("코드 분석");
@@ -507,6 +507,19 @@ const Main = () => {
     } catch (err) {
       console.log("Error >>", err);
     }
+    try {
+      const response4 = await axios.get(
+        "http://localhost:8000/editor/reference/",
+        {
+          params: {question: selectedproblem},
+        }
+      );
+      console.log("response reference>>", response4);
+      setReference(response4["data"]);
+      // console.log(efficiencyb);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
   };
 
   const getQuestionInfo = async () => {
@@ -566,14 +579,7 @@ const Main = () => {
   }
 
   const onAnalyzeClick = () => {
-    navigate("/resultpage",{state: {efficiencya: efficiencya, 
-                                    efficiencyb: efficiencyb, 
-                                    copy: copy, 
-                                    score: {score: score, pf: test_case_boolean}, 
-                                    readability: readability,
-                                    simple_explain: simpleanalyzed_texts,
-                                    detail_explain: detailanalyzed_texts,
-                                  }});
+    navigate("/resultpage",{state: {efficiencya: efficiencya, efficiencyb: efficiencyb, copy: copy, score: {score: score, pf: test_case_boolean}, readability: readability,reference:reference}});
   };
 
   return (
@@ -590,8 +596,8 @@ const Main = () => {
           <Dropdownlist />
         </Dropdown>
       </div>
-      <Split className="main_section" gutterSize={20} cursor="col-resize">
-        <Split className="section_left" gutterSize={20} direction="vertical">
+      <Split className="main_section" sizes={[40,60]} minSize={[300,600]} gutterSize={20} cursor="col-resize">
+        <Split className="section_left" sizes={[60,40]} minSize={[200,200]} gutterSize={20} direction="vertical">
           <div className="section1">
             <div className="question_title1">문제</div>
             <div className="question_line" />
@@ -610,7 +616,7 @@ const Main = () => {
             </div>
           </div>
         </Split>
-        <Split className="editor" gutterSize={20} direction="vertical">
+        <Split className="editor" sizes={[60,40]} minSize={[280,200]} gutterSize={20} direction="vertical">
           <div className="editor_header_body">
             <div className="editor_header">
               <div classname="savebutton">
