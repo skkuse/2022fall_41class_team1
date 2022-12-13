@@ -58,7 +58,20 @@ const CourseSelect = () => {
     }
 
     const click_start = () => {
-        navigate("/Main",{state: logAccount});
+      const getAllProblem = async () => {
+        try {
+          const response = await axios.get("http://localhost:8000/main/question/", {
+            params: {
+              course: logAccount.user_course,
+            },
+          });
+          navigate("/Main",{state: {logAccount: logAccount, initial_problem: response.data[0]}});
+        } catch (error) {
+          console.log("Error >>", error);
+        }
+      };
+      getAllProblem();
+      
     }
 
     return (

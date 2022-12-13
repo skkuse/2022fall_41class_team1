@@ -19,8 +19,8 @@ const Main = () => {
   const navigate = useNavigate();
 
   const [editorVisible, setEditorVisible] = useState(1);
-  const [user_id, setUser_id] = useState(state.user_email);
-  const [course, setCourse] = useState(state.user_course);
+  const [user_id, setUser_id] = useState(state.logAccount.user_email);
+  const [course, setCourse] = useState(state.logAccount.user_course);
   const [code1, setCode1] = useState();
   const [code2, setCode2] = useState();
   const [code3, setCode3] = useState();
@@ -34,7 +34,7 @@ const Main = () => {
   const [analyzed_texts_co, setAnalyzed_texts_co] = useState("코드 분석 한국어");
   const [test_case_texts, setTest_case_texts] = useState("테스트 케이스");
   const [problemlist, setProblemlist] = useState([]);
-  const [selectedproblem, setSelectedproblem] = useState(state["user_course"]+"_1");
+  const [selectedproblem, setSelectedproblem] = useState(state.initial_problem);
   const [opentestcase, setOpentestcase] = useState([]);
   const [hiddentestcase, setHiddentestcase] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -248,8 +248,7 @@ const Main = () => {
         },
       });
       //console.log("response_getallproblem >>", response.data);
-      setProblemlist(response.data);
-      setSelectedproblem(response.data[0]);
+      setProblemlist(response.data.sort());
     } catch (error) {
       console.log("Error >>", error);
     }
@@ -437,8 +436,23 @@ const Main = () => {
         }
       );
 
-      console.log("response >>", response);
-      setAnalyzed_texts(response["data"]["code"]);
+      console.log("response_simple_explain>>", response);
+      setSimpleAnalyzed_texts(response["data"]["code"]);
+    } catch (err) {
+      console.log("Error >>", err);
+    }
+
+    try {
+      console.log(newData);
+      const response = await axios.get(
+        "http://localhost:8000/editor/detail_explain/",
+        {
+          params: newData,
+        }
+      );
+
+      console.log("response_detailed_explain>>", response);
+      setDetailanalyzed_texts(response["data"]["code"]);
     } catch (err) {
       console.log("Error >>", err);
     }
@@ -565,7 +579,8 @@ const Main = () => {
   };
 
   function Dropdownlist(props) {
-    const handleclick = () => {
+    const handleclick = (item) => {
+      setSelectedproblem(item)
       getQuestionInfo();
     };
 
@@ -573,10 +588,7 @@ const Main = () => {
       <ul css={dropdownul}>
         {problemlist.map((item) => {
           return (
-            <li css={dropdownli} onClick={() => handleclick()}>
-              {" "}
-              {item}{" "}
-            </li>
+            <li css={dropdownli} onClick={() => handleclick(item)}>{item}</li>
           );
         })}
       </ul>
@@ -1018,7 +1030,7 @@ const Main = () => {
                 }
               >
                 <textarea
-                  value={analyzed_texts}
+                  value={simpleanalyzed_texts}
                   disabled="True"
                   css={css`
                     height: 100%;

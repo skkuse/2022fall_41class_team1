@@ -28,8 +28,7 @@ const ResultPage = () => {
     readability: state.readability,
     analyzed_text: state.analyzed_text,
   }); // 사진 + 정보 결과
-  const [detailInfo, setDetail] = useState(); // 정보만 결과
-
+  
   const [selected, setSelected] = useState(1); //제출결과
 
   const [opentestcase, setOpentestcase] = useState([]);
