@@ -16,6 +16,8 @@ import { NowContext } from "../context/NowContext";
 import Split from "react-split";
 import { Howl } from "howler";
 import stage_clear from "../audios/stage_clear.mp3";
+import coin from "../audios/coin.mp3";
+import jump from "../audios/jump.mp3";
 import Loading from "./Loading";
 
 const Main = () => {
@@ -256,8 +258,14 @@ const Main = () => {
     }
   };
 
-  const sound = new Howl({
-    src: stage_clear,
+  const clear = new Howl({
+    src: [stage_clear],
+  });
+  const jp = new Howl({
+    src: [jump],
+  });
+  const cn = new Howl({
+    src: [coin],
   });
 
   const saveData = async () => {
@@ -364,6 +372,7 @@ const Main = () => {
   const submitResultDisplay = () => {};
 
   const submit = async () => {
+    clear.play();
     setSubmitted(1);
     setLoading(true);
     await showValue();
@@ -568,7 +577,7 @@ const Main = () => {
   };
 
   const Dropdown = (props) => {
-    return <article>{props.visibility && props.children}</article>;
+    return <article css={css`width: 454px;`}>{props.visibility && props.children}</article>;
   };
 
   function Dropdownlist(props) {
@@ -630,12 +639,14 @@ const Main = () => {
       <Split
         className="main_section"
         sizes={[40, 60]}
+        minSize={[400,500]}
         gutterSize={20}
         cursor="col-resize"
       >
         <Split
           className="section_left"
           sizes={[70, 30]}
+          minSize={[300,200]}
           gutterSize={20}
           direction="vertical"
         >
@@ -658,31 +669,38 @@ const Main = () => {
           className="editor"
           gutterSize={20}
           sizes={[60, 40]}
+          minSize={[280,200]}
           direction="vertical"
         >
           <div className="editor_header_body">
             <div className="editor_header">
               <div classname="savebutton">
                 <button
+                  style={{background: editorVisible==1 ? '#ff9410' : '#ffd010'}}
                   className="codeBtn1"
                   onClick={() => {
                     setEditorVisible(1);
+                    jp.play();
                   }}
                 >
                   1
                 </button>
                 <button
+                  style={{background: editorVisible==2 ? '#ff9410' : '#ffd010'}}
                   className="codeBtn2"
                   onClick={() => {
                     setEditorVisible(2);
+                    jp.play();
                   }}
                 >
                   2
                 </button>
                 <button
+                  style={{background: editorVisible==3 ? '#ff9410' : '#ffd010'}}
                   className="codeBtn3"
                   onClick={() => {
                     setEditorVisible(3);
+                    jp.play();
                   }}
                 >
                   3
@@ -735,6 +753,7 @@ const Main = () => {
                   defaultLanguage="python"
                   defaultValue="# some comment"
                   onMount={handleEditor1DidMount}
+                  options={{fontSize: "15px"}}
                 />
                 <div className="editor_footer">
                   <div
@@ -802,6 +821,7 @@ const Main = () => {
                   defaultLanguage="python"
                   defaultValue="# some comment"
                   onMount={handleEditor2DidMount}
+                  options={{fontSize: "15px"}}
                 />
                 <div className="editor_footer">
                   <div
@@ -869,6 +889,7 @@ const Main = () => {
                   defaultLanguage="python"
                   defaultValue="# some comment"
                   onMount={handleEditor3DidMount}
+                  options={{fontSize: "15px"}}
                 />
                 <div className="editor_footer">
                   <div
@@ -936,6 +957,7 @@ const Main = () => {
                   modified={modified_code}
                   onMount={handleDiffEditorDidMount}
                   readOnly={true}
+                  options={{fontSize: "15px"}}
                 />
               </div>
             </div>
@@ -953,7 +975,7 @@ const Main = () => {
                 <button className="resultBtn1" onClick={() => setResultShow(0)}>
                   실행결과{" "}
                 </button>
-                <button
+                {/* <button
                   className="resultBtn2"
                   onClick={
                     submitted == 1
@@ -964,7 +986,7 @@ const Main = () => {
                   }
                 >
                   제출결과
-                </button>
+                </button> */}
                 <button className="resultBtn3" onClick={() => setResultShow(2)}>
                   테스트케이스
                 </button>
@@ -989,7 +1011,9 @@ const Main = () => {
                 css={
                   resultShow == 0
                     ? css`
+                        padding: 20px;
                         display: block;
+                        font-size: 30px;
                       `
                     : css`
                         display: none;
@@ -1000,7 +1024,12 @@ const Main = () => {
                   value={result}
                   disabled="True"
                   css={css`
+                    resize:none;
+                    height:100%;
                     width: 100%;
+                    border:none;
+                    padding:0;
+                    font-size: 25px;
                   `}
                 />
               </div>
@@ -1008,6 +1037,8 @@ const Main = () => {
                 css={
                   resultShow == 1
                     ? css`
+                        display: block;
+                        padding: 20px;
                         display: block;
                       `
                     : css`
@@ -1026,6 +1057,8 @@ const Main = () => {
                   }
                   disabled="True"
                   css={css`
+                  resize:none;
+                    height:100%;
                     width: 100%;
                   `}
                 />
@@ -1035,8 +1068,10 @@ const Main = () => {
                 css={
                   resultShow == 2
                     ? css`
+                      
                         display: flex;
                         flex-direction: column;
+                        
                       `
                     : css`
                         display: none;
@@ -1049,8 +1084,10 @@ const Main = () => {
                   value={"Score: " + score}
                   disabled="True"
                   css={css`
+                  resize:none;
                     height: 10%;
                     width: 100%;
+                    font-size: 20px;
                   `}
                 />
                 <textarea
@@ -1059,6 +1096,7 @@ const Main = () => {
                   value={test_case_texts.split("&")[0]}
                   disabled="True"
                   css={css`
+                  resize:none;
                     height: 45%;
                     width: 100%;
                   `}
@@ -1069,6 +1107,7 @@ const Main = () => {
                   value={test_case_texts.split("&")[1]}
                   disabled="True"
                   css={css`
+                    resize:none;
                     height: 45%;
                     width: 100%;
                   `}
@@ -1090,6 +1129,7 @@ const Main = () => {
                   value={simpleanalyzed_texts}
                   disabled="True"
                   css={css`
+                  resize:none;
                     width: 100%;
                   `}
                 />
@@ -1106,17 +1146,18 @@ export default Main;
 
 const dropdownul = css`
   position: absolute;
-  color: black;
-  background-color: white;
+  color: white;
+  background-color: black;
   z-index: 2;
   width: 300px;
-  margin-top: 5px;
+  margin-top: 37px;
   font-weight: 400;
   font-size: 30px;
   line-height: 30px;
+  border: thick solid #3b338c;
 `;
 const dropdownli = css`
-  color: black;
+  color: white;
   margin-left: 0.75rem;
   margin-right: 0.75rem;
   margin-top: 0.75rem;

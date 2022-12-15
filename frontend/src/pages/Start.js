@@ -1,14 +1,25 @@
-
-import { useCallback } from "react";
+import { useCallback, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Start.css";
+import mario from "../audios/mario.mp3";
+import { Howl } from "howler";
 
 const Start = () => {
   const navigate = useNavigate();
 
-  const onDesktop1Click = useCallback(() => {
+  const onDesktop1Click = () => {
+    sound.play('mario');
     navigate("/login");
-  }, [navigate]);
+  };
+
+  const sound = new Howl({
+    src: mario,
+    sprite: {
+      mario: [2000, 10000]
+    }
+  });
+  
+  
 
   return (
     <div className="desktop1" onClick={onDesktop1Click}>
